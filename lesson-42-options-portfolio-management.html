@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第42课：期权组合管理 - OPITIOS期权课程</title>
+    <meta name="description" content="学习期权组合管理方法，掌握如何优化期权投资组合，提高风险调整收益。">
+    <meta name="keywords" content="期权组合管理,期权投资组合,期权管理,期权投资,期权交易">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-42-options-portfolio-management.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-42-options-portfolio-management.html">
+    <meta property="og:title" content="第42课：期权组合管理 - OPITIOS期权课程">
+    <meta property="og:description" content="学习期权组合管理方法，掌握如何优化期权投资组合，提高风险调整收益。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-42-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-42-options-portfolio-management.html">
+    <meta property="twitter:title" content="第42课：期权组合管理 - OPITIOS期权课程">
+    <meta property="twitter:description" content="学习期权组合管理方法，掌握如何优化期权投资组合，提高风险调整收益。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-42-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第42课：期权组合管理",
+        "description": "学习期权组合管理方法，掌握如何优化期权投资组合，提高风险调整收益。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-42-options-portfolio-management.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第42课：期权组合管理与优化 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --portfolio-color: #0ea5e9;
+            --optimization-color: #8b5cf6;
+            --diversification-color: #059669;
+            --performance-color: #f59e0b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--portfolio-color) 0%, var(--optimization-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .portfolio-banner {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-left: 4px solid var(--portfolio-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--portfolio-color);
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .management-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .management-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .management-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .management-card.construction {
+            border-color: var(--portfolio-color);
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        .management-card.construction:hover {
+            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.2);
+        }
+
+        .management-card.optimization {
+            border-color: var(--optimization-color);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .management-card.optimization:hover {
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .management-card.diversification {
+            border-color: var(--diversification-color);
+            background: rgba(5, 150, 105, 0.1);
+        }
+
+        .management-card.diversification:hover {
+            box-shadow: 0 15px 40px rgba(5, 150, 105, 0.2);
+        }
+
+        .management-card.performance {
+            border-color: var(--performance-color);
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .management-card.performance:hover {
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.2);
+        }
+
+        .management-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .management-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .management-card.construction .management-title {
+            color: var(--portfolio-color);
+        }
+
+        .management-card.optimization .management-title {
+            color: var(--optimization-color);
+        }
+
+        .management-card.diversification .management-title {
+            color: var(--diversification-color);
+        }
+
+        .management-card.performance .management-title {
+            color: var(--performance-color);
+        }
+
+        .management-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .portfolio-builder {
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--portfolio-color);
+        }
+
+        .builder-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-label {
+            color: var(--portfolio-color);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .control-input, .control-select {
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .control-input:focus, .control-select:focus {
+            outline: none;
+            border-color: var(--portfolio-color);
+        }
+
+        .build-btn {
+            background: linear-gradient(135deg, var(--portfolio-color) 0%, var(--optimization-color) 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .build-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .portfolio-results {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .portfolio-results.show {
+            display: block;
+        }
+
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .metrics-table th {
+            background: var(--portfolio-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .metrics-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .excellent-metric {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .good-metric {
+            background: rgba(245, 158, 11, 0.3);
+            color: var(--performance-color);
+            font-weight: 600;
+        }
+
+        .poor-metric {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+            font-weight: 600;
+        }
+
+        .optimization-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .example-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .example-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .example-type {
+            color: var(--portfolio-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .example-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .management-grid {
+                grid-template-columns: 1fr;
+            }
+            .optimization-examples {
+                grid-template-columns: 1fr;
+            }
+            .builder-controls {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第42课：期权组合管理与优化</h1>
+                <div class="strategy-badge">📊 实战精进篇 · 组合管理Portfolio Management专家</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">组合制胜的智慧：构建、管理、优化专业级期权投资组合</p>
+            </section>
+
+            <div class="portfolio-banner">
+                📊 期权组合管理核心：通过科学的资产配置、风险分散、动态再平衡和绩效监控，构建能够在各种市场环境下稳定盈利的期权投资组合，实现风险与收益的最佳平衡。
+            </div>
+
+            <div class="card">
+                <h3>期权组合管理的系统化框架</h3>
+                <p>期权组合管理是将单一策略应用提升为系统化投资管理的关键环节。它涵盖了投资目标设定、资产配置决策、风险预算分配、策略选择与组合、动态调整与再平衡、绩效评估与归因分析等完整流程。成功的期权组合管理需要在多个维度实现平衡：不同策略间的平衡、不同风险因子的平衡、短期收益与长期增长的平衡、主动管理与被动配置的平衡。现代期权组合管理融合了传统投资组合理论、行为金融学理论、风险管理技术和量化分析方法，形成了科学完整的管理体系。</p>
+
+                <p><strong>多维度风险分散的精妙设计</strong>：期权组合的风险分散不仅体现在标的资产的多样化，更重要的是策略类型、到期时间、执行价格、市场环境适应性等多个维度的分散。策略类型分散包括基础策略、价差策略、波动率策略和高级组合策略的合理配比；时间分散通过不同到期日的期权组合来平滑时间风险；价格分散通过不同执行价格的组合来适应不同的市场情景；环境分散则确保组合在牛市、熊市、横盘和高波动等各种市场环境下都有相应的策略发挥作用。这种多维度分散比传统股票组合的分散更加复杂但也更加有效。</p>
+
+                <p><strong>动态再平衡的时机与方法</strong>：期权组合由于其衰减性和非线性特征，需要比股票组合更频繁和更精确的再平衡。再平衡的触发机制包括时间触发（定期再平衡）、阈值触发（偏离目标配置达到一定程度）、市场事件触发（重大市场变化）和策略到期触发（期权到期需要处理）。再平衡的方法包括完全再平衡（调整至目标配置）、部分再平衡（向目标方向调整）、机会再平衡（利用市场机会调整）和防御再平衡（应对风险调整）。有效的再平衡可以显著提高组合的长期表现。</p>
+
+                <p><strong>绩效归因与持续优化机制</strong>：期权组合的绩效评估需要专门的方法和指标，包括绝对收益、相对收益、风险调整收益、最大回撤、夏普比率、卡尔玛比率等。绩效归因分析要将收益分解为市场因素、策略选择、时机把握、执行效率等不同来源。持续优化包括策略权重调整、新策略引入、落后策略剔除、参数精细化调整等。建立完善的绩效评估和优化机制，能够确保组合管理水平的持续提升和长期竞争优势的维持。</p>
+            </div>
+
+            <section class="management-grid">
+                <div class="management-card construction">
+                    <span class="management-icon">🏗️</span>
+                    <div class="management-title">组合构建</div>
+                    <div class="management-description">
+                        基于投资目标和风险偏好，科学设计期权策略组合架构，确定各策略权重和配置比例。
+                    </div>
+                </div>
+
+                <div class="management-card optimization">
+                    <span class="management-icon">⚙️</span>
+                    <div class="management-title">参数优化</div>
+                    <div class="management-description">
+                        运用量化方法优化组合参数，包括策略权重、执行价格选择、到期时间配置等关键要素。
+                    </div>
+                </div>
+
+                <div class="management-card diversification">
+                    <span class="management-icon">🎯</span>
+                    <div class="management-title">风险分散</div>
+                    <div class="management-description">
+                        多维度风险分散设计，包括策略分散、时间分散、标的分散和市场环境分散。
+                    </div>
+                </div>
+
+                <div class="management-card performance">
+                    <span class="management-icon">📈</span>
+                    <div class="management-title">绩效监控</div>
+                    <div class="management-description">
+                        实时监控组合表现，进行绩效归因分析，及时发现问题并实施改进措施。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 期权组合构建器 -->
+            <div class="card">
+                <h3>智能期权组合构建器</h3>
+                <div class="portfolio-builder">
+                    <h4 style="color: var(--portfolio-color); text-align: center; margin-bottom: 2rem;">个性化组合配置工具</h4>
+                    <div class="builder-controls">
+                        <div class="control-group">
+                            <label class="control-label">投资目标</label>
+                            <select class="control-select" id="investmentGoal">
+                                <option value="income">稳定收入</option>
+                                <option value="growth">资本增值</option>
+                                <option value="balanced">平衡增长</option>
+                                <option value="aggressive">激进增长</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">风险承受度</label>
+                            <select class="control-select" id="riskTolerance">
+                                <option value="conservative">保守型</option>
+                                <option value="moderate">稳健型</option>
+                                <option value="aggressive">激进型</option>
+                                <option value="speculative">投机型</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">投资期限</label>
+                            <select class="control-select" id="timeHorizon">
+                                <option value="short">短期（1-3个月）</option>
+                                <option value="medium">中期（3-12个月）</option>
+                                <option value="long">长期（1年以上）</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">市场观点</label>
+                            <select class="control-select" id="marketView">
+                                <option value="bullish">看涨</option>
+                                <option value="bearish">看跌</option>
+                                <option value="neutral">中性</option>
+                                <option value="volatile">高波动</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">投资金额 ($)</label>
+                            <input type="number" class="control-input" id="capitalAmount" value="100000" min="10000" max="1000000" step="10000">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">经验水平</label>
+                            <select class="control-select" id="experienceLevel">
+                                <option value="beginner">初级</option>
+                                <option value="intermediate">中级</option>
+                                <option value="advanced">高级</option>
+                                <option value="expert">专家</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="build-btn" onclick="buildPortfolio()">构建优化组合</button>
+                    <div class="portfolio-results" id="portfolioResults">
+                        <div id="portfolioOutput"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 组合绩效指标表 -->
+            <div class="card">
+                <h3>期权组合关键绩效指标</h3>
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>绩效指标</th>
+                            <th>计算方式</th>
+                            <th>优秀标准</th>
+                            <th>良好标准</th>
+                            <th>改进建议</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>年化收益率</strong></td>
+                            <td>(期末价值/期初价值)^(1/年数) - 1</td>
+                            <td class="excellent-metric">> 15%</td>
+                            <td class="good-metric">8-15%</td>
+                            <td>优化策略选择</td>
+                        </tr>
+                        <tr>
+                            <td><strong>夏普比率</strong></td>
+                            <td>(组合收益 - 无风险收益) / 波动率</td>
+                            <td class="excellent-metric">> 1.5</td>
+                            <td class="good-metric">0.8-1.5</td>
+                            <td>降低波动性</td>
+                        </tr>
+                        <tr>
+                            <td><strong>最大回撤</strong></td>
+                            <td>峰值到谷值的最大下跌幅度</td>
+                            <td class="excellent-metric">< 10%</td>
+                            <td class="good-metric">10-20%</td>
+                            <td>强化风控</td>
+                        </tr>
+                        <tr>
+                            <td><strong>胜率</strong></td>
+                            <td>盈利交易数量 / 总交易数量</td>
+                            <td class="excellent-metric">> 60%</td>
+                            <td class="good-metric">50-60%</td>
+                            <td>提升选股能力</td>
+                        </tr>
+                        <tr>
+                            <td><strong>盈亏比</strong></td>
+                            <td>平均盈利 / 平均亏损</td>
+                            <td class="excellent-metric">> 2.0</td>
+                            <td class="good-metric">1.2-2.0</td>
+                            <td>改善止损策略</td>
+                        </tr>
+                        <tr>
+                            <td><strong>卡尔玛比率</strong></td>
+                            <td>年化收益率 / 最大回撤</td>
+                            <td class="excellent-metric">> 1.0</td>
+                            <td class="good-metric">0.5-1.0</td>
+                            <td>平衡收益风险</td>
+                        </tr>
+                        <tr>
+                            <td><strong>信息比率</strong></td>
+                            <td>超额收益 / 跟踪误差</td>
+                            <td class="excellent-metric">> 0.8</td>
+                            <td class="good-metric">0.4-0.8</td>
+                            <td>提升主动管理</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">期权组合优化效果对比</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">展示优化前后的组合表现差异：</p>
+                <canvas class="chart-canvas" id="portfolioChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--error-color);">■</span> 优化前组合
+                    <span style="margin-left: 2rem; color: var(--success-color);">■</span> 优化后组合
+                    <span style="margin-left: 2rem; color: var(--performance-color);">■</span> 基准指数
+                    <span style="margin-left: 2rem; color: var(--portfolio-color);">■</span> 目标收益</div>
+            </section>
+
+            <div class="card">
+                <h3>期权组合管理的实战优化案例</h3>
+                <div class="optimization-examples">
+                    <div class="example-card">
+                        <div class="example-title">🎯 收入导向型组合</div>
+                        <div class="example-type">优化目标：稳定现金流生成</div>
+                        <div class="example-description">
+                            配置50%备兑看涨策略、30%现金担保看跌策略、20%铁鹰策略，月度预期收益2-3%，最大回撤控制在8%以内。
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <div class="example-title">📈 增长导向型组合</div>
+                        <div class="example-type">优化目标：资本长期增值</div>
+                        <div class="example-description">
+                            配置40%价差策略、30%对角价差、20%波动率策略、10%保护性策略，年化目标收益15-20%。
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <div class="example-title">⚖️ 平衡导向型组合</div>
+                        <div class="example-type">优化目标：风险收益平衡</div>
+                        <div class="example-description">
+                            混合多种策略类型，通过动态调整适应不同市场环境，实现12-15%年化收益，夏普比率>1.2。
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <div class="example-title">🛡️ 防御导向型组合</div>
+                        <div class="example-type">优化目标：资本保值增值</div>
+                        <div class="example-description">
+                            重点配置保护性策略和低风险价差策略，在熊市中表现出色，最大回撤控制在5%以内。
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <div class="example-title">⚡ 机会导向型组合</div>
+                        <div class="example-type">优化目标：把握市场机会</div>
+                        <div class="example-description">
+                            灵活配置高收益策略，在市场机会出现时快速调整，适合经验丰富的专业投资者。
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <div class="example-title">🔄 适应性组合</div>
+                        <div class="example-type">优化目标：环境适应能力</div>
+                        <div class="example-description">
+                            建立多情景组合，根据市场环境自动切换策略权重，实现全天候投资管理。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>期权组合管理的高级技术应用</h3>
+                <p><strong>量化模型驱动的组合优化</strong>：现代期权组合管理广泛应用量化模型进行优化决策。马科维茨均值方差模型为组合优化提供了基础框架，但需要针对期权的特殊性进行改进。Black-Litterman模型通过贝叶斯方法结合主观观点和历史数据，提高了预期收益估计的准确性。风险平价模型确保各策略对组合风险的贡献相等，避免风险集中。机器学习模型如神经网络、随机森林、支持向量机等被用于策略选择、参数优化和风险预测。这些模型能够处理非线性关系和复杂交互作用，显著提升组合管理效果。</p>
+
+                <p><strong>多因子风险模型的构建与应用</strong>：期权组合的风险来源复杂多样，需要建立专门的多因子风险模型进行管理。主要风险因子包括方向性风险（Delta）、凸性风险（Gamma）、时间风险（Theta）、波动率风险（Vega）、利率风险（Rho）等。还要考虑标的资产风险、流动性风险、模型风险、操作风险等。通过主成分分析、因子分析等统计方法识别主要风险因子，建立因子载荷矩阵，计算组合在各因子上的暴露度。基于因子模型进行风险预算分配、风险归因分析和压力测试，实现精细化的风险管理。</p>
+
+                <p><strong>动态对冲与风险中性管理</strong>：期权组合的非线性特征要求采用动态对冲技术来管理风险。Delta对冲是最基础的方法，通过调整标的资产头寸来保持Delta中性。Gamma对冲通过增加或减少期权头寸来管理凸性风险。Vega对冲通过调整不同期限期权的比例来管理波动率风险。动态对冲需要平衡对冲效果和交易成本，确定最优的对冲频率和对冲阈值。风险中性管理是将组合调整为对某些风险因子中性，如市场中性、波动率中性等，从而获得纯粹的Alpha收益。</p>
+
+                <p><strong>人工智能在组合管理中的应用</strong>：AI技术正在革命性地改变期权组合管理实践。深度学习模型能够识别复杂的市场模式，预测期权价格和波动率变化。强化学习算法通过与市场环境交互学习最优的交易策略。自然语言处理技术分析新闻、社交媒体、财报等文本信息，提取市场情绪和投资信号。计算机视觉技术识别图表模式和技术形态。这些AI技术的综合应用使组合管理更加智能化、自动化，能够在复杂多变的市场环境中保持竞争优势。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "期权组合管理中最重要的风险分散维度是？",
+                options: [
+                    "标的资产分散",
+                    "策略类型、时间、价格多维分散",
+                    "资金分散",
+                    "地域分散"
+                ],
+                correct: 1,
+                explanation: "期权组合需要在策略类型、到期时间、执行价格、市场环境适应性等多个维度实现分散，比单纯的标的分散更加重要。"
+            },
+            {
+                question: "期权组合的夏普比率优秀标准是？",
+                options: [
+                    "大于0.5",
+                    "大于1.0",
+                    "大于1.5",
+                    "大于2.0"
+                ],
+                correct: 2,
+                explanation: "夏普比率大于1.5被认为是优秀水平，表明组合在承担单位风险下获得了较高的超额收益。"
+            },
+            {
+                question: "期权组合再平衡的最佳触发机制是？",
+                options: [
+                    "仅时间触发",
+                    "仅阈值触发",
+                    "多种触发机制结合",
+                    "仅市场事件触发"
+                ],
+                correct: 2,
+                explanation: "有效的再平衡需要结合时间触发、阈值触发、市场事件触发和策略到期触发等多种机制。"
+            },
+            {
+                question: "量化模型在组合优化中的主要作用是？",
+                options: [
+                    "替代人工决策",
+                    "提供决策支持和优化建议",
+                    "保证盈利",
+                    "消除风险"
+                ],
+                correct: 1,
+                explanation: "量化模型主要提供科学的决策支持和优化建议，帮助管理者做出更好的投资决策，而不是完全替代人工判断。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawPortfolioChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通期权组合管理！' : 
+                         percentage >= 60 ? '良好的理解，建议深入学习组合优化技术。' : 
+                         '需要加强对组合管理理论和实践的学习。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawPortfolioChart() {
+            const canvas = document.getElementById('portfolioChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Sample data for portfolio performance
+            const timePoints = 12; // 12 months
+            const beforeOptimization = [100, 98, 95, 92, 96, 94, 97, 99, 96, 98, 101, 103];
+            const afterOptimization = [100, 102, 105, 103, 108, 112, 115, 118, 116, 120, 125, 128];
+            const benchmark = [100, 101, 102, 100, 104, 106, 108, 107, 109, 111, 113, 115];
+            const target = [100, 101, 103, 104, 106, 107, 109, 110, 112, 113, 115, 116];
+
+            // Draw before optimization line (poor performance)
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            beforeOptimization.forEach((value, i) => {
+                const x = padding + (i / (timePoints - 1)) * chartWidth;
+                const y = canvas.height - padding - ((value - 90) / 40) * chartHeight;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            // Draw after optimization line (good performance)
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            afterOptimization.forEach((value, i) => {
+                const x = padding + (i / (timePoints - 1)) * chartWidth;
+                const y = canvas.height - padding - ((value - 90) / 40) * chartHeight;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            // Draw benchmark line
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            benchmark.forEach((value, i) => {
+                const x = padding + (i / (timePoints - 1)) * chartWidth;
+                const y = canvas.height - padding - ((value - 90) / 40) * chartHeight;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw target line
+            ctx.strokeStyle = '#0ea5e9';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 5]);
+            ctx.beginPath();
+            target.forEach((value, i) => {
+                const x = padding + (i / (timePoints - 1)) * chartWidth;
+                const y = canvas.height - padding - ((value - 90) / 40) * chartHeight;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            for (let i = 0; i < timePoints; i += 2) {
+                const x = padding + (i / (timePoints - 1)) * chartWidth;
+                ctx.fillText(`${i + 1}月`, x, canvas.height - padding + 20);
+            }
+
+            ctx.fillText('时间', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('组合价值', 0, 0);
+            ctx.restore();
+
+            // Add title
+            ctx.fillStyle = '#ffd700';
+            ctx.font = '18px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('期权组合优化效果对比', canvas.width / 2, 30);
+        }
+
+        function buildPortfolio() {
+            const goal = document.getElementById('investmentGoal').value;
+            const risk = document.getElementById('riskTolerance').value;
+            const horizon = document.getElementById('timeHorizon').value;
+            const view = document.getElementById('marketView').value;
+            const capital = parseInt(document.getElementById('capitalAmount').value);
+            const experience = document.getElementById('experienceLevel').value;
+
+            // Portfolio construction algorithm
+            let allocation = {
+                basic: 0,
+                spread: 0,
+                volatility: 0,
+                advanced: 0
+            };
+
+            let expectedReturn = 0;
+            let riskLevel = 0;
+
+            // Base allocation based on experience
+            if (experience === 'beginner') {
+                allocation = { basic: 60, spread: 30, volatility: 10, advanced: 0 };
+            } else if (experience === 'intermediate') {
+                allocation = { basic: 40, spread: 40, volatility: 15, advanced: 5 };
+            } else if (experience === 'advanced') {
+                allocation = { basic: 25, spread: 35, volatility: 25, advanced: 15 };
+            } else {
+                allocation = { basic: 15, spread: 30, volatility: 30, advanced: 25 };
+            }
+
+            // Adjust based on goals and risk tolerance
+            if (goal === 'income' && risk === 'conservative') {
+                allocation.basic += 20;
+                allocation.advanced -= 10;
+                expectedReturn = 8;
+                riskLevel = 15;
+            } else if (goal === 'growth' && risk === 'aggressive') {
+                allocation.volatility += 15;
+                allocation.advanced += 10;
+                expectedReturn = 18;
+                riskLevel = 35;
+            } else if (goal === 'balanced') {
+                expectedReturn = 12;
+                riskLevel = 25;
+            }
+
+            // Market view adjustments
+            if (view === 'volatile') {
+                allocation.volatility += 15;
+                allocation.basic -= 10;
+            } else if (view === 'neutral') {
+                allocation.spread += 10;
+                allocation.volatility -= 5;
+            }
+
+            // Normalize to 100%
+            const total = Object.values(allocation).reduce((a, b) => a + b, 0);
+            Object.keys(allocation).forEach(key => {
+                allocation[key] = Math.round((allocation[key] / total) * 100);
+            });
+
+            const sharpe = (expectedReturn - 3) / (riskLevel * 0.8); // Assuming 3% risk-free rate
+            const maxDrawdown = riskLevel * 0.6;
+
+            const results = `
+                <h4 style="color: var(--portfolio-color); margin-bottom: 1.5rem;">🎯 智能组合配置方案</h4>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                    <div style="padding: 1rem; background: rgba(14, 165, 233, 0.1); border-radius: 8px; text-align: center;">
+                        <strong style="color: var(--portfolio-color);">基础策略</strong><br>
+                        <span style="font-size: 1.5em; color: var(--primary-color);">${allocation.basic}%</span>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(139, 92, 246, 0.1); border-radius: 8px; text-align: center;">
+                        <strong style="color: var(--optimization-color);">价差策略</strong><br>
+                        <span style="font-size: 1.5em; color: var(--primary-color);">${allocation.spread}%</span>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(5, 150, 105, 0.1); border-radius: 8px; text-align: center;">
+                        <strong style="color: var(--diversification-color);">波动率策略</strong><br>
+                        <span style="font-size: 1.5em; color: var(--primary-color);">${allocation.volatility}%</span>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px; text-align: center;">
+                        <strong style="color: var(--performance-color);">高级策略</strong><br>
+                        <span style="font-size: 1.5em; color: var(--primary-color);">${allocation.advanced}%</span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                    <div style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                        <strong style="color: var(--success-color);">预期年收益</strong><br>
+                        <span style="font-size: 1.3em; color: var(--primary-color);">${expectedReturn}%</span>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                        <strong style="color: var(--performance-color);">风险水平</strong><br>
+                        <span style="font-size: 1.3em; color: var(--primary-color);">${riskLevel}%</span>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                        <strong style="color: var(--optimization-color);">夏普比率</strong><br>
+                        <span style="font-size: 1.3em; color: var(--primary-color);">${sharpe.toFixed(2)}</span>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                        <strong style="color: var(--diversification-color);">预期回撤</strong><br>
+                        <span style="font-size: 1.3em; color: var(--primary-color);">${maxDrawdown.toFixed(1)}%</span>
+                    </div>
+                </div>
+
+                <div style="margin: 2rem 0; padding: 2rem; background: rgba(255, 215, 0, 0.1); border-radius: 12px; border-left: 4px solid var(--primary-color);">
+                    <h5 style="color: var(--primary-color); margin-bottom: 1rem;">📋 实施建议</h5>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <div>
+                            <strong>资金配置：</strong><br>
+                            基础策略: $${Math.round(capital * allocation.basic / 100).toLocaleString()}
+                        </div>
+                        <div>
+                            <strong>再平衡频率：</strong><br>
+                            ${horizon === 'short' ? '每周检查' : horizon === 'medium' ? '每月调整' : '季度再平衡'}
+                        </div>
+                        <div>
+                            <strong>风控措施：</strong><br>
+                            单策略最大损失不超过${riskLevel < 20 ? '3%' : riskLevel < 30 ? '5%' : '8%'}
+                        </div>
+                        <div>
+                            <strong>监控重点：</strong><br>
+                            ${view === 'volatile' ? '波动率指标' : view === 'neutral' ? 'Delta敞口' : '方向性风险'}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('portfolioOutput').innerHTML = results;
+            document.getElementById('portfolioResults').classList.add('show');
+        }
+    </script>
+</body>
+</html>

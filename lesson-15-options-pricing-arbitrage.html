@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第15课：期权定价套利 - OPITIOS期权课程</title>
+    <meta name="description" content="学习期权套利的基本原理和策略，掌握如何发现和利用期权定价偏差获取无风险收益。">
+    <meta name="keywords" content="期权套利,期权定价,套利策略,无风险收益,期权交易">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-15-options-pricing-arbitrage.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-15-options-pricing-arbitrage.html">
+    <meta property="og:title" content="第15课：期权定价套利 - OPITIOS期权课程">
+    <meta property="og:description" content="学习期权套利的基本原理和策略，掌握如何发现和利用期权定价偏差获取无风险收益。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-15-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-15-options-pricing-arbitrage.html">
+    <meta property="twitter:title" content="第15课：期权定价套利 - OPITIOS期权课程">
+    <meta property="twitter:description" content="学习期权套利的基本原理和策略，掌握如何发现和利用期权定价偏差获取无风险收益。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-15-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第15课：期权定价套利",
+        "description": "学习期权套利的基本原理和策略，掌握如何发现和利用期权定价偏差获取无风险收益。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-15-options-pricing-arbitrage.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第15课：期权定价偏差与套利机会 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --arbitrage-color: #06b6d4;
+            --profit-color: #10b981;
+            --risk-color: #f59e0b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .arbitrage-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .arbitrage-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--arbitrage-color);
+            background: rgba(6, 182, 212, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .arbitrage-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .arbitrage-icon {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .arbitrage-title {
+            color: var(--arbitrage-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .arbitrage-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .profit-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--profit-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .risk-indicator {
+            background: var(--risk-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .parity-calculator {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid #8b5cf6;
+        }
+
+        .calculator-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-item label {
+            color: #8b5cf6;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .input-item input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #8b5cf6;
+            border-radius: 6px;
+            padding: 0.7rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .calculate-parity-btn {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .calculate-parity-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .parity-result {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border: 2px solid var(--primary-color);
+            display: none;
+        }
+
+        .parity-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .parity-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .parity-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .parity-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .arbitrage-opportunity {
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .opportunity-none {
+            background: rgba(156, 163, 175, 0.2);
+            color: #9ca3af;
+        }
+
+        .opportunity-call {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--profit-color);
+        }
+
+        .opportunity-put {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .strategy-examples {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--profit-color);
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .strategy-example {
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border-left: 4px solid var(--profit-color);
+        }
+
+        .strategy-name {
+            color: var(--profit-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .strategy-steps {
+            list-style: none;
+            padding: 0;
+        }
+
+        .strategy-steps li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .strategy-steps li::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: var(--profit-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .strategy-steps {
+            counter-reset: step-counter;
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid var(--error-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .warning-title {
+            color: var(--error-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .warning-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .risk-factors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .risk-factor {
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border-left: 3px solid var(--error-color);
+        }
+
+        .risk-title {
+            color: var(--error-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .risk-desc {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .arbitrage-types {
+                grid-template-columns: 1fr;
+            }
+            .calculator-inputs {
+                grid-template-columns: 1fr;
+            }
+            .strategy-grid {
+                grid-template-columns: 1fr;
+            }
+            .risk-factors {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第15课：期权定价偏差与套利机会</h1>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">识别市场不效率与无风险获利策略</p>
+            </section>
+
+            <div class="card">
+                <h3>期权定价偏差的理论基础</h3>
+                <p>期权定价偏差是指期权的市场价格偏离其理论价值的现象。在完全有效的市场中，所有期权都应该按照理论模型（如Black-Scholes模型）的预测进行定价。然而，现实市场存在各种摩擦因素，包括交易成本、流动性限制、信息不对称、市场情绪等，这些因素会导致期权价格偏离理论值，从而创造套利机会。</p>
+
+                <p><strong>套利的本质与条件</strong>：套利是指利用相同或相似资产在不同市场或不同合约间的价格差异，通过同时买入低价资产、卖出高价资产来获取无风险利润的交易行为。完美的套利需要满足三个条件：零初始投资、零风险、正收益。在期权市场中，套利机会主要来源于违反无套利定价原理的情况，如看涨看跌期权平价关系的违背、转换套利机会等。</p>
+
+                <p><strong>市场微观结构的影响</strong>：期权市场的微观结构特征对定价偏差的形成具有重要影响。做市商制度下，买卖价差的存在为定价偏差提供了生存空间；期权合约的标准化和有限性使得某些执行价格或到期时间的期权可能供需失衡；机构投资者的大额交易需求可能推动特定期权偏离理论价值；算法交易的普及既可能减少定价偏差，也可能在特定条件下放大偏差。</p>
+
+                <p><strong>行为金融学视角</strong>：从行为金融学角度看，投资者的认知偏差和情绪波动是期权定价偏差的重要来源。过度自信导致投资者低估风险，推高期权价格；损失厌恶使投资者过度追求保护，抬高看跌期权价格；锚定效应和代表性偏差影响投资者对波动率的判断；羊群效应在市场恐慌或狂热时期尤为明显，导致期权价格出现系统性偏差。</p>
+            </div>
+
+            <section>
+                <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 3rem; font-size: 2rem;">主要套利机会类型</h2>
+                <div class="arbitrage-types">
+                    <div class="arbitrage-card">
+                        <div class="profit-indicator">低风险</div>
+                        <span class="arbitrage-icon">⚖️</span>
+                        <div class="arbitrage-title">看涨看跌期权平价套利</div>
+                        <div class="arbitrage-description">
+                            当C + K×e^(-rT) ≠ P + S的平价关系被违背时，可以通过买入被低估的一边，卖出被高估的一边来获利。这是最经典的期权套利策略。
+                        </div>
+                        <div class="risk-indicator">执行风险：低</div>
+                    </div>
+
+                    <div class="arbitrage-card">
+                        <div class="profit-indicator">中风险</div>
+                        <span class="arbitrage-icon">🔄</span>
+                        <div class="arbitrage-title">转换与反向转换套利</div>
+                        <div class="arbitrage-description">
+                            转换套利：卖出看涨期权+买入看跌期权+买入股票。反向转换：买入看涨期权+卖出看跌期权+卖空股票。利用相同执行价格期权间的定价偏差。
+                        </div>
+                        <div class="risk-indicator">执行风险：中</div>
+                    </div>
+
+                    <div class="arbitrage-card">
+                        <div class="profit-indicator">中风险</div>
+                        <span class="arbitrage-icon">📊</span>
+                        <div class="arbitrage-title">Box套利</div>
+                        <div class="arbitrage-description">
+                            组合多个期权构建合成的无风险债券，当组合的成本偏离无风险债券理论价值时产生套利机会。需要四个期权同时操作。
+                        </div>
+                        <div class="risk-indicator">执行风险：中</div>
+                    </div>
+
+                    <div class="arbitrage-card">
+                        <div class="profit-indicator">高收益</div>
+                        <span class="arbitrage-icon">📈</span>
+                        <div class="arbitrage-title">波动率套利</div>
+                        <div class="arbitrage-description">
+                            当隐含波动率显著偏离预期实际波动率时，通过动态对冲策略实现波动率套利。买入被低估的波动率，卖出被高估的波动率。
+                        </div>
+                        <div class="risk-indicator">执行风险：高</div>
+                    </div>
+
+                    <div class="arbitrage-card">
+                        <div class="profit-indicator">特殊机会</div>
+                        <span class="arbitrage-icon">🎯</span>
+                        <div class="arbitrage-title">早期行权套利</div>
+                        <div class="arbitrage-description">
+                            针对美式期权，当期权的时间价值为负或极低时，通过早期行权获得套利收益。通常出现在高股息股票的深度实值看涨期权。
+                        </div>
+                        <div class="risk-indicator">执行风险：低</div>
+                    </div>
+
+                    <div class="arbitrage-card">
+                        <div class="profit-indicator">技术性</div>
+                        <span class="arbitrage-icon">🔧</span>
+                        <div class="arbitrage-title">日历套利</div>
+                        <div class="arbitrage-description">
+                            利用不同到期时间但相同执行价格的期权间的定价偏差，通过买入一个到期时间的期权，卖出另一个到期时间的期权来获利。
+                        </div>
+                        <div class="risk-indicator">执行风险：中</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">期权套利收益分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">以下图表展示不同套利策略的风险收益特征：</p>
+                <canvas class="chart-canvas" id="arbitrageChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--arbitrage-color);">■</span> 套利收益
+                    <span style="margin-left: 2rem; color: var(--risk-color);">■</span> 执行风险
+                    <span style="margin-left: 2rem; color: var(--profit-color);">---</span> 无风险收益线
+                </div>
+            </section>
+
+            <div class="parity-calculator">
+                <h4 style="color: #8b5cf6; text-align: center; margin-bottom: 2rem;">看涨看跌期权平价计算器</h4>
+                <div class="calculator-inputs">
+                    <div class="input-item">
+                        <label>当前股价 (S)</label>
+                        <input type="number" id="stockPriceCalc" value="100" step="0.01">
+                    </div>
+                    <div class="input-item">
+                        <label>执行价格 (K)</label>
+                        <input type="number" id="strikePriceCalc" value="100" step="0.01">
+                    </div>
+                    <div class="input-item">
+                        <label>到期时间（年）</label>
+                        <input type="number" id="timeToExpiryCalc" value="0.25" step="0.01">
+                    </div>
+                    <div class="input-item">
+                        <label>无风险利率</label>
+                        <input type="number" id="riskFreeRateCalc" value="0.05" step="0.001">
+                    </div>
+                    <div class="input-item">
+                        <label>看涨期权价格</label>
+                        <input type="number" id="callPriceCalc" value="5" step="0.01">
+                    </div>
+                    <div class="input-item">
+                        <label>看跌期权价格</label>
+                        <input type="number" id="putPriceCalc" value="5" step="0.01">
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button class="calculate-parity-btn" onclick="calculateParity()">检查平价关系</button>
+                </div>
+                <div class="parity-result" id="parityResult">
+                    <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">平价关系分析</h4>
+                    <div class="parity-comparison" id="parityComparison">
+                        <!-- Results will be populated by JavaScript -->
+                    </div>
+                    <div class="arbitrage-opportunity" id="arbitrageOpportunity">
+                        <!-- Arbitrage opportunity will be shown here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>看涨看跌期权平价关系详解</h3>
+                <p><strong>平价关系的数学表达</strong>：看涨看跌期权平价关系是期权定价理论的基础，其数学表达为：C + K×e^(-rT) = P + S。这个等式表明，买入看涨期权加上投资于无风险资产的现值应该等于买入看跌期权加上买入股票的成本。这种等价性基于无套利原理，任何偏离都会创造套利机会。</p>
+
+                <p><strong>平价关系的经济意义</strong>：该关系反映了期权市场内在的逻辑一致性。左边（C + K×e^(-rT)）代表一个投资组合：买入看涨期权并将执行价格的现值投资于无风险资产；右边（P + S）代表另一个投资组合：买入看跌期权和股票。在到期时，这两个投资组合具有相同的收益结构，因此当前价值必须相等。</p>
+
+                <p><strong>实际应用中的考虑因素</strong>：在实践中应用平价关系时需要考虑多个因素。首先是股息的影响，有股息的股票需要调整公式为：C + K×e^(-rT) = P + S×e^(-qT)，其中q是股息收益率。其次是美式期权的早期行权特征，可能导致平价关系不完全成立。最后是交易成本和买卖价差，这些因素为定价偏差提供了生存空间。</p>
+
+                <p><strong>套利执行的实际挑战</strong>：虽然平价关系提供了理论上的套利机会，但实际执行面临多重挑战。时间同步是最大难题，需要同时交易多个工具且价格快速变化；流动性风险使得某些期权可能无法以理论价格成交；pin风险指股价在到期时恰好等于执行价格的风险；交易成本可能吞噬套利利润。成功的平价套利需要先进的交易系统和风险管理能力。</p>
+            </div>
+
+            <div class="strategy-examples">
+                <h4 style="color: var(--profit-color); text-align: center; margin-bottom: 2rem;">套利策略执行步骤</h4>
+                <div class="strategy-grid">
+                    <div class="strategy-example">
+                        <div class="strategy-name">转换套利 (Conversion)</div>
+                        <ul class="strategy-steps">
+                            <li>卖出看涨期权</li>
+                            <li>买入相同执行价格的看跌期权</li>
+                            <li>买入100股标的股票</li>
+                            <li>持有至到期或提前平仓</li>
+                        </ul>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">
+                            <strong>适用条件：</strong>看涨期权价格过高或看跌期权价格过低
+                        </p>
+                    </div>
+
+                    <div class="strategy-example">
+                        <div class="strategy-name">反向转换套利 (Reversal)</div>
+                        <ul class="strategy-steps">
+                            <li>买入看涨期权</li>
+                            <li>卖出相同执行价格的看跌期权</li>
+                            <li>卖空100股标的股票</li>
+                            <li>持有至到期或提前平仓</li>
+                        </ul>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">
+                            <strong>适用条件：</strong>看跌期权价格过高或看涨期权价格过低
+                        </p>
+                    </div>
+
+                    <div class="strategy-example">
+                        <div class="strategy-name">Box套利 (Box Spread)</div>
+                        <ul class="strategy-steps">
+                            <li>构建牛市看涨价差</li>
+                            <li>构建牛市看跌价差</li>
+                            <li>两个价差使用相同执行价格</li>
+                            <li>锁定无风险收益至到期</li>
+                        </ul>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">
+                            <strong>适用条件：</strong>Box价差成本偏离理论价值
+                        </p>
+                    </div>
+
+                    <div class="strategy-example">
+                        <div class="strategy-name">波动率套利 (Vol Arbitrage)</div>
+                        <ul class="strategy-steps">
+                            <li>识别波动率定价偏差</li>
+                            <li>建立Delta中性头寸</li>
+                            <li>持续动态对冲Delta</li>
+                            <li>实现波动率收益</li>
+                        </ul>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">
+                            <strong>适用条件：</strong>隐含波动率与实际波动率显著背离
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">⚠️ 套利风险警示</div>
+                <div class="warning-content">
+                    虽然期权套利在理论上是无风险的，但实际执行中存在多种风险因素。成功的套利交易需要专业知识、先进技术和充足资本，普通投资者应谨慎参与。
+                </div>
+
+                <div class="risk-factors">
+                    <div class="risk-factor">
+                        <div class="risk-title">执行风险</div>
+                        <div class="risk-desc">无法同时以理想价格执行所有交易腿，导致套利不完整或产生损失。</div>
+                    </div>
+
+                    <div class="risk-factor">
+                        <div class="risk-title">流动性风险</div>
+                        <div class="risk-desc">市场流动性不足，无法及时平仓或调整头寸，被困在不利头寸中。</div>
+                    </div>
+
+                    <div class="risk-factor">
+                        <div class="risk-title">Pin风险</div>
+                        <div class="risk-desc">股价在到期时恰好等于执行价格，造成不确定的行权情况和风险暴露。</div>
+                    </div>
+
+                    <div class="risk-factor">
+                        <div class="risk-title">交易成本</div>
+                        <div class="risk-desc">佣金、买卖价差、融资成本等可能侵蚀甚至超过套利利润。</div>
+                    </div>
+
+                    <div class="risk-factor">
+                        <div class="risk-title">技术风险</div>
+                        <div class="risk-desc">交易系统故障、网络中断、数据错误等技术问题影响套利执行。</div>
+                    </div>
+
+                    <div class="risk-factor">
+                        <div class="risk-title">监管风险</div>
+                        <div class="risk-desc">监管政策变化、交易规则调整、税收政策变更影响套利策略可行性。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>现代套利环境与挑战</h3>
+                <p><strong>算法交易的双刃剑效应</strong>：现代金融市场中，算法交易和高频交易的普及对期权套利产生了深远影响。一方面，自动化交易系统能够快速识别和消除定价偏差，使得传统套利机会的持续时间大大缩短，竞争更加激烈；另一方面，算法交易也可能在特定条件下放大市场波动，创造新的套利机会。投资者需要适应这种高速变化的环境。</p>
+
+                <p><strong>监管环境的演变</strong>：金融监管的不断加强对期权套利策略产生重要影响。沃尔克规则限制了银行的自营交易，减少了市场流动性提供者；MiFID II等法规要求更高的透明度和报告标准；做市商义务和最佳执行要求改变了期权市场微观结构。这些变化既限制了某些套利活动，也创造了新的机会。</p>
+
+                <p><strong>技术创新与成本结构</strong>：云计算、机器学习、区块链等技术创新正在重塑期权套利的成本结构和可行性。低延迟交易网络降低了执行成本但提高了技术门槛；大数据分析提高了套利机会识别的精度；智能合约可能简化复杂套利策略的执行。然而，技术投资的高成本也提高了参与门槛。</p>
+
+                <p><strong>市场结构的深层变化</strong>：期权市场正在经历结构性变化，影响套利策略的有效性。电子化交易比例不断上升，改变了价格发现机制；做市商集中度提高，增加了系统性风险；零售投资者参与度上升，可能创造新的定价异常。理解这些深层变化对于把握未来套利机会至关重要。成功的套利者需要不断适应和创新，在变化中寻找机会。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "看涨看跌期权平价关系的正确表达式是什么？",
+                options: [
+                    "C + S = P + K×e^(-rT)",
+                    "C + K×e^(-rT) = P + S",
+                    "C + P = S + K×e^(-rT)",
+                    "C - P = S - K×e^(-rT)"
+                ],
+                correct: 1,
+                explanation: "看涨看跌期权平价关系为 C + K×e^(-rT) = P + S，即买入看涨期权加上执行价格现值等于买入看跌期权加上股票价格。"
+            },
+            {
+                question: "转换套利策略包含哪些操作？",
+                options: [
+                    "买看涨期权+卖看跌期权+卖空股票",
+                    "卖看涨期权+买看跌期权+买股票",
+                    "买看涨期权+买看跌期权+买股票",
+                    "卖看涨期权+卖看跌期权+买股票"
+                ],
+                correct: 1,
+                explanation: "转换套利包括：卖出看涨期权+买入看跌期权+买入股票。这个组合在看涨期权被高估时能够锁定无风险收益。"
+            },
+            {
+                question: "以下哪种风险不是期权套利的主要风险？",
+                options: [
+                    "执行风险",
+                    "流动性风险",
+                    "汇率风险",
+                    "Pin风险"
+                ],
+                correct: 2,
+                explanation: "汇率风险主要存在于跨货币交易中，对于单一货币的期权套利不是主要风险。执行风险、流动性风险和Pin风险都是期权套利的主要风险。"
+            },
+            {
+                question: "现代算法交易对期权套利的主要影响是什么？",
+                options: [
+                    "完全消除了套利机会",
+                    "只增加了套利机会",
+                    "缩短了套利机会的持续时间",
+                    "对套利没有影响"
+                ],
+                correct: 2,
+                explanation: "算法交易能够快速识别和消除定价偏差，使得套利机会的持续时间大大缩短，竞争更加激烈，但并未完全消除套利机会。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawArbitrageChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '恭喜您，对期权套利理解深入！' : 
+                         percentage >= 60 ? '理解良好，建议进一步学习套利策略执行。' : 
+                         '需要加强对期权套利理论和实践的学习。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawArbitrageChart() {
+            const canvas = document.getElementById('arbitrageChart');
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('执行风险水平', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 40, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('预期收益率 (%)', 0, 0);
+            ctx.restore();
+
+            // Data points for different arbitrage strategies
+            const strategies = [
+                {name: '平价套利', risk: 0.1, return: 0.5, size: 8},
+                {name: '转换套利', risk: 0.3, return: 1.2, size: 10},
+                {name: 'Box套利', risk: 0.2, return: 0.8, size: 9},
+                {name: '波动率套利', risk: 0.7, return: 3.5, size: 12},
+                {name: '日历套利', risk: 0.5, return: 2.0, size: 10},
+                {name: '早期行权', risk: 0.15, return: 0.3, size: 7}
+            ];
+
+            // Draw risk-free return line
+            const riskFreeReturn = 1.0;
+            const riskFreeY = canvas.height - padding - (riskFreeReturn / 4) * chartHeight;
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(padding, riskFreeY);
+            ctx.lineTo(canvas.width - padding, riskFreeY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw strategy points
+            strategies.forEach((strategy, index) => {
+                const x = padding + (strategy.risk / 1) * chartWidth;
+                const y = canvas.height - padding - (strategy.return / 4) * chartHeight;
+
+                // Draw point
+                ctx.fillStyle = '#06b6d4';
+                ctx.beginPath();
+                ctx.arc(x, y, strategy.size, 0, 2 * Math.PI);
+                ctx.fill();
+
+                // Add label
+                ctx.fillStyle = '#ccc';
+                ctx.font = '10px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(strategy.name, x, y - strategy.size - 5);
+            });
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            // Vertical grid lines
+            for (let risk = 0; risk <= 1; risk += 0.2) {
+                const x = padding + risk * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText((risk * 100).toFixed(0) + '%', x, canvas.height - padding + 20);
+            }
+
+            // Horizontal grid lines
+            for (let ret = 0; ret <= 4; ret += 1) {
+                const y = canvas.height - padding - (ret / 4) * chartHeight;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'right';
+                ctx.fillText(ret.toFixed(1) + '%', padding - 10, y + 5);
+            }
+
+            ctx.setLineDash([]);
+
+            // Add legend
+            ctx.fillStyle = '#10b981';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('无风险收益基准: 1.0%', padding + 20, riskFreeY - 10);
+
+            ctx.fillStyle = '#06b6d4';
+            ctx.beginPath();
+            ctx.arc(canvas.width - 100, padding + 30, 6, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillStyle = '#ccc';
+            ctx.fillText('套利策略', canvas.width - 85, padding + 35);
+        }
+
+        function calculateParity() {
+            const S = parseFloat(document.getElementById('stockPriceCalc').value);
+            const K = parseFloat(document.getElementById('strikePriceCalc').value);
+            const T = parseFloat(document.getElementById('timeToExpiryCalc').value);
+            const r = parseFloat(document.getElementById('riskFreeRateCalc').value);
+            const C = parseFloat(document.getElementById('callPriceCalc').value);
+            const P = parseFloat(document.getElementById('putPriceCalc').value);
+
+            // Calculate theoretical values
+            const leftSide = C + K * Math.exp(-r * T);
+            const rightSide = P + S;
+            const difference = leftSide - rightSide;
+
+            // Display results
+            document.getElementById('parityResult').style.display = 'block';
+            document.getElementById('parityComparison').innerHTML = `
+                <div class="parity-item">
+                    <div class="parity-value">$${leftSide.toFixed(4)}</div>
+                    <div class="parity-label">C + K×e^(-rT)</div>
+                </div>
+                <div class="parity-item">
+                    <div class="parity-value">$${rightSide.toFixed(4)}</div>
+                    <div class="parity-label">P + S</div>
+                </div>
+                <div class="parity-item">
+                    <div class="parity-value">$${Math.abs(difference).toFixed(4)}</div>
+                    <div class="parity-label">价差绝对值</div>
+                </div>
+                <div class="parity-item">
+                    <div class="parity-value">${(Math.abs(difference)/S*100).toFixed(2)}%</div>
+                    <div class="parity-label">相对价差</div>
+                </div>
+            `;
+
+            // Determine arbitrage opportunity
+            const opportunityDiv = document.getElementById('arbitrageOpportunity');
+            const threshold = 0.01; // 1 cent threshold
+
+            if (Math.abs(difference) < threshold) {
+                opportunityDiv.className = 'arbitrage-opportunity opportunity-none';
+                opportunityDiv.textContent = '✅ 平价关系基本成立，无明显套利机会';
+            } else if (difference > threshold) {
+                opportunityDiv.className = 'arbitrage-opportunity opportunity-call';
+                opportunityDiv.innerHTML = `
+                    🔥 看涨期权被高估！<br>
+                    <small>建议：卖出看涨期权，买入看跌期权和股票（转换套利）</small>
+                `;
+            } else {
+                opportunityDiv.className = 'arbitrage-opportunity opportunity-put';
+                opportunityDiv.innerHTML = `
+                    🔥 看跌期权被高估！<br>
+                    <small>建议：买入看涨期权，卖出看跌期权和股票（反向转换套利）</small>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

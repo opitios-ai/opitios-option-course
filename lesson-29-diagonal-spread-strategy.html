@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第29课：对角价差策略 - OPITIOS期权课程</title>
+    <meta name="description" content="深入学习对角价差策略，掌握复杂价差组合的构建方法，提高期权交易策略的灵活性。">
+    <meta name="keywords" content="对角价差,期权价差策略,期权组合,期权交易策略,期权投资">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-29-diagonal-spread-strategy.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-29-diagonal-spread-strategy.html">
+    <meta property="og:title" content="第29课：对角价差策略 - OPITIOS期权课程">
+    <meta property="og:description" content="深入学习对角价差策略，掌握复杂价差组合的构建方法，提高期权交易策略的灵活性。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-29-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-29-diagonal-spread-strategy.html">
+    <meta property="twitter:title" content="第29课：对角价差策略 - OPITIOS期权课程">
+    <meta property="twitter:description" content="深入学习对角价差策略，掌握复杂价差组合的构建方法，提高期权交易策略的灵活性。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-29-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第29课：对角价差策略",
+        "description": "深入学习对角价差策略，掌握复杂价差组合的构建方法，提高期权交易策略的灵活性。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-29-diagonal-spread-strategy.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第29课：对角价差策略高级技巧 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --diagonal-color: #8b5cf6;
+            --hybrid-color: #3b82f6;
+            --bullish-color: #10b981;
+            --bearish-color: #ef4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--diagonal-color) 0%, var(--hybrid-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .diagonal-banner {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-left: 4px solid var(--diagonal-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--diagonal-color);
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .diagonal-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .type-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .type-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .type-card.bullish-diagonal {
+            border-color: var(--bullish-color);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .type-card.bullish-diagonal:hover {
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .type-card.bearish-diagonal {
+            border-color: var(--bearish-color);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .type-card.bearish-diagonal:hover {
+            box-shadow: 0 15px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        .type-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .type-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--bullish-color);
+        }
+
+        .type-card.bearish-diagonal .type-title {
+            color: var(--bearish-color);
+        }
+
+        .type-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .diagonal-analyzer {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--diagonal-color);
+        }
+
+        .analyzer-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--bullish-color);
+            color: white;
+        }
+
+        .tab-btn.bearish.active {
+            background: var(--bearish-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .analyzer-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--bullish-color);
+        }
+
+        .bearish-controls .control-group label {
+            color: var(--bearish-color);
+        }
+
+        .control-group input, .control-group select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--bullish-color);
+            border-radius: 6px;
+            padding: 0.7rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .bearish-controls .control-group input, 
+        .bearish-controls .control-group select {
+            border-color: var(--bearish-color);
+        }
+
+        .analyze-btn {
+            background: linear-gradient(135deg, var(--bullish-color) 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .analyze-btn.bearish {
+            background: linear-gradient(135deg, var(--bearish-color) 0%, #dc2626 100%);
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .strategy-analysis {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border: 2px solid var(--primary-color);
+            display: none;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .analysis-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .analysis-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .complexity-matrix {
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--hybrid-color);
+        }
+
+        .complexity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .complexity-table th {
+            background: var(--hybrid-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .complexity-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .complexity-high {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+            font-weight: 600;
+        }
+
+        .complexity-medium {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .complexity-low {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .advanced-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .scenario-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-type {
+            color: var(--diagonal-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .scenario-card.bullish .scenario-type {
+            color: var(--bullish-color);
+        }
+
+        .scenario-card.bearish .scenario-type {
+            color: var(--bearish-color);
+        }
+
+        .scenario-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .optimization-engine {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--diagonal-color);
+        }
+
+        .engine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .engine-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .engine-label {
+            color: var(--diagonal-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .engine-input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--diagonal-color);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .engine-result {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .engine-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .diagonal-types {
+                grid-template-columns: 1fr;
+            }
+            .analyzer-controls {
+                grid-template-columns: 1fr;
+            }
+            .advanced-scenarios {
+                grid-template-columns: 1fr;
+            }
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            .engine-grid {
+                grid-template-columns: 1fr;
+            }
+            .analyzer-tabs {
+                flex-direction: column;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第29课：对角价差策略高级技巧</h1>
+                <div class="strategy-badge">🔄 混合策略精通 · 对角价差策略专家</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">垂直与时间的完美结合：高级价差策略的终极形态</p>
+            </section>
+
+            <div class="diagonal-banner">
+                🔄 高级策略核心：对角价差策略结合了垂直价差和日历价差的特征，通过不同执行价格和不同到期日的期权组合，实现更精细的风险收益调节。
+            </div>
+
+            <div class="card">
+                <h3>对角价差策略的高级组合精髓</h3>
+                <p>对角价差策略（Diagonal Spread）是期权交易中最复杂和最灵活的价差策略之一，它同时改变了期权的执行价格和到期时间。与垂直价差策略的相同到期日不同执行价格，以及日历价差策略的相同执行价格不同到期日不同，对角价差策略创造性地将这两种维度结合起来，形成了一种兼具方向性和时间套利特征的混合策略。这种策略的复杂性要求投资者对期权定价的各个因素都有深入理解，包括时间价值、隐含波动率、以及不同执行价格之间的关系。</p>
+
+                <p><strong>看涨对角价差的构建逻辑</strong>：看涨对角价差通过买入较长期限、较低执行价格的看涨期权，同时卖出较短期限、较高执行价格的看涨期权来构建。这种组合通常需要支付净权利金，但相比单纯的垂直价差，它能够从时间价值衰减差异中获得额外收益。当近月期权到期时，如果股价位于两个执行价格之间，投资者可以保留远月期权的全部价值，同时让近月期权无价值到期。这种策略特别适合那些对股票有中等程度看涨预期，但希望降低成本和提高时间效率的投资者。</p>
+
+                <p><strong>看跌对角价差的镜像应用</strong>：看跌对角价差通过买入较长期限、较高执行价格的看跌期权，同时卖出较短期限、较低执行价格的看跌期权来实现。其基本逻辑与看涨对角价差相似，但方向相反，适合中等程度看跌的市场预期。这种策略在熊市环境中特别有效，因为它既能从价格下跌中获利，又能从时间价值衰减的差异中获得额外收益。选择合适的执行价格组合是成功的关键，通常建议长期权的执行价格设在预期的目标价位，短期权的执行价格设在当前支撑位附近。</p>
+
+                <p><strong>风险收益的多维调节机制</strong>：对角价差策略最大的优势在于其高度的可调节性。通过改变执行价格之间的差距，投资者可以调节策略的方向性敏感度；通过改变到期时间之间的差距，投资者可以调节策略的时间敏感度；通过选择不同的期权类型组合，投资者可以创造出几乎无限种的风险收益特征。这种灵活性使得对角价差策略能够适应各种复杂的市场环境和投资需求，但也要求投资者具备更高的期权交易技能和风险管理能力。</p>
+            </div>
+
+            <section class="diagonal-types">
+                <div class="type-card bullish-diagonal">
+                    <span class="type-icon">📊</span>
+                    <div class="type-title">看涨对角价差</div>
+                    <div class="type-description">
+                        买入长期限低执行价看涨期权，卖出短期限高执行价看涨期权。结合方向性和时间套利。
+                    </div>
+                </div>
+
+                <div class="type-card bearish-diagonal">
+                    <span class="type-icon">📉</span>
+                    <div class="type-title">看跌对角价差</div>
+                    <div class="type-description">
+                        买入长期限高执行价看跌期权，卖出短期限低执行价看跌期权。看跌方向的混合策略。
+                    </div>
+                </div>
+
+                <div class="type-card bullish-diagonal">
+                    <span class="type-icon">🎯</span>
+                    <div class="type-title">精细风险控制</div>
+                    <div class="type-description">
+                        通过调节执行价格差和时间差，实现风险收益特征的精细调节，满足个性化投资需求。
+                    </div>
+                </div>
+
+                <div class="type-card bearish-diagonal">
+                    <span class="type-icon">⚙️</span>
+                    <div class="type-title">策略可调节性</div>
+                    <div class="type-description">
+                        最高的策略灵活性，可以根据市场变化动态调整，适应复杂的投资环境。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">对角价差策略收益分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">展示看涨对角价差在近月期权到期时的收益特征：</p>
+                <canvas class="chart-canvas" id="diagonalSpreadChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--bullish-color);">■</span> 对角价差收益
+                    <span style="margin-left: 2rem; color: var(--diagonal-color);">■</span> 垂直价差对比
+                    <span style="margin-left: 2rem; color: var(--primary-color);">│</span> 执行价格
+                    <span style="margin-left: 2rem; color: var(--hybrid-color);">█</span> 优势区间
+                </div>
+            </section>
+
+            <div class="diagonal-analyzer">
+                <div class="analyzer-tabs">
+                    <button class="tab-btn active" onclick="switchDiagonalTab('bullish')">看涨对角</button>
+                    <button class="tab-btn bearish" onclick="switchDiagonalTab('bearish')">看跌对角</button>
+                </div>
+
+                <!-- 看涨对角价差分析器 -->
+                <div class="tab-content active" id="bullish-content">
+                    <h4 style="color: var(--bullish-color); text-align: center; margin-bottom: 2rem;">看涨对角价差分析器</h4>
+                    <div class="analyzer-controls">
+                        <div class="control-group">
+                            <label>当前股价 (S)</label>
+                            <input type="number" id="bullishDiagonalStockPrice" value="100" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>长期权执行价 (K1)</label>
+                            <input type="number" id="bullishDiagonalLongStrike" value="95" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>短期权执行价 (K2)</label>
+                            <input type="number" id="bullishDiagonalShortStrike" value="105" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>长期权价格</label>
+                            <input type="number" id="bullishDiagonalLongPremium" value="9.50" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>短期权价格</label>
+                            <input type="number" id="bullishDiagonalShortPremium" value="2.80" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>长期权到期（天）</label>
+                            <input type="number" id="bullishDiagonalLongDays" value="90" step="1">
+                        </div>
+                        <div class="control-group">
+                            <label>短期权到期（天）</label>
+                            <input type="number" id="bullishDiagonalShortDays" value="30" step="1">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <button class="analyze-btn" onclick="analyzeBullishDiagonal()">分析看涨对角价差</button>
+                    </div>
+                    <div class="strategy-analysis" id="bullishDiagonalAnalysis">
+                        <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">看涨对角价差分析结果</h4>
+                        <div class="analysis-grid" id="bullishDiagonalResults">
+                            <!-- Results populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 看跌对角价差分析器 -->
+                <div class="tab-content bearish-controls" id="bearish-content">
+                    <h4 style="color: var(--bearish-color); text-align: center; margin-bottom: 2rem;">看跌对角价差分析器</h4>
+                    <div class="analyzer-controls">
+                        <div class="control-group">
+                            <label>当前股价 (S)</label>
+                            <input type="number" id="bearishDiagonalStockPrice" value="100" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>长期权执行价 (K1)</label>
+                            <input type="number" id="bearishDiagonalLongStrike" value="105" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>短期权执行价 (K2)</label>
+                            <input type="number" id="bearishDiagonalShortStrike" value="95" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>长期权价格</label>
+                            <input type="number" id="bearishDiagonalLongPremium" value="9.20" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>短期权价格</label>
+                            <input type="number" id="bearishDiagonalShortPremium" value="2.50" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>长期权到期（天）</label>
+                            <input type="number" id="bearishDiagonalLongDays" value="90" step="1">
+                        </div>
+                        <div class="control-group">
+                            <label>短期权到期（天）</label>
+                            <input type="number" id="bearishDiagonalShortDays" value="30" step="1">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <button class="analyze-btn bearish" onclick="analyzeBearishDiagonal()">分析看跌对角价差</button>
+                    </div>
+                    <div class="strategy-analysis" id="bearishDiagonalAnalysis">
+                        <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">看跌对角价差分析结果</h4>
+                        <div class="analysis-grid" id="bearishDiagonalResults">
+                            <!-- Results populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>对角价差策略复杂度分析</h3>
+                <div class="complexity-matrix">
+                    <h4 style="color: var(--hybrid-color); text-align: center; margin-bottom: 2rem;">多维度复杂性评估矩阵</h4>
+                    <table class="complexity-table">
+                        <thead>
+                            <tr>
+                                <th>复杂度维度</th>
+                                <th>垂直价差</th>
+                                <th>日历价差</th>
+                                <th>对角价差</th>
+                                <th>管理难度</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>构建复杂度</strong></td>
+                                <td class="complexity-low">简单</td>
+                                <td class="complexity-medium">中等</td>
+                                <td class="complexity-high">复杂</td>
+                                <td>需要4个变量优化</td>
+                            </tr>
+                            <tr>
+                                <td><strong>定价分析</strong></td>
+                                <td class="complexity-low">直观</td>
+                                <td class="complexity-medium">中等</td>
+                                <td class="complexity-high">复杂</td>
+                                <td>多因素综合影响</td>
+                            </tr>
+                            <tr>
+                                <td><strong>风险管理</strong></td>
+                                <td class="complexity-medium">中等</td>
+                                <td class="complexity-medium">中等</td>
+                                <td class="complexity-high">复杂</td>
+                                <td>多层次风险控制</td>
+                            </tr>
+                            <tr>
+                                <td><strong>动态调整</strong></td>
+                                <td class="complexity-low">简单</td>
+                                <td class="complexity-high">复杂</td>
+                                <td class="complexity-high">非常复杂</td>
+                                <td>实时监控要求高</td>
+                            </tr>
+                            <tr>
+                                <td><strong>收益预测</strong></td>
+                                <td class="complexity-low">可预测</td>
+                                <td class="complexity-medium">中等</td>
+                                <td class="complexity-high">难以预测</td>
+                                <td>多变量敏感度分析</td>
+                            </tr>
+                            <tr>
+                                <td><strong>流动性管理</strong></td>
+                                <td class="complexity-medium">中等</td>
+                                <td class="complexity-medium">中等</td>
+                                <td class="complexity-high">复杂</td>
+                                <td>多合约流动性考虑</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>对角价差策略的高级应用场景</h3>
+                <div class="advanced-scenarios">
+                    <div class="scenario-card bullish">
+                        <div class="scenario-title">📊 分阶段看涨策略</div>
+                        <div class="scenario-type">看涨对角：渐进式上涨预期</div>
+                        <div class="scenario-description">
+                            当预期股价将分阶段上涨时，使用看涨对角价差可以在第一阶段获得时间价值收益，在第二阶段获得方向性收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card bearish">
+                        <div class="scenario-title">📉 结构性调整布局</div>
+                        <div class="scenario-type">看跌对角：多重阻力突破</div>
+                        <div class="scenario-description">
+                            在股价面临多重技术阻力时，看跌对角价差可以从短期阻力和长期下跌趋势中获得双重收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card bullish">
+                        <div class="scenario-title">🎯 业绩周期管理</div>
+                        <div class="scenario-type">看涨对角：长期成长投资</div>
+                        <div class="scenario-description">
+                            结合公司业绩发布周期，通过对角价差管理不同时间段的预期，实现长期成长投资的风险优化。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card bearish">
+                        <div class="scenario-title">⚠️ 风险事件对冲</div>
+                        <div class="scenario-type">看跌对角：多层次风险管理</div>
+                        <div class="scenario-description">
+                            面对多个潜在风险事件时，看跌对角价差提供分层次的保护，近期保护和远期对冲相结合。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card bullish">
+                        <div class="scenario-title">🔄 滚动优化策略</div>
+                        <div class="scenario-type">看涨对角：动态策略管理</div>
+                        <div class="scenario-description">
+                            通过定期滚动对角价差，可以持续优化执行价格和到期时间，适应不断变化的市场环境。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card bearish">
+                        <div class="scenario-title">📈 反转信号捕捉</div>
+                        <div class="scenario-type">看跌对角：趋势反转预判</div>
+                        <div class="scenario-description">
+                            在牛市后期布局看跌对角价差，可以提前为可能的趋势反转做准备，获得先发优势。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>对角价差优化引擎</h3>
+                <div class="optimization-engine">
+                    <h4 style="color: var(--diagonal-color); text-align: center; margin-bottom: 2rem;">智能策略优化系统</h4>
+                    <div class="engine-grid">
+                        <div class="engine-item">
+                            <div class="engine-label">目标股价</div>
+                            <input type="number" class="engine-input" id="targetPrice" value="110" placeholder="目标股价">
+                            <div class="engine-result" id="targetPriceDisplay">$110</div>
+                        </div>
+
+                        <div class="engine-item">
+                            <div class="engine-label">时间视野（天）</div>
+                            <input type="number" class="engine-input" id="timeHorizon" value="60" placeholder="投资时间视野">
+                            <div class="engine-result" id="timeHorizonDisplay">60天</div>
+                        </div>
+
+                        <div class="engine-item">
+                            <div class="engine-label">风险偏好</div>
+                            <input type="range" class="engine-input" id="riskTolerance" min="1" max="5" value="3" style="height: 40px;">
+                            <div class="engine-result" id="riskToleranceDisplay">平衡型</div>
+                        </div>
+
+                        <div class="engine-item">
+                            <div class="engine-label">建议执行价格组合</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="engine-result" id="optimalStrikes">95/105</div>
+                            <div class="engine-description">长期权/短期权执行价</div>
+                        </div>
+
+                        <div class="engine-item">
+                            <div class="engine-label">建议到期日组合</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="engine-result" id="optimalExpiries">90/30</div>
+                            <div class="engine-description">长期权/短期权到期天数</div>
+                        </div>
+
+                        <div class="engine-item">
+                            <div class="engine-label">策略评分</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="engine-result" id="strategyScore">85分</div>
+                            <div class="engine-description">综合优化评分</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button onclick="optimizeDiagonalStrategy()" style="background: linear-gradient(135deg, var(--diagonal-color) 0%, #7c3aed 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+                            优化策略参数
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>对角价差策略的精细化管理技术</h3>
+                <p><strong>多维参数的协同优化</strong>：对角价差策略涉及四个关键参数的同时优化：长期权执行价格、短期权执行价格、长期权到期时间和短期权到期时间。这种多维优化需要考虑参数之间的相互关系和协同效应。例如，如果选择较大的执行价格差距，通常需要较长的时间差距来充分发挥策略优势；如果选择较小的执行价格差距，则可以选择较短的时间差距来提高资金效率。最优参数组合取决于具体的市场预期、波动率环境和风险承受能力。</p>
+
+                <p><strong>动态Delta中性管理</strong>：对角价差策略的Delta值会随着股价、时间和波动率的变化而变化，需要进行动态管理来维持期望的风险敞口。当股价向有利方向移动时，可以考虑部分获利了结或调整头寸比例；当股价向不利方向移动时，可以考虑加仓或调整执行价格。Delta对冲可以通过买卖股票、ETF或期货来实现，但需要权衡对冲成本与风险控制的效益。</p>
+
+                <p><strong>波动率期限结构的利用</strong>：对角价差策略对隐含波动率的期限结构特别敏感，因为不同到期日的期权对波动率变化的反应不同。投资者应该密切关注近月和远月期权隐含波动率的相对关系，当远月期权波动率相对被低估时，更适合建立对角价差策略。同时要注意即将到来的事件（如财报、FDA批准等）对不同到期期权波动率的差异化影响。</p>
+
+                <p><strong>分层退出与滚动策略</strong>：对角价差策略的退出比其他价差策略更加复杂，需要制定分层退出计划。一般来说，当短期权接近到期时，如果策略盈利且股价位置有利，可以让短期权自然到期，然后管理剩余的长期权头寸；如果策略亏损，可以考虑买回短期权并同时卖出长期权，或者实施滚动策略将短期权滚动到下一个到期月。滚动策略可以延续对角价差的优势，但需要仔细评估滚动成本和新的市场环境。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "看涨对角价差策略的构建方式是什么？",
+                options: [
+                    "买入长期低执行价看涨，卖出短期高执行价看涨",
+                    "买入长期高执行价看涨，卖出短期低执行价看涨", 
+                    "买入短期低执行价看涨，卖出长期高执行价看涨",
+                    "买入短期高执行价看涨，卖出长期低执行价看涨"
+                ],
+                correct: 0,
+                explanation: "看涨对角价差通过买入长期限、低执行价格的看涨期权，同时卖出短期限、高执行价格的看涨期权来构建。"
+            },
+            {
+                question: "对角价差策略相比垂直价差的主要优势是什么？",
+                options: [
+                    "风险更小",
+                    "收益更确定",
+                    "结合了时间套利优势",
+                    "不受波动率影响"
+                ],
+                correct: 2,
+                explanation: "对角价差策略的主要优势是结合了垂直价差和日历价差的特征，既有方向性又有时间套利优势。"
+            },
+            {
+                question: "对角价差策略最适合什么投资者？",
+                options: [
+                    "期权交易初学者",
+                    "有经验的高级投资者",
+                    "只想获得固定收益的投资者",
+                    "不愿承担任何风险的投资者"
+                ],
+                correct: 1,
+                explanation: "对角价差策略复杂度高，需要对期权定价、时间价值和波动率有深入理解，适合有经验的高级投资者。"
+            },
+            {
+                question: "对角价差策略管理的最大挑战是什么？",
+                options: [
+                    "成本太高",
+                    "多维参数需要同时优化",
+                    "流动性不足",
+                    "只能单方向获利"
+                ],
+                correct: 1,
+                explanation: "对角价差策略需要同时优化四个参数（两个执行价格和两个到期时间），多维参数的协同优化是最大挑战。"
+            }
+        ];
+
+        let userAnswers = [];
+        let activeTab = 'bullish';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawDiagonalSpreadChart();
+            updateOptimizationEngine();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function switchDiagonalTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update tab contents
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tab + '-content').classList.add('active');
+
+            activeTab = tab;
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通对角价差策略！' : 
+                         percentage >= 60 ? '不错的理解，建议进一步学习高级价差策略管理。' : 
+                         '需要加强对对角价差策略复杂性的理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawDiagonalSpreadChart() {
+            const canvas = document.getElementById('diagonalSpreadChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis (profit/loss line)
+            const zeroLine = canvas.height - padding - chartHeight / 2;
+            ctx.moveTo(padding, zeroLine);
+            ctx.lineTo(canvas.width - padding, zeroLine);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Parameters for Diagonal Spread
+            const longStrike = 95;
+            const shortStrike = 105;
+            const longPremium = 9.5;
+            const shortPremium = 2.8;
+            const netDebit = longPremium - shortPremium;
+            const minStock = 80;
+            const maxStock = 120;
+            const steps = 100;
+
+            // Draw diagonal spread payoff at short expiration
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                // Short option payoff (expires)
+                let shortPayoff = Math.max(stockPrice - shortStrike, 0) - shortPremium;
+                // Long option retains time value
+                let longTimeValue = Math.max(3, 6 - Math.abs(stockPrice - longStrike) / 15);
+                let longPayoff = Math.max(stockPrice - longStrike, 0) + longTimeValue - longPremium;
+                let totalPayoff = longPayoff - shortPayoff; // Long - short
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (totalPayoff / 12) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw vertical spread for comparison
+            ctx.strokeStyle = '#8b5cf6';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let longPayoff = Math.max(stockPrice - longStrike, 0) - longPremium;
+                let shortPayoff = Math.max(stockPrice - shortStrike, 0) - shortPremium;
+                let totalPayoff = longPayoff - shortPayoff;
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (totalPayoff / 12) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw advantage zone
+            const advZoneStart = padding + ((95 - minStock) / (maxStock - minStock)) * chartWidth;
+            const advZoneEnd = padding + ((105 - minStock) / (maxStock - minStock)) * chartWidth;
+
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.2)';
+            ctx.fillRect(advZoneStart, padding, advZoneEnd - advZoneStart, canvas.height - 2 * padding);
+
+            // Draw strike price lines
+            const longStrikeX = padding + ((longStrike - minStock) / (maxStock - minStock)) * chartWidth;
+            const shortStrikeX = padding + ((shortStrike - minStock) / (maxStock - minStock)) * chartWidth;
+
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(longStrikeX, padding);
+            ctx.lineTo(longStrikeX, canvas.height - padding);
+            ctx.moveTo(shortStrikeX, padding);
+            ctx.lineTo(shortStrikeX, canvas.height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            for (let price = 85; price <= 115; price += 5) {
+                const x = padding + ((price - minStock) / (maxStock - minStock)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('损益', 0, 0);
+            ctx.restore();
+
+            ctx.setLineDash([]);
+        }
+
+        function analyzeBullishDiagonal() {
+            const stockPrice = parseFloat(document.getElementById('bullishDiagonalStockPrice').value);
+            const longStrike = parseFloat(document.getElementById('bullishDiagonalLongStrike').value);
+            const shortStrike = parseFloat(document.getElementById('bullishDiagonalShortStrike').value);
+            const longPremium = parseFloat(document.getElementById('bullishDiagonalLongPremium').value);
+            const shortPremium = parseFloat(document.getElementById('bullishDiagonalShortPremium').value);
+            const longDays = parseInt(document.getElementById('bullishDiagonalLongDays').value);
+            const shortDays = parseInt(document.getElementById('bullishDiagonalShortDays').value);
+
+            // Calculations
+            const netDebit = longPremium - shortPremium;
+            const maxLoss = netDebit;
+            const strikeSpread = shortStrike - longStrike;
+            const estimatedMaxProfit = strikeSpread - netDebit + 2; // Time value benefit
+            const timeBenefit = longDays - shortDays;
+            const optimalRange = `$${longStrike} - $${shortStrike}`;
+
+            // Complexity score
+            const complexity = timeBenefit > 45 ? '高' : '中等';
+
+            document.getElementById('bullishDiagonalAnalysis').style.display = 'block';
+            document.getElementById('bullishDiagonalResults').innerHTML = `
+                <div class="analysis-item">
+                    <div class="analysis-value">$${netDebit.toFixed(2)}</div>
+                    <div class="analysis-label">净投入成本</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${estimatedMaxProfit.toFixed(2)}</div>
+                    <div class="analysis-label">预估最大收益</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${maxLoss.toFixed(2)}</div>
+                    <div class="analysis-label">最大损失</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${optimalRange}</div>
+                    <div class="analysis-label">最佳价格区间</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${strikeSpread.toFixed(0)}</div>
+                    <div class="analysis-label">执行价格差</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${timeBenefit}天</div>
+                    <div class="analysis-label">时间价值优势</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${complexity}</div>
+                    <div class="analysis-label">策略复杂度</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${shortDays}天</div>
+                    <div class="analysis-label">短期权剩余</div>
+                </div>
+            `;
+        }
+
+        function analyzeBearishDiagonal() {
+            const stockPrice = parseFloat(document.getElementById('bearishDiagonalStockPrice').value);
+            const longStrike = parseFloat(document.getElementById('bearishDiagonalLongStrike').value);
+            const shortStrike = parseFloat(document.getElementById('bearishDiagonalShortStrike').value);
+            const longPremium = parseFloat(document.getElementById('bearishDiagonalLongPremium').value);
+            const shortPremium = parseFloat(document.getElementById('bearishDiagonalShortPremium').value);
+            const longDays = parseInt(document.getElementById('bearishDiagonalLongDays').value);
+            const shortDays = parseInt(document.getElementById('bearishDiagonalShortDays').value);
+
+            // Calculations
+            const netDebit = longPremium - shortPremium;
+            const maxLoss = netDebit;
+            const strikeSpread = longStrike - shortStrike;
+            const estimatedMaxProfit = strikeSpread - netDebit + 1.8; // Time value benefit
+            const timeBenefit = longDays - shortDays;
+            const optimalRange = `$${shortStrike} - $${longStrike}`;
+
+            // Complexity score
+            const complexity = timeBenefit > 45 ? '高' : '中等';
+
+            document.getElementById('bearishDiagonalAnalysis').style.display = 'block';
+            document.getElementById('bearishDiagonalResults').innerHTML = `
+                <div class="analysis-item">
+                    <div class="analysis-value">$${netDebit.toFixed(2)}</div>
+                    <div class="analysis-label">净投入成本</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${estimatedMaxProfit.toFixed(2)}</div>
+                    <div class="analysis-label">预估最大收益</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${maxLoss.toFixed(2)}</div>
+                    <div class="analysis-label">最大损失</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${optimalRange}</div>
+                    <div class="analysis-label">最佳价格区间</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${strikeSpread.toFixed(0)}</div>
+                    <div class="analysis-label">执行价格差</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${timeBenefit}天</div>
+                    <div class="analysis-label">时间价值优势</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${complexity}</div>
+                    <div class="analysis-label">策略复杂度</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${shortDays}天</div>
+                    <div class="analysis-label">短期权剩余</div>
+                </div>
+            `;
+        }
+
+        function updateOptimizationEngine() {
+            document.getElementById('targetPrice').addEventListener('input', optimizeDiagonalStrategy);
+            document.getElementById('timeHorizon').addEventListener('input', optimizeDiagonalStrategy);
+            document.getElementById('riskTolerance').addEventListener('input', optimizeDiagonalStrategy);
+        }
+
+        function optimizeDiagonalStrategy() {
+            const targetPrice = parseFloat(document.getElementById('targetPrice').value) || 110;
+            const timeHorizon = parseInt(document.getElementById('timeHorizon').value) || 60;
+            const riskTolerance = parseInt(document.getElementById('riskTolerance').value) || 3;
+
+            // Update displays
+            document.getElementById('targetPriceDisplay').textContent = '$' + targetPrice;
+            document.getElementById('timeHorizonDisplay').textContent = timeHorizon + '天';
+
+            // Risk tolerance display
+            const riskLabels = ['保守型', '稳健型', '平衡型', '积极型', '激进型'];
+            document.getElementById('riskToleranceDisplay').textContent = riskLabels[riskTolerance - 1];
+
+            // Calculate optimal parameters
+            const currentPrice = 100; // Assumed current price
+            const priceDiff = targetPrice - currentPrice;
+
+            // Optimize strike prices based on target and risk
+            let longStrike, shortStrike;
+            if (priceDiff > 0) { // Bullish
+                longStrike = currentPrice - (5 - riskTolerance);
+                shortStrike = targetPrice - riskTolerance;
+            } else { // Bearish
+                longStrike = currentPrice + (5 - riskTolerance);
+                shortStrike = targetPrice + riskTolerance;
+            }
+
+            // Optimize expiry dates
+            const shortExpiry = Math.max(14, Math.min(30, timeHorizon / 2));
+            const longExpiry = Math.min(120, timeHorizon + 30);
+
+            // Strategy score calculation
+            const timeSpread = longExpiry - shortExpiry;
+            const priceSpread = Math.abs(shortStrike - longStrike);
+            let score = 60 + (timeSpread / 2) + (priceSpread * 2);
+            if (riskTolerance === 3) score += 10; // Bonus for balanced risk
+            score = Math.min(100, Math.max(30, Math.round(score)));
+
+            document.getElementById('optimalStrikes').textContent = Math.round(longStrike) + '/' + Math.round(shortStrike);
+            document.getElementById('optimalExpiries').textContent = Math.round(longExpiry) + '/' + Math.round(shortExpiry);
+            document.getElementById('strategyScore').textContent = score + '分';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第12课：二叉树定价模型 - OPITIOS期权课程</title>
+    <meta name="description" content="学习二叉树期权定价模型，理解离散时间下的期权定价方法，掌握数值计算技巧。">
+    <meta name="keywords" content="二叉树模型,期权定价模型,数值方法,期权计算,期权分析">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-12-binomial-pricing-model.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-12-binomial-pricing-model.html">
+    <meta property="og:title" content="第12课：二叉树定价模型 - OPITIOS期权课程">
+    <meta property="og:description" content="学习二叉树期权定价模型，理解离散时间下的期权定价方法，掌握数值计算技巧。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-12-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-12-binomial-pricing-model.html">
+    <meta property="twitter:title" content="第12课：二叉树定价模型 - OPITIOS期权课程">
+    <meta property="twitter:description" content="学习二叉树期权定价模型，理解离散时间下的期权定价方法，掌握数值计算技巧。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-12-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第12课：二叉树定价模型",
+        "description": "学习二叉树期权定价模型，理解离散时间下的期权定价方法，掌握数值计算技巧。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-12-binomial-pricing-model.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第12课：二叉树定价模型应用 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --tree-color: #8b5cf6;
+            --node-color: #06b6d4;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .model-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .model-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .model-card.binomial {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--tree-color);
+        }
+
+        .model-card.bs {
+            background: rgba(6, 182, 212, 0.1);
+            border-color: var(--node-color);
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .model-card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .model-card.binomial h4 {
+            color: var(--tree-color);
+        }
+
+        .model-card.bs h4 {
+            color: var(--node-color);
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .steps-container {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--tree-color);
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .step-number {
+            background: var(--tree-color);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            color: var(--tree-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .formula-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--tree-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .formula-title {
+            color: var(--tree-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .formula-content {
+            font-family: 'Courier New', monospace;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .interactive-demo {
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--node-color);
+        }
+
+        .demo-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            color: var(--node-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .control-group input, .control-group select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--node-color);
+            border-radius: 6px;
+            padding: 0.6rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .demo-btn {
+            background: linear-gradient(135deg, var(--node-color) 0%, #0891b2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .demo-result {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            border: 2px solid var(--primary-color);
+            display: none;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .advantage-item {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--success-color);
+            text-align: center;
+        }
+
+        .advantage-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .advantage-title {
+            color: var(--success-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .model-comparison {
+                grid-template-columns: 1fr;
+            }
+            .demo-controls {
+                grid-template-columns: 1fr;
+            }
+            .advantages-grid {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第12课：二叉树定价模型应用</h1>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">灵活实用的期权定价方法与美式期权定价</p>
+            </section>
+
+            <div class="card">
+                <h3>二叉树模型的理论基础</h3>
+                <p>二叉树期权定价模型由约翰·考克斯（John Cox）、斯蒂芬·罗斯（Stephen Ross）和马克·鲁宾斯坦（Mark Rubinstein）在1979年提出，被称为CRR模型。该模型通过将期权的存续期划分为多个小的时间间隔，假设在每个时间间隔内股票价格只能向上或向下移动，形成一个二叉树结构。这种离散化处理使得复杂的期权定价问题变得相对简单，同时保持了较高的准确性。</p>
+
+                <p><strong>模型的核心思想</strong>：二叉树模型基于无套利原理和风险中性定价理论。在风险中性世界中，所有资产的期望收益率等于无风险利率，这使得我们可以通过构造一个包含股票和无风险债券的投资组合来复制期权的收益，从而确定期权的理论价格。模型的关键在于确定股价上涨和下跌的概率以及相应的价格变动幅度。</p>
+
+                <p><strong>与连续时间模型的关系</strong>：二叉树模型实际上是Black-Scholes模型的离散化版本。当时间间隔趋于零、分割数量趋于无穷时，二叉树模型的结果会收敛到Black-Scholes公式的解。这种关系表明，二叉树模型不仅是一个实用的计算工具，更是连接离散和连续金融理论的重要桥梁。</p>
+
+                <p><strong>模型的实际意义</strong>：二叉树模型的提出解决了美式期权定价这一重要问题，因为Black-Scholes模型只适用于欧式期权。美式期权允许在到期前任何时候行权，这种早期行权的选择权具有额外价值，需要通过动态规划方法来处理。二叉树模型天然具备处理这种路径依赖性问题的能力，使其在实际应用中具有重要价值。</p>
+            </div>
+
+            <section class="model-comparison">
+                <div class="model-card binomial">
+                    <h4>🌳 二叉树模型</h4>
+                    <ul style="list-style: none; padding: 0; color: var(--text-secondary);">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">✅ 适用于美式期权</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">✅ 处理早期行权</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">✅ 支持股息调整</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">✅ 直观易理解</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">✅ 灵活性高</li>
+                        <li style="padding: 0.5rem 0;">❌ 计算量较大</li>
+                    </ul>
+                </div>
+
+                <div class="model-card bs">
+                    <h4>📐 Black-Scholes模型</h4>
+                    <ul style="list-style: none; padding: 0; color: var(--text-secondary);">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">✅ 计算速度快</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">✅ 数学推导严密</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">✅ 连续时间模型</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">❌ 仅适用欧式期权</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">❌ 假设条件严格</li>
+                        <li style="padding: 0.5rem 0;">❌ 难以处理复杂特征</li>
+                    </ul>
+                </div>
+            </section>
+
+            <div class="steps-container">
+                <h4 style="color: var(--tree-color); text-align: center; margin-bottom: 2rem; font-size: 1.5rem;">二叉树定价步骤</h4>
+
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">确定参数</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            设定上涨因子u和下跌因子d，通常u = e^(σ√Δt)，d = 1/u = e^(-σ√Δt)，其中σ是波动率，Δt是时间间隔。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">构建股价树</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            从当前股价S开始，构建每个节点的股价。第i期第j个节点的股价为S × u^j × d^(i-j)。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">计算风险中性概率</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            风险中性概率p = (e^(rΔt) - d) / (u - d)，确保无套利条件成立。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">确定到期收益</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            计算期权在到期日每个节点的内在价值：看涨期权max(S-K,0)，看跌期权max(K-S,0)。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-title">向后递推</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            从到期日向前递推，每个节点价值 = e^(-rΔt) × [p × 上涨价值 + (1-p) × 下跌价值]。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <div class="step-title">处理美式期权</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            对于美式期权，在每个节点比较持有价值和立即行权价值，取较大者作为节点价值。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formula-section">
+                <div class="formula-title">关键公式汇总</div>
+                <div class="formula-content">
+                    上涨因子：u = e^(σ√Δt)<br>
+                    下跌因子：d = e^(-σ√Δt)<br>
+                    风险中性概率：p = (e^(rΔt) - d) / (u - d)<br>
+                    节点期权价值：V = e^(-rΔt) × [p × V_up + (1-p) × V_down]<br>
+                    美式期权价值：V = max(行权价值, 持有价值)
+                </div>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">二叉树期权定价可视化</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">以下图表展示3期二叉树的股价路径和期权价值计算过程：</p>
+                <canvas class="chart-canvas" id="binomialChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--tree-color);">●</span> 股价节点
+                    <span style="margin-left: 2rem; color: var(--node-color);">●</span> 期权价值
+                    <span style="margin-left: 2rem; color: var(--primary-color);">→</span> 价值传递路径
+                </div>
+            </section>
+
+            <div class="interactive-demo">
+                <h4 style="color: var(--node-color); text-align: center; margin-bottom: 2rem;">交互式二叉树计算器</h4>
+                <div class="demo-controls">
+                    <div class="control-group">
+                        <label>当前股价</label>
+                        <input type="number" id="currentPrice" value="100" step="0.01">
+                    </div>
+                    <div class="control-group">
+                        <label>执行价格</label>
+                        <input type="number" id="strikePrice" value="100" step="0.01">
+                    </div>
+                    <div class="control-group">
+                        <label>到期时间（年）</label>
+                        <input type="number" id="timeToMaturity" value="0.25" step="0.01">
+                    </div>
+                    <div class="control-group">
+                        <label>无风险利率</label>
+                        <input type="number" id="riskFreeRate" value="0.05" step="0.001">
+                    </div>
+                    <div class="control-group">
+                        <label>波动率</label>
+                        <input type="number" id="volatility" value="0.2" step="0.01">
+                    </div>
+                    <div class="control-group">
+                        <label>期权类型</label>
+                        <select id="optionType">
+                            <option value="call">看涨期权</option>
+                            <option value="put">看跌期权</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>期权风格</label>
+                        <select id="optionStyle">
+                            <option value="european">欧式</option>
+                            <option value="american">美式</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>时间步数</label>
+                        <select id="timeSteps">
+                            <option value="3">3步</option>
+                            <option value="10">10步</option>
+                            <option value="50">50步</option>
+                            <option value="100">100步</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button class="demo-btn" onclick="calculateBinomial()">计算期权价格</button>
+                </div>
+                <div class="demo-result" id="binomialResult">
+                    <h4 style="color: var(--primary-color); margin-bottom: 1rem;">计算结果</h4>
+                    <div id="binomialResultContent"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>美式期权定价的独特价值</h3>
+                <p><strong>早期行权的经济价值</strong>：美式期权相对于欧式期权的主要优势在于早期行权的灵活性。对于看涨期权，当股票即将除息且股息较高时，提前行权可以获得股息收益；对于看跌期权，当股价大幅下跌且无风险利率较高时，提前行权可以提前获得现金并进行投资。二叉树模型能够准确捕捉这种早期行权的时机和价值。</p>
+
+                <p><strong>最优行权边界</strong>：二叉树模型通过逐步递推，能够确定美式期权的最优行权边界。这个边界将股价-时间平面划分为两个区域：行权区域和等待区域。当股价位于行权区域时，立即行权是最优选择；当股价位于等待区域时，继续持有期权更有价值。这种分析对于期权交易者制定策略具有重要指导意义。</p>
+
+                <p><strong>路径依赖特征</strong>：美式期权的价值不仅依赖于到期时的股价，还依赖于股价在整个存续期内的路径。二叉树模型天然具备处理这种路径依赖性的能力，通过在每个时间点检查行权条件，确保获得最优决策。这种特性使得二叉树模型在处理各种复杂期权（如百慕大期权、亚洲期权等）时也表现出色。</p>
+
+                <p><strong>敏感性分析优势</strong>：二叉树模型能够方便地进行各种敏感性分析。通过改变模型参数（如波动率、利率、股息率等），可以观察期权价格和最优行权边界的变化。这种分析有助于理解不同市场条件下期权的行为特征，为风险管理和策略调整提供支持。</p>
+            </div>
+
+            <div class="card">
+                <h3>模型优势与实际应用</h3>
+                <div class="advantages-grid">
+                    <div class="advantage-item">
+                        <span class="advantage-icon">🎯</span>
+                        <div class="advantage-title">直观易懂</div>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            树状结构直观展示股价可能路径，便于理解期权价值形成过程和行权决策逻辑。
+                        </p>
+                    </div>
+
+                    <div class="advantage-item">
+                        <span class="advantage-icon">⚡</span>
+                        <div class="advantage-title">灵活适应</div>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            可处理股息、早期行权、时变参数等复杂特征，适用性广泛。
+                        </p>
+                    </div>
+
+                    <div class="advantage-item">
+                        <span class="advantage-icon">🔧</span>
+                        <div class="advantage-title">数值稳定</div>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            随着步数增加收敛到理论值，计算结果稳定可靠。
+                        </p>
+                    </div>
+
+                    <div class="advantage-item">
+                        <span class="advantage-icon">📊</span>
+                        <div class="advantage-title">风险透明</div>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            清晰显示各种市场情景下的期权价值，便于风险分析。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>模型局限性与改进方向</h3>
+                <p><strong>计算复杂度挑战</strong>：二叉树模型的主要缺点是计算复杂度随步数呈指数增长。对于n步二叉树，需要计算2^n个节点，这在处理长期期权或需要高精度时会导致计算量过大。实际应用中通常需要在精度和效率之间找到平衡点，一般50-100步已能提供足够精度。</p>
+
+                <p><strong>收敛速度问题</strong>：虽然二叉树模型会收敛到连续时间模型的解，但收敛速度相对较慢，且可能出现振荡现象。特别是对于某些参数组合，收敛可能不均匀。为改善这一问题，研究者提出了三叉树模型、自适应网格等改进方法。</p>
+
+                <p><strong>参数选择敏感性</strong>：模型结果对上涨和下跌因子的选择较为敏感。不同的参数化方案（如CRR方法、JR方法等）可能产生略有不同的结果。实际应用中需要根据具体情况选择合适的参数化方法，并进行敏感性测试。</p>
+
+                <p><strong>现代化改进方向</strong>：现代金融工程中，二叉树模型已发展出多种改进版本。蒙特卡洛方法结合回归技术可以处理高维问题；有限差分方法提供了另一种数值求解途径；机器学习技术开始被应用于期权定价，展现出良好前景。这些发展使得期权定价技术更加成熟和实用。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "二叉树模型相对于Black-Scholes模型的主要优势是什么？",
+                options: [
+                    "计算速度更快",
+                    "数学推导更简单",
+                    "能够处理美式期权的早期行权",
+                    "假设条件更少"
+                ],
+                correct: 2,
+                explanation: "二叉树模型的主要优势是能够处理美式期权的早期行权问题，通过在每个节点比较持有价值和行权价值来确定最优策略。"
+            },
+            {
+                question: "在二叉树模型中，风险中性概率p的计算公式是什么？",
+                options: [
+                    "p = (u - e^(rΔt)) / (u - d)",
+                    "p = (e^(rΔt) - d) / (u - d)",
+                    "p = (d - e^(rΔt)) / (u - d)",
+                    "p = (u - d) / (e^(rΔt) - d)"
+                ],
+                correct: 1,
+                explanation: "风险中性概率p = (e^(rΔt) - d) / (u - d)，这个公式确保了无套利条件的成立。"
+            },
+            {
+                question: "二叉树模型中，股价向上移动的因子u通常如何计算？",
+                options: [
+                    "u = σ√Δt",
+                    "u = e^(σ√Δt)",
+                    "u = 1 + σ√Δt",
+                    "u = σ²Δt"
+                ],
+                correct: 1,
+                explanation: "上涨因子u = e^(σ√Δt)，其中σ是波动率，Δt是时间间隔。这个公式确保了股价变化的对数正态分布特性。"
+            },
+            {
+                question: "对于美式期权，二叉树模型在每个节点需要做什么比较？",
+                options: [
+                    "比较看涨和看跌期权价值",
+                    "比较持有价值和立即行权价值",
+                    "比较内在价值和时间价值",
+                    "比较上涨概率和下跌概率"
+                ],
+                correct: 1,
+                explanation: "对于美式期权，在每个节点需要比较持有期权的价值和立即行权的价值，选择较大者作为该节点的期权价值。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawBinomialChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '恭喜您，对二叉树模型理解深入！' : 
+                         percentage >= 60 ? '理解良好，建议进一步练习计算过程。' : 
+                         '需要加强对二叉树定价方法的学习。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawBinomialChart() {
+            const canvas = document.getElementById('binomialChart');
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Sample binomial tree data (3 periods)
+            const S0 = 100;
+            const u = 1.2;
+            const d = 0.8;
+            const K = 100; // Strike price
+            const periods = 3;
+
+            // Calculate positions
+            const nodeSpacingX = chartWidth / periods;
+            const nodeSpacingY = chartHeight / (periods + 1);
+
+            // Draw tree structure
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+
+            // Draw connections
+            for (let i = 0; i < periods; i++) {
+                for (let j = 0; j <= i; j++) {
+                    const x1 = padding + i * nodeSpacingX;
+                    const y1 = padding + nodeSpacingY + j * nodeSpacingY;
+                    const x2 = padding + (i + 1) * nodeSpacingX;
+
+                    // Up movement
+                    const y2_up = padding + nodeSpacingY + j * nodeSpacingY;
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2_up);
+                    ctx.stroke();
+
+                    // Down movement
+                    const y2_down = padding + nodeSpacingY + (j + 1) * nodeSpacingY;
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2_down);
+                    ctx.stroke();
+                }
+            }
+
+            // Draw nodes and values
+            for (let i = 0; i <= periods; i++) {
+                for (let j = 0; j <= i; j++) {
+                    const x = padding + i * nodeSpacingX;
+                    const y = padding + nodeSpacingY + j * nodeSpacingY;
+
+                    // Calculate stock price
+                    const stockPrice = S0 * Math.pow(u, i - j) * Math.pow(d, j);
+
+                    // Draw stock price node
+                    ctx.fillStyle = '#8b5cf6';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 20, 0, 2 * Math.PI);
+                    ctx.fill();
+
+                    // Draw stock price text
+                    ctx.fillStyle = 'white';
+                    ctx.font = 'bold 12px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`$${stockPrice.toFixed(0)}`, x, y + 4);
+
+                    // For terminal nodes, show option value
+                    if (i === periods) {
+                        const optionValue = Math.max(0, stockPrice - K);
+                        ctx.fillStyle = '#06b6d4';
+                        ctx.beginPath();
+                        ctx.arc(x, y + 40, 15, 0, 2 * Math.PI);
+                        ctx.fill();
+
+                        ctx.fillStyle = 'white';
+                        ctx.font = '10px Arial';
+                        ctx.fillText(`$${optionValue.toFixed(0)}`, x, y + 44);
+                    }
+                }
+            }
+
+            // Add labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('时间', padding - 40, canvas.height - padding + 30);
+
+            ctx.save();
+            ctx.translate(padding - 60, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('股价路径', 0, 0);
+            ctx.restore();
+
+            // Add time labels
+            for (let i = 0; i <= periods; i++) {
+                const x = padding + i * nodeSpacingX;
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(`T${i}`, x, canvas.height - padding + 20);
+            }
+
+            // Add legend
+            ctx.fillStyle = '#8b5cf6';
+            ctx.beginPath();
+            ctx.arc(canvas.width - 150, padding + 20, 8, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillStyle = '#ccc';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('股价节点', canvas.width - 135, padding + 25);
+
+            ctx.fillStyle = '#06b6d4';
+            ctx.beginPath();
+            ctx.arc(canvas.width - 150, padding + 40, 8, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillText('期权价值', canvas.width - 135, padding + 45);
+        }
+
+        function calculateBinomial() {
+            const S = parseFloat(document.getElementById('currentPrice').value);
+            const K = parseFloat(document.getElementById('strikePrice').value);
+            const T = parseFloat(document.getElementById('timeToMaturity').value);
+            const r = parseFloat(document.getElementById('riskFreeRate').value);
+            const sigma = parseFloat(document.getElementById('volatility').value);
+            const n = parseInt(document.getElementById('timeSteps').value);
+            const optionType = document.getElementById('optionType').value;
+            const optionStyle = document.getElementById('optionStyle').value;
+
+            const dt = T / n;
+            const u = Math.exp(sigma * Math.sqrt(dt));
+            const d = 1 / u;
+            const p = (Math.exp(r * dt) - d) / (u - d);
+
+            // Build the binomial tree
+            const stockPrices = [];
+            const optionValues = [];
+
+            // Initialize arrays
+            for (let i = 0; i <= n; i++) {
+                stockPrices[i] = [];
+                optionValues[i] = [];
+            }
+
+            // Calculate stock prices
+            for (let i = 0; i <= n; i++) {
+                for (let j = 0; j <= i; j++) {
+                    stockPrices[i][j] = S * Math.pow(u, i - j) * Math.pow(d, j);
+                }
+            }
+
+            // Calculate option values at expiration
+            for (let j = 0; j <= n; j++) {
+                if (optionType === 'call') {
+                    optionValues[n][j] = Math.max(0, stockPrices[n][j] - K);
+                } else {
+                    optionValues[n][j] = Math.max(0, K - stockPrices[n][j]);
+                }
+            }
+
+            // Backward induction
+            for (let i = n - 1; i >= 0; i--) {
+                for (let j = 0; j <= i; j++) {
+                    // European option value
+                    const holdValue = Math.exp(-r * dt) * (p * optionValues[i + 1][j] + (1 - p) * optionValues[i + 1][j + 1]);
+
+                    if (optionStyle === 'european') {
+                        optionValues[i][j] = holdValue;
+                    } else {
+                        // American option value
+                        let exerciseValue;
+                        if (optionType === 'call') {
+                            exerciseValue = Math.max(0, stockPrices[i][j] - K);
+                        } else {
+                            exerciseValue = Math.max(0, K - stockPrices[i][j]);
+                        }
+                        optionValues[i][j] = Math.max(holdValue, exerciseValue);
+                    }
+                }
+            }
+
+            const optionPrice = optionValues[0][0];
+
+            // Display results
+            document.getElementById('binomialResult').style.display = 'block';
+            document.getElementById('binomialResultContent').innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; text-align: left;">
+                    <div><strong>期权价格：</strong> $${optionPrice.toFixed(4)}</div>
+                    <div><strong>上涨因子 u：</strong> ${u.toFixed(4)}</div>
+                    <div><strong>下跌因子 d：</strong> ${d.toFixed(4)}</div>
+                    <div><strong>风险中性概率 p：</strong> ${p.toFixed(4)}</div>
+                    <div><strong>时间步长：</strong> ${dt.toFixed(4)} 年</div>
+                    <div><strong>计算步数：</strong> ${n} 步</div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

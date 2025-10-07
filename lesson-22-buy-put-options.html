@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第22课：买入看跌期权 - OPITIOS期权课程</title>
+    <meta name="description" content="深入学习买入看跌期权策略，掌握看跌期权的交易技巧，学会利用看跌期权进行做空和对冲。">
+    <meta name="keywords" content="买入看跌期权,看跌期权策略,期权做空,期权对冲,期权交易策略">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-22-buy-put-options.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-22-buy-put-options.html">
+    <meta property="og:title" content="第22课：买入看跌期权 - OPITIOS期权课程">
+    <meta property="og:description" content="深入学习买入看跌期权策略，掌握看跌期权的交易技巧，学会利用看跌期权进行做空和对冲。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-22-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-22-buy-put-options.html">
+    <meta property="twitter:title" content="第22课：买入看跌期权 - OPITIOS期权课程">
+    <meta property="twitter:description" content="深入学习买入看跌期权策略，掌握看跌期权的交易技巧，学会利用看跌期权进行做空和对冲。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-22-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第22课：买入看跌期权",
+        "description": "深入学习买入看跌期权策略，掌握看跌期权的交易技巧，学会利用看跌期权进行做空和对冲。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-22-buy-put-options.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第22课：买入看跌期权 - 保护性策略与做空应用 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --bear-color: #ef4444;
+            --protection-color: #8b5cf6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--protection-color) 0%, #7c3aed 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .strategy-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .type-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--bear-color);
+            background: rgba(239, 68, 68, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        .type-card.protection {
+            border-color: var(--protection-color);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .type-card.protection:hover {
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .type-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .type-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--bear-color);
+        }
+
+        .type-card.protection .type-title {
+            color: var(--protection-color);
+        }
+
+        .type-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .dual-strategy-analyzer {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--bear-color);
+        }
+
+        .strategy-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: var(--bear-color);
+            color: white;
+        }
+
+        .tab-button.protection.active {
+            background: var(--protection-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .analyzer-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--bear-color);
+        }
+
+        .protection-controls .control-group label {
+            color: var(--protection-color);
+        }
+
+        .control-group input, .control-group select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--bear-color);
+            border-radius: 6px;
+            padding: 0.7rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .protection-controls .control-group input, 
+        .protection-controls .control-group select {
+            border-color: var(--protection-color);
+        }
+
+        .analyze-btn {
+            background: linear-gradient(135deg, var(--bear-color) 0%, #dc2626 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .analyze-btn.protection {
+            background: linear-gradient(135deg, var(--protection-color) 0%, #7c3aed 100%);
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .strategy-analysis {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border: 2px solid var(--primary-color);
+            display: none;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .analysis-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .analysis-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .protection-matrix {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--protection-color);
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .matrix-table th {
+            background: var(--protection-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .matrix-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .protection-high {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .protection-medium {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .protection-low {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+            font-weight: 600;
+        }
+
+        .application-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .scenario-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-type {
+            color: var(--bear-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .scenario-card.protection .scenario-type {
+            color: var(--protection-color);
+        }
+
+        .scenario-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .hedging-calculator {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--success-color);
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calculator-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .calculator-label {
+            color: var(--success-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .calculator-input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--success-color);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .calculator-result {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .strategy-types {
+                grid-template-columns: 1fr;
+            }
+            .analyzer-controls {
+                grid-template-columns: 1fr;
+            }
+            .application-scenarios {
+                grid-template-columns: 1fr;
+            }
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            .strategy-tabs {
+                flex-direction: column;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第22课：买入看跌期权 - 保护性策略与做空应用</h1>
+                <div class="strategy-badge">🛡️ 双重策略精通 · 防护与做空大师</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">防守与进攻并重：投资组合保护与看空获利的艺术</p>
+            </section>
+
+            <div class="card">
+                <h3>买入看跌期权的双重战略意义</h3>
+                <p>买入看跌期权（Long Put）是期权交易中一个具有双重战略意义的策略。一方面，它可以作为投资组合的保护性工具，为持有的股票提供下跌保护，类似于购买保险；另一方面，它也是一种纯粹的看空投资策略，让投资者能够在股价下跌中获利。这种双重性使得买入看跌期权成为既可以用于风险管理，也可以用于方向性投机的多功能策略。理解这两种应用方式的不同特点和适用场景，是掌握看跌期权策略的关键。</p>
+
+                <p><strong>保护性看跌期权的保险机制</strong>：当买入看跌期权用于投资组合保护时，它的作用机制类似于保险合同。持有股票的投资者通过买入相应的看跌期权，可以锁定股票的最低卖出价格，即执行价格。无论股价如何下跌，投资者都可以以执行价格卖出股票，从而限制了下跌风险。这种保护的成本是支付的权利金，可以视为"保险费"。保护的有效性取决于执行价格的选择：执行价格越高，保护效果越好，但权利金也越昂贵。</p>
+
+                <p><strong>纯看空策略的投机特征</strong>：作为纯粹的看空策略，买入看跌期权提供了在股价下跌中获利的机会，同时风险有限。与卖空股票相比，买入看跌期权不需要借股，没有无限损失风险，也不需要支付借股费用。当股价下跌时，看跌期权价值上升，投资者可以通过卖出期权或行权获利。这种策略的收益函数为：收益 = Max(K - S, 0) - P，其中K是执行价格，S是股价，P是权利金。最大收益出现在股价跌至零时，为K - P。</p>
+
+                <p><strong>希腊字母特征与风险分析</strong>：买入看跌期权具有独特的希腊字母风险特征。Delta为负值，与股价呈负相关关系，股价下跌时期权价值上升；Gamma为正值，在平值附近最大，表明Delta的变化速度；Theta为负值，时间流逝对策略不利，需要股价下跌来抵消时间价值损失；Vega为正值，波动率上升有利于策略；Rho为负值，利率上升对策略有轻微的负面影响。这些特征决定了策略在不同市场环境下的表现和风险特征。</p>
+            </div>
+
+            <section class="strategy-types">
+                <div class="type-card protection">
+                    <span class="type-icon">🛡️</span>
+                    <div class="type-title">保护性策略</div>
+                    <div class="type-description">
+                        为现有股票持仓提供下跌保护，设定最低卖出价格，类似购买保险，保护投资组合免受重大损失。
+                    </div>
+                </div>
+
+                <div class="type-card">
+                    <span class="type-icon">📉</span>
+                    <div class="type-title">纯看空策略</div>
+                    <div class="type-description">
+                        直接看空股票获利，在股价下跌中盈利，相比卖空股票风险有限，无需借股，是安全的做空方式。
+                    </div>
+                </div>
+
+                <div class="type-card protection">
+                    <span class="type-icon">⚖️</span>
+                    <div class="type-title">风险对冲工具</div>
+                    <div class="type-description">
+                        对冲投资组合的系统性风险，在市场不确定性增加时提供保护，减少投资组合的整体波动性。
+                    </div>
+                </div>
+
+                <div class="type-card">
+                    <span class="type-icon">💰</span>
+                    <div class="type-title">杠杆做空工具</div>
+                    <div class="type-description">
+                        用较少资金获得较大的看空敞口，提高资本使用效率，在确信股价下跌时获得放大收益。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">买入看跌期权策略收益分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">对比纯看空策略与保护性策略的收益特征：</p>
+                <canvas class="chart-canvas" id="longPutChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--bear-color);">■</span> 纯看空策略
+                    <span style="margin-left: 2rem; color: var(--protection-color);">■</span> 保护性策略（含股票）
+                    <span style="margin-left: 2rem; color: var(--primary-color);">│</span> 执行价格
+                </div>
+            </section>
+
+            <div class="dual-strategy-analyzer">
+                <div class="strategy-tabs">
+                    <button class="tab-button active" onclick="switchTab('bearish')">纯看空策略</button>
+                    <button class="tab-button protection" onclick="switchTab('protective')">保护性策略</button>
+                </div>
+
+                <!-- 纯看空策略分析器 -->
+                <div class="tab-content active" id="bearish-content">
+                    <h4 style="color: var(--bear-color); text-align: center; margin-bottom: 2rem;">纯看空策略分析器</h4>
+                    <div class="analyzer-controls">
+                        <div class="control-group">
+                            <label>当前股价 (S)</label>
+                            <input type="number" id="bearishStockPrice" value="100" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>执行价格 (K)</label>
+                            <input type="number" id="bearishStrike" value="95" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>看跌期权价格</label>
+                            <input type="number" id="bearishPremium" value="2.80" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>到期时间（天）</label>
+                            <input type="number" id="bearishDays" value="60" step="1">
+                        </div>
+                        <div class="control-group">
+                            <label>隐含波动率 (%)</label>
+                            <input type="number" id="bearishIV" value="30" step="1">
+                        </div>
+                        <div class="control-group">
+                            <label>期权数量（手）</label>
+                            <input type="number" id="bearishContracts" value="10" step="1">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <button class="analyze-btn" onclick="analyzeBearishPut()">分析看空策略</button>
+                    </div>
+                    <div class="strategy-analysis" id="bearishAnalysis">
+                        <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">看空策略分析结果</h4>
+                        <div class="analysis-grid" id="bearishResults">
+                            <!-- Results populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 保护性策略分析器 -->
+                <div class="tab-content protection-controls" id="protective-content">
+                    <h4 style="color: var(--protection-color); text-align: center; margin-bottom: 2rem;">保护性策略分析器</h4>
+                    <div class="analyzer-controls">
+                        <div class="control-group">
+                            <label>股票持仓数量</label>
+                            <input type="number" id="stockShares" value="1000" step="100">
+                        </div>
+                        <div class="control-group">
+                            <label>股票买入价格</label>
+                            <input type="number" id="stockCost" value="98" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>当前股价</label>
+                            <input type="number" id="protectiveStockPrice" value="100" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>保护执行价格</label>
+                            <input type="number" id="protectiveStrike" value="95" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>看跌期权价格</label>
+                            <input type="number" id="protectivePremium" value="2.80" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>期权到期（天）</label>
+                            <input type="number" id="protectiveDays" value="60" step="1">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <button class="analyze-btn protection" onclick="analyzeProtectivePut()">分析保护策略</button>
+                    </div>
+                    <div class="strategy-analysis" id="protectiveAnalysis">
+                        <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">保护策略分析结果</h4>
+                        <div class="analysis-grid" id="protectiveResults">
+                            <!-- Results populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>保护性看跌期权的保护效果矩阵</h3>
+                <div class="protection-matrix">
+                    <h4 style="color: var(--protection-color); text-align: center; margin-bottom: 2rem;">不同执行价格的保护效果对比</h4>
+                    <table class="matrix-table">
+                        <thead>
+                            <tr>
+                                <th>执行价格选择</th>
+                                <th>保护程度</th>
+                                <th>权利金成本</th>
+                                <th>保护效率</th>
+                                <th>适用情况</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>深度实值 (ITM)</strong></td>
+                                <td class="protection-high">极高保护</td>
+                                <td class="protection-low">成本昂贵</td>
+                                <td class="protection-medium">中等</td>
+                                <td>极度悲观，要求最强保护</td>
+                            </tr>
+                            <tr>
+                                <td><strong>轻度实值 (ITM)</strong></td>
+                                <td class="protection-high">高度保护</td>
+                                <td class="protection-medium">中等成本</td>
+                                <td class="protection-high">高效</td>
+                                <td>较悲观，平衡保护与成本</td>
+                            </tr>
+                            <tr>
+                                <td><strong>平值 (ATM)</strong></td>
+                                <td class="protection-medium">适度保护</td>
+                                <td class="protection-medium">合理成本</td>
+                                <td class="protection-high">最优</td>
+                                <td>温和悲观，最常用选择</td>
+                            </tr>
+                            <tr>
+                                <td><strong>轻度虚值 (OTM)</strong></td>
+                                <td class="protection-medium">基础保护</td>
+                                <td class="protection-high">成本较低</td>
+                                <td class="protection-medium">中等</td>
+                                <td>轻度担忧，成本敏感</td>
+                            </tr>
+                            <tr>
+                                <td><strong>深度虚值 (OTM)</strong></td>
+                                <td class="protection-low">有限保护</td>
+                                <td class="protection-high">成本很低</td>
+                                <td class="protection-low">较低</td>
+                                <td>极端风险保护，预算有限</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>买入看跌期权的实战应用场景</h3>
+                <div class="application-scenarios">
+                    <div class="scenario-card protection">
+                        <div class="scenario-title">💼 投资组合保护</div>
+                        <div class="scenario-type">保护性应用：风险管理</div>
+                        <div class="scenario-description">
+                            持有大量股票或ETF的投资者，在市场不确定性增加时购买看跌期权保护投资组合。特别适用于牛市末期或重大事件前的风险对冲。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">📉 熊市投机</div>
+                        <div class="scenario-type">投机性应用：方向性交易</div>
+                        <div class="scenario-description">
+                            看空特定股票或市场时，买入看跌期权进行方向性投机。相比卖空股票风险更小，适合在技术面走弱或基本面恶化时使用。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card protection">
+                        <div class="scenario-title">🔒 收益锁定</div>
+                        <div class="scenario-type">保护性应用：利润保护</div>
+                        <div class="scenario-description">
+                            股票大幅上涨后，投资者希望锁定部分收益而不想卖出股票。通过买入看跌期权设定保护价位，确保最低收益水平。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">📊 事件驱动策略</div>
+                        <div class="scenario-type">投机性应用：事件交易</div>
+                        <div class="scenario-description">
+                            在财报发布、FDA决定、监管审查等重大负面事件前，购买看跌期权防范或获利于负面消息导致的股价下跌。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card protection">
+                        <div class="scenario-title">🌍 系统性风险对冲</div>
+                        <div class="scenario-type">保护性应用：宏观对冲</div>
+                        <div class="scenario-description">
+                            通过购买指数看跌期权（如SPY PUT）对冲整个投资组合的系统性风险，在市场恐慌或经济衰退风险增加时特别有效。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">⚡ 波动率交易</div>
+                        <div class="scenario-type">投机性应用：波动率套利</div>
+                        <div class="scenario-description">
+                            当隐含波动率被低估时买入看跌期权，通过波动率上升获利。这种策略不依赖股价方向，而是通过波动率差异获利。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>保护成本优化与动态调整策略</h3>
+                <div class="hedging-calculator">
+                    <h4 style="color: var(--success-color); text-align: center; margin-bottom: 2rem;">保护成本计算器</h4>
+                    <div class="calculator-grid">
+                        <div class="calculator-item">
+                            <div class="calculator-label">投资组合价值</div>
+                            <input type="number" class="calculator-input" id="portfolioValue" value="100000" placeholder="输入投资组合总值">
+                            <div class="calculator-result" id="portfolioValueResult">$100,000</div>
+                        </div>
+
+                        <div class="calculator-item">
+                            <div class="calculator-label">保护比例 (%)</div>
+                            <input type="number" class="calculator-input" id="hedgeRatio" value="80" placeholder="想要保护的比例">
+                            <div class="calculator-result" id="hedgeRatioResult">80%</div>
+                        </div>
+
+                        <div class="calculator-item">
+                            <div class="calculator-label">期权权利金率 (%)</div>
+                            <input type="number" class="calculator-input" id="premiumRate" value="2.5" step="0.1" placeholder="权利金占股价比例">
+                            <div class="calculator-result" id="premiumRateResult">2.5%</div>
+                        </div>
+
+                        <div class="calculator-item">
+                            <div class="calculator-label">年化保护成本</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="calculator-result" id="annualizedCost">$6,000</div>
+                        </div>
+
+                        <div class="calculator-item">
+                            <div class="calculator-label">保护效率比</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="calculator-result" id="efficiencyRatio">12:1</div>
+                        </div>
+
+                        <div class="calculator-item">
+                            <div class="calculator-label">建议调整</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="calculator-result" id="recommendation">合理</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button onclick="calculateHedgingCost()" style="background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+                            计算保护成本
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>买入看跌期权的高级管理技巧</h3>
+                <p><strong>动态保护策略的实施</strong>：保护性看跌期权不是一成不变的静态策略，需要根据市场变化进行动态调整。当股价上涨时，可以考虑提高保护价格，即买入执行价格更高的看跌期权，同时卖出原有的看跌期权。当波动率下降时，可以降低保护成本，选择执行价格稍低但权利金更便宜的看跌期权。这种动态调整可以在保持保护效果的同时优化成本。</p>
+
+                <p><strong>滚动保护与成本分摊</strong>：由于期权有到期时间限制，长期投资组合保护需要实施滚动策略。在期权即将到期前，投资者需要买入新的看跌期权来延续保护。为了分摊成本和减少时机风险，可以采用分批滚动的方式，即不在同一时间滚动所有保护头寸，而是分几次进行。这种方法可以平均化权利金成本，减少因时机选择不当造成的额外成本。</p>
+
+                <p><strong>保护与收益的权衡优化</strong>：保护性看跌期权会降低投资组合的预期收益，因为权利金是实际的成本支出。投资者需要在保护程度和成本之间找到最优平衡。通常建议保护成本不超过年度预期收益的30%，否则保护成本过高会显著影响长期收益。可以通过选择合适的执行价格、到期时间和保护比例来优化这个权衡关系。</p>
+
+                <p><strong>与其他策略的组合运用</strong>：买入看跌期权可以与其他策略组合使用以提高效率。例如，可以同时卖出看涨期权来收取权利金，部分抵消看跌期权的成本，形成领口策略（Collar）；也可以买入不同执行价格的看跌期权，形成看跌价差策略，在降低成本的同时提供基础保护。这些组合策略可以在特定市场环境下提供更优的风险收益特征。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "保护性看跌期权的主要作用是什么？",
+                options: [
+                    "增加投资组合收益",
+                    "为股票持仓提供下跌保护",
+                    "提高投资组合的波动性",
+                    "增加股票的分红收益"
+                ],
+                correct: 1,
+                explanation: "保护性看跌期权的主要作用是为现有股票持仓提供下跌保护，设定最低卖出价格，类似购买保险。"
+            },
+            {
+                question: "买入看跌期权的最大收益出现在什么情况下？",
+                options: [
+                    "股价大幅上涨时",
+                    "股价跌至零时",
+                    "股价保持不变时",
+                    "期权到期时"
+                ],
+                correct: 1,
+                explanation: "买入看跌期权的最大收益出现在股价跌至零时，此时收益为执行价格减去权利金。"
+            },
+            {
+                question: "相比直接卖空股票，买入看跌期权的优势是什么？",
+                options: [
+                    "收益更高",
+                    "不需要支付任何费用",
+                    "风险有限且不需要借股",
+                    "没有时间限制"
+                ],
+                correct: 2,
+                explanation: "相比卖空股票，买入看跌期权的优势是风险有限（最大损失为权利金）且不需要借股，避免了无限损失风险。"
+            },
+            {
+                question: "保护性看跌期权的保护成本应该控制在什么范围内？",
+                options: [
+                    "年度预期收益的10%以内",
+                    "年度预期收益的30%以内",
+                    "年度预期收益的50%以内",
+                    "没有限制"
+                ],
+                correct: 1,
+                explanation: "通常建议保护性看跌期权的成本不超过年度预期收益的30%，否则保护成本过高会显著影响长期收益。"
+            }
+        ];
+
+        let userAnswers = [];
+        let activeTab = 'bearish';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawLongPutChart();
+            updateHedgingCalculator();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function switchTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update tab contents
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tab + '-content').classList.add('active');
+
+            activeTab = tab;
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通看跌期权策略！' : 
+                         percentage >= 60 ? '不错的理解，建议进一步学习保护策略应用。' : 
+                         '需要加强对看跌期权双重应用的理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawLongPutChart() {
+            const canvas = document.getElementById('longPutChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis (profit/loss line)
+            const zeroLine = canvas.height - padding - chartHeight / 2;
+            ctx.moveTo(padding, zeroLine);
+            ctx.lineTo(canvas.width - padding, zeroLine);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('损益', 0, 0);
+            ctx.restore();
+
+            // Parameters
+            const strike = 95;
+            const premium = 2.8;
+            const stockBuyPrice = 100;
+            const minStock = 70;
+            const maxStock = 120;
+            const steps = 100;
+
+            // Draw pure bearish put payoff
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let putPayoff = Math.max(strike - stockPrice, 0) - premium;
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (putPayoff / 20) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw protective put (stock + put) payoff
+            ctx.strokeStyle = '#8b5cf6';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let stockPayoff = stockPrice - stockBuyPrice;
+                let putPayoff = Math.max(strike - stockPrice, 0) - premium;
+                let totalPayoff = stockPayoff + putPayoff;
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (totalPayoff / 20) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw strike price line
+            const strikeX = padding + ((strike - minStock) / (maxStock - minStock)) * chartWidth;
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(strikeX, padding);
+            ctx.lineTo(strikeX, canvas.height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            // Vertical grid
+            for (let price = 80; price <= 110; price += 10) {
+                const x = padding + ((price - minStock) / (maxStock - minStock)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Add labels
+            ctx.fillStyle = '#ffd700';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('执行价 $' + strike, strikeX + 10, padding + 20);
+
+            ctx.fillStyle = '#ef4444';
+            ctx.fillText('纯看空策略', padding + 20, padding + 30);
+
+            ctx.fillStyle = '#8b5cf6';
+            ctx.fillText('保护性策略', padding + 20, padding + 50);
+
+            ctx.setLineDash([]);
+        }
+
+        function analyzeBearishPut() {
+            const stockPrice = parseFloat(document.getElementById('bearishStockPrice').value);
+            const strike = parseFloat(document.getElementById('bearishStrike').value);
+            const premium = parseFloat(document.getElementById('bearishPremium').value);
+            const days = parseInt(document.getElementById('bearishDays').value);
+            const iv = parseFloat(document.getElementById('bearishIV').value);
+            const contracts = parseInt(document.getElementById('bearishContracts').value);
+
+            // Calculations
+            const breakeven = strike - premium;
+            const totalCost = premium * contracts * 100;
+            const maxProfit = (strike - premium) * contracts * 100;
+            const currentIntrinsic = Math.max(strike - stockPrice, 0);
+            const timeValue = premium - currentIntrinsic;
+
+            // Scenario analysis
+            const down10 = Math.max(strike - stockPrice * 0.9, 0) - premium;
+            const down20 = Math.max(strike - stockPrice * 0.8, 0) - premium;
+            const up10 = Math.max(strike - stockPrice * 1.1, 0) - premium;
+
+            // Success probability (simplified)
+            const moneyness = stockPrice / strike;
+            let successProb = 0;
+            if (moneyness < 0.95) successProb = 70;
+            else if (moneyness < 1.0) successProb = 60;
+            else if (moneyness < 1.05) successProb = 40;
+            else successProb = 25;
+
+            document.getElementById('bearishAnalysis').style.display = 'block';
+            document.getElementById('bearishResults').innerHTML = `
+                <div class="analysis-item">
+                    <div class="analysis-value">$${breakeven.toFixed(2)}</div>
+                    <div class="analysis-label">盈亏平衡点</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${totalCost.toFixed(0)}</div>
+                    <div class="analysis-label">总投资成本</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${maxProfit.toFixed(0)}</div>
+                    <div class="analysis-label">最大理论收益</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${successProb}%</div>
+                    <div class="analysis-label">盈利概率估算</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${(down10 * contracts * 100).toFixed(0)}</div>
+                    <div class="analysis-label">-10%情景收益</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${(down20 * contracts * 100).toFixed(0)}</div>
+                    <div class="analysis-label">-20%情景收益</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${timeValue.toFixed(3)}</div>
+                    <div class="analysis-label">时间价值</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${days}天</div>
+                    <div class="analysis-label">剩余时间</div>
+                </div>
+            `;
+        }
+
+        function analyzeProtectivePut() {
+            const shares = parseInt(document.getElementById('stockShares').value);
+            const costBasis = parseFloat(document.getElementById('stockCost').value);
+            const currentPrice = parseFloat(document.getElementById('protectiveStockPrice').value);
+            const strike = parseFloat(document.getElementById('protectiveStrike').value);
+            const premium = parseFloat(document.getElementById('protectivePremium').value);
+            const days = parseInt(document.getElementById('protectiveDays').value);
+
+            // Calculations
+            const stockValue = shares * currentPrice;
+            const protectionCost = (shares / 100) * premium * 100;
+            const protectedValue = shares * strike;
+            const maxLoss = (costBasis - strike) * shares + protectionCost;
+            const protectionLevel = ((strike / currentPrice) - 1) * 100;
+            const annualizedCost = (protectionCost / stockValue) * (365 / days) * 100;
+
+            // Current position
+            const unrealizedGain = (currentPrice - costBasis) * shares;
+            const protectedGain = Math.max(0, (strike - costBasis) * shares) - protectionCost;
+
+            document.getElementById('protectiveAnalysis').style.display = 'block';
+            document.getElementById('protectiveResults').innerHTML = `
+                <div class="analysis-item">
+                    <div class="analysis-value">$${stockValue.toLocaleString()}</div>
+                    <div class="analysis-label">当前股票价值</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${protectionCost.toLocaleString()}</div>
+                    <div class="analysis-label">保护成本</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${protectedValue.toLocaleString()}</div>
+                    <div class="analysis-label">保护价值下限</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${protectionLevel.toFixed(1)}%</div>
+                    <div class="analysis-label">保护水平</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${Math.abs(maxLoss).toLocaleString()}</div>
+                    <div class="analysis-label">最大潜在损失</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${annualizedCost.toFixed(2)}%</div>
+                    <div class="analysis-label">年化保护成本</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${unrealizedGain.toLocaleString()}</div>
+                    <div class="analysis-label">当前未实现收益</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${protectedGain.toLocaleString()}</div>
+                    <div class="analysis-label">保护后最低收益</div>
+                </div>
+            `;
+        }
+
+        function updateHedgingCalculator() {
+            document.getElementById('portfolioValue').addEventListener('input', calculateHedgingCost);
+            document.getElementById('hedgeRatio').addEventListener('input', calculateHedgingCost);
+            document.getElementById('premiumRate').addEventListener('input', calculateHedgingCost);
+        }
+
+        function calculateHedgingCost() {
+            const portfolioValue = parseFloat(document.getElementById('portfolioValue').value) || 0;
+            const hedgeRatio = parseFloat(document.getElementById('hedgeRatio').value) || 0;
+            const premiumRate = parseFloat(document.getElementById('premiumRate').value) || 0;
+
+            // Update display values
+            document.getElementById('portfolioValueResult').textContent = '$' + portfolioValue.toLocaleString();
+            document.getElementById('hedgeRatioResult').textContent = hedgeRatio + '%';
+            document.getElementById('premiumRateResult').textContent = premiumRate + '%';
+
+            // Calculate costs
+            const protectedValue = portfolioValue * (hedgeRatio / 100);
+            const quarterlyCost = protectedValue * (premiumRate / 100);
+            const annualizedCost = quarterlyCost * 4;
+            const efficiencyRatio = Math.round(protectedValue / annualizedCost);
+
+            document.getElementById('annualizedCost').textContent = '$' + Math.round(annualizedCost).toLocaleString();
+            document.getElementById('efficiencyRatio').textContent = efficiencyRatio + ':1';
+
+            // Recommendations
+            let recommendation = '';
+            if (annualizedCost / portfolioValue > 0.15) {
+                recommendation = '成本过高';
+            } else if (annualizedCost / portfolioValue > 0.08) {
+                recommendation = '成本偏高';
+            } else if (annualizedCost / portfolioValue > 0.04) {
+                recommendation = '合理';
+            } else {
+                recommendation = '很经济';
+            }
+
+            document.getElementById('recommendation').textContent = recommendation;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第27课：熊市价差策略 - OPITIOS期权课程</title>
+    <meta name="description" content="深入学习熊市价差策略，掌握在下跌市场中的期权交易技巧，学会构建有效的做空策略。">
+    <meta name="keywords" content="熊市价差,期权价差策略,期权做空,期权交易策略,期权投资">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-27-bear-spread-strategy.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-27-bear-spread-strategy.html">
+    <meta property="og:title" content="第27课：熊市价差策略 - OPITIOS期权课程">
+    <meta property="og:description" content="深入学习熊市价差策略，掌握在下跌市场中的期权交易技巧，学会构建有效的做空策略。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-27-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-27-bear-spread-strategy.html">
+    <meta property="twitter:title" content="第27课：熊市价差策略 - OPITIOS期权课程">
+    <meta property="twitter:description" content="深入学习熊市价差策略，掌握在下跌市场中的期权交易技巧，学会构建有效的做空策略。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-27-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第27课：熊市价差策略",
+        "description": "深入学习熊市价差策略，掌握在下跌市场中的期权交易技巧，学会构建有效的做空策略。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-27-bear-spread-strategy.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第27课：熊市价差策略完整应用 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --bear-color: #ef4444;
+            --spread-color: #dc2626;
+            --debit-color: #f59e0b;
+            --credit-color: #06b6d4;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--bear-color) 0%, var(--spread-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .bear-banner {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.1) 100%);
+            border-left: 4px solid var(--bear-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--bear-color);
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .bear-strategies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .strategy-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .strategy-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .strategy-card.put-debit {
+            border-color: var(--debit-color);
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .strategy-card.put-debit:hover {
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.2);
+        }
+
+        .strategy-card.call-credit {
+            border-color: var(--credit-color);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .strategy-card.call-credit:hover {
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .strategy-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .strategy-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--debit-color);
+        }
+
+        .strategy-card.call-credit .strategy-title {
+            color: var(--credit-color);
+        }
+
+        .strategy-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .bear-analyzer {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--bear-color);
+        }
+
+        .analyzer-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--debit-color);
+            color: white;
+        }
+
+        .tab-btn.credit.active {
+            background: var(--credit-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .analyzer-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--debit-color);
+        }
+
+        .credit-controls .control-group label {
+            color: var(--credit-color);
+        }
+
+        .control-group input, .control-group select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--debit-color);
+            border-radius: 6px;
+            padding: 0.7rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .credit-controls .control-group input, 
+        .credit-controls .control-group select {
+            border-color: var(--credit-color);
+        }
+
+        .analyze-btn {
+            background: linear-gradient(135deg, var(--debit-color) 0%, #d97706 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .analyze-btn.credit {
+            background: linear-gradient(135deg, var(--credit-color) 0%, #0891b2 100%);
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .strategy-analysis {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border: 2px solid var(--primary-color);
+            display: none;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .analysis-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .analysis-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .market-timing {
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--bear-color);
+        }
+
+        .timing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .timing-table th {
+            background: var(--bear-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .timing-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .timing-excellent {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--bear-color);
+            font-weight: 600;
+        }
+
+        .timing-good {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .timing-fair {
+            background: rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            font-weight: 600;
+        }
+
+        .timing-poor {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .bear-applications {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .application-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .application-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .application-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .application-type {
+            color: var(--bear-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .application-card.put-spread .application-type {
+            color: var(--debit-color);
+        }
+
+        .application-card.call-spread .application-type {
+            color: var(--credit-color);
+        }
+
+        .application-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .volatility-impact {
+            background: rgba(220, 38, 38, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--spread-color);
+        }
+
+        .volatility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .volatility-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .volatility-label {
+            color: var(--spread-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .volatility-input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--spread-color);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .volatility-result {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .volatility-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .bear-strategies {
+                grid-template-columns: 1fr;
+            }
+            .analyzer-controls {
+                grid-template-columns: 1fr;
+            }
+            .bear-applications {
+                grid-template-columns: 1fr;
+            }
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            .volatility-grid {
+                grid-template-columns: 1fr;
+            }
+            .analyzer-tabs {
+                flex-direction: column;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第27课：熊市价差策略完整应用</h1>
+                <div class="strategy-badge">📉 看跌策略精通 · 熊市价差策略专家</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">下跌市场的获利艺术：风险可控的看跌策略组合</p>
+            </section>
+
+            <div class="bear-banner">
+                📉 看跌策略核心：熊市价差策略通过组合期权头寸，在预期下跌的市场中实现风险可控的获利，是专业投资者必备的做空工具。
+            </div>
+
+            <div class="card">
+                <h3>熊市价差策略的做空交易精髓</h3>
+                <p>熊市价差策略（Bear Spread）是牛市价差策略的镜像对称，专门设计用于从股价下跌中获利。与牛市价差策略类似，熊市价差也有两种实现方式：借方熊市价差（Bear Put Spread）和贷方熊市价差（Bear Call Spread）。这两种策略都能在预期股价下跌时实现有限风险、有限收益的投资目标，但它们在成本结构、时间价值敏感性和市场适用性方面存在重要差异。掌握这些差异对于在不同市场环境下选择最优策略至关重要。</p>
+
+                <p><strong>借方熊市价差的安全做空逻辑</strong>：借方熊市价差通过买入较高执行价格的看跌期权，同时卖出较低执行价格的看跌期权来构建。这种组合需要支付净权利金，但提供了一种相对安全的做空方式。与单纯买入看跌期权相比，通过卖出较低执行价格的看跌期权，投资者收取了额外的权利金，降低了整体成本。当股价下跌到较低执行价格以下时，两个期权的价值变化会部分抵消，从而限制了最大收益，但同时也提供了成本优化。</p>
+
+                <p><strong>贷方熊市价差的收益型做空策略</strong>：贷方熊市价差通过卖出较低执行价格的看涨期权，同时买入较高执行价格的看涨期权来实现。这种组合能够收取净权利金，提供即时的现金流。当股价下跌时，两个看涨期权都会失去价值，投资者可以保留收取的权利金作为利润。这种策略特别适合在预期股价温和下跌且波动率可能下降的环境中使用，因为时间价值衰减对卖出期权的一方是有利的。</p>
+
+                <p><strong>风险控制与收益限制的平衡艺术</strong>：熊市价差策略的核心优势在于实现了风险和收益的双重限制。对于借方熊市价差，最大损失等于支付的净权利金，最大收益等于两个执行价格的差额减去净成本；对于贷方熊市价差，最大收益等于收取的净权利金，最大损失等于两个执行价格的差额减去净收益。这种确定性使得投资者能够精确计算风险收益比，并根据自己的风险承受能力调整头寸规模。</p>
+            </div>
+
+            <section class="bear-strategies">
+                <div class="strategy-card put-debit">
+                    <span class="strategy-icon">📊</span>
+                    <div class="strategy-title">借方熊市价差</div>
+                    <div class="strategy-description">
+                        买入高执行价看跌期权，卖出低执行价看跌期权。支付净权利金，适合强烈看跌但希望控制成本的投资者。
+                    </div>
+                </div>
+
+                <div class="strategy-card call-credit">
+                    <span class="strategy-icon">💰</span>
+                    <div class="strategy-title">贷方熊市价差</div>
+                    <div class="strategy-description">
+                        卖出低执行价看涨期权，买入高执行价看涨期权。收取净权利金，适合温和看跌且希望即时现金流的投资者。
+                    </div>
+                </div>
+
+                <div class="strategy-card put-debit">
+                    <span class="strategy-icon">🛡️</span>
+                    <div class="strategy-title">安全做空特征</div>
+                    <div class="strategy-description">
+                        相比裸卖看涨期权，熊市价差策略提供了更安全的做空方式，风险有明确上限，适合保守的看跌投资者。
+                    </div>
+                </div>
+
+                <div class="strategy-card call-credit">
+                    <span class="strategy-icon">⏰</span>
+                    <div class="strategy-title">时间价值友好</div>
+                    <div class="strategy-description">
+                        贷方熊市价差受益于时间价值衰减，即使股价横盘也能获得收益，提供了多重获利路径。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">熊市价差策略收益分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">对比借方与贷方熊市价差策略的收益特征：</p>
+                <canvas class="chart-canvas" id="bearSpreadChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--debit-color);">■</span> 借方熊市价差
+                    <span style="margin-left: 2rem; color: var(--credit-color);">■</span> 贷方熊市价差
+                    <span style="margin-left: 2rem; color: var(--bear-color);">■</span> 单纯买入看跌
+                    <span style="margin-left: 2rem; color: var(--primary-color);">│</span> 执行价格
+                </div>
+            </section>
+
+            <div class="bear-analyzer">
+                <div class="analyzer-tabs">
+                    <button class="tab-btn active" onclick="switchBearTab('put-debit')">看跌借方</button>
+                    <button class="tab-btn credit" onclick="switchBearTab('call-credit')">看涨贷方</button>
+                </div>
+
+                <!-- 看跌借方价差分析器 -->
+                <div class="tab-content active" id="put-debit-content">
+                    <h4 style="color: var(--debit-color); text-align: center; margin-bottom: 2rem;">借方熊市价差分析器</h4>
+                    <div class="analyzer-controls">
+                        <div class="control-group">
+                            <label>当前股价 (S)</label>
+                            <input type="number" id="putDebitStockPrice" value="100" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>买入看跌执行价 (K1)</label>
+                            <input type="number" id="putDebitLongStrike" value="105" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>卖出看跌执行价 (K2)</label>
+                            <input type="number" id="putDebitShortStrike" value="95" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>买入期权价格</label>
+                            <input type="number" id="putDebitLongPremium" value="8.00" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>卖出期权价格</label>
+                            <input type="number" id="putDebitShortPremium" value="4.00" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>到期时间（天）</label>
+                            <input type="number" id="putDebitDays" value="45" step="1">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <button class="analyze-btn" onclick="analyzePutDebitSpread()">分析看跌借方价差</button>
+                    </div>
+                    <div class="strategy-analysis" id="putDebitAnalysis">
+                        <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">看跌借方价差分析结果</h4>
+                        <div class="analysis-grid" id="putDebitResults">
+                            <!-- Results populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 看涨贷方价差分析器 -->
+                <div class="tab-content credit-controls" id="call-credit-content">
+                    <h4 style="color: var(--credit-color); text-align: center; margin-bottom: 2rem;">贷方熊市价差分析器</h4>
+                    <div class="analyzer-controls">
+                        <div class="control-group">
+                            <label>当前股价 (S)</label>
+                            <input type="number" id="callCreditStockPrice" value="100" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>卖出看涨执行价 (K1)</label>
+                            <input type="number" id="callCreditShortStrike" value="105" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>买入看涨执行价 (K2)</label>
+                            <input type="number" id="callCreditLongStrike" value="115" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>卖出期权价格</label>
+                            <input type="number" id="callCreditShortPremium" value="3.50" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>买入期权价格</label>
+                            <input type="number" id="callCreditLongPremium" value="1.50" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>期权到期（天）</label>
+                            <input type="number" id="callCreditDays" value="45" step="1">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <button class="analyze-btn credit" onclick="analyzeCallCreditSpread()">分析看涨贷方价差</button>
+                    </div>
+                    <div class="strategy-analysis" id="callCreditAnalysis">
+                        <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">看涨贷方价差分析结果</h4>
+                        <div class="analysis-grid" id="callCreditResults">
+                            <!-- Results populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>熊市价差策略的最佳时机选择</h3>
+                <div class="market-timing">
+                    <h4 style="color: var(--bear-color); text-align: center; margin-bottom: 2rem;">不同市场环境下的策略适用性</h4>
+                    <table class="timing-table">
+                        <thead>
+                            <tr>
+                                <th>市场环境</th>
+                                <th>借方熊市价差</th>
+                                <th>贷方熊市价差</th>
+                                <th>最佳选择理由</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>强烈熊市预期</strong></td>
+                                <td class="timing-excellent">极佳</td>
+                                <td class="timing-good">良好</td>
+                                <td>借方价差能更好地捕捉大幅下跌</td>
+                            </tr>
+                            <tr>
+                                <td><strong>温和下跌预期</strong></td>
+                                <td class="timing-good">良好</td>
+                                <td class="timing-excellent">极佳</td>
+                                <td>贷方价差收益确定性更高</td>
+                            </tr>
+                            <tr>
+                                <td><strong>高波动率环境</strong></td>
+                                <td class="timing-good">良好</td>
+                                <td class="timing-fair">一般</td>
+                                <td>借方价差受益于波动率上升</td>
+                            </tr>
+                            <tr>
+                                <td><strong>低波动率环境</strong></td>
+                                <td class="timing-fair">一般</td>
+                                <td class="timing-excellent">极佳</td>
+                                <td>贷方价差受益于波动率下降</td>
+                            </tr>
+                            <tr>
+                                <td><strong>时间价值衰减期</strong></td>
+                                <td class="timing-fair">一般</td>
+                                <td class="timing-excellent">极佳</td>
+                                <td>贷方价差时间价值友好</td>
+                            </tr>
+                            <tr>
+                                <td><strong>事件驱动下跌</strong></td>
+                                <td class="timing-excellent">极佳</td>
+                                <td class="timing-good">良好</td>
+                                <td>借方价差捕捉突发下跌机会</td>
+                            </tr>
+                            <tr>
+                                <td><strong>技术面看跌</strong></td>
+                                <td class="timing-good">良好</td>
+                                <td class="timing-good">良好</td>
+                                <td>根据跌幅预期选择策略类型</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>熊市价差策略的实战应用场景</h3>
+                <div class="bear-applications">
+                    <div class="application-card put-spread">
+                        <div class="application-title">📉 财报失望布局</div>
+                        <div class="application-type">借方看跌价差：事件驱动做空</div>
+                        <div class="application-description">
+                            当预期公司财报可能失望，但不确定下跌幅度时，使用借方熊市价差可以在控制成本的同时从下跌中获利，避免过度投机的风险。
+                        </div>
+                    </div>
+
+                    <div class="application-card call-spread">
+                        <div class="application-title">📊 技术面破位</div>
+                        <div class="application-type">贷方看涨价差：趋势跟随</div>
+                        <div class="application-description">
+                            股价跌破重要技术支撑位后，预期将继续下跌但跌幅有限时，使用贷方熊市价差可以收取权利金并受益于时间价值衰减。
+                        </div>
+                    </div>
+
+                    <div class="application-card put-spread">
+                        <div class="application-title">🎯 目标下跌投资</div>
+                        <div class="application-type">借方看跌价差：精准做空</div>
+                        <div class="application-description">
+                            对股票有明确的下跌目标价位时，通过选择合适的执行价格组合，可以在目标价位附近获得最大收益的精准做空。
+                        </div>
+                    </div>
+
+                    <div class="application-card call-spread">
+                        <div class="application-title">💰 收益增强做空</div>
+                        <div class="application-type">贷方看涨价差：现金流优化</div>
+                        <div class="application-description">
+                            在温和看跌的环境中，通过贷方熊市价差获得即时权利金收入，同时保持适度的做空敞口，优化现金流结构。
+                        </div>
+                    </div>
+
+                    <div class="application-card put-spread">
+                        <div class="application-title">⚡ 对冲保护策略</div>
+                        <div class="application-type">借方看跌价差：投资组合对冲</div>
+                        <div class="application-description">
+                            作为投资组合的对冲工具，借方熊市价差比单纯买入看跌期权成本更低，能够以较小成本为投资组合提供下跌保护。
+                        </div>
+                    </div>
+
+                    <div class="application-card call-spread">
+                        <div class="application-title">🔄 市场中性策略</div>
+                        <div class="application-type">贷方看涨价差：多策略组合</div>
+                        <div class="application-description">
+                            与其他策略组合使用，构建市场中性投资组合。通过贷方熊市价差的收益来平衡其他策略的风险敞口。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>波动率对熊市价差策略的影响</h3>
+                <div class="volatility-impact">
+                    <h4 style="color: var(--spread-color); text-align: center; margin-bottom: 2rem;">波动率变化影响分析器</h4>
+                    <div class="volatility-grid">
+                        <div class="volatility-item">
+                            <div class="volatility-label">当前隐含波动率</div>
+                            <input type="number" class="volatility-input" id="currentIV" value="25" placeholder="当前IV %">
+                            <div class="volatility-result" id="currentIVDisplay">25%</div>
+                        </div>
+
+                        <div class="volatility-item">
+                            <div class="volatility-label">预期波动率变化</div>
+                            <input type="number" class="volatility-input" id="ivChange" value="-5" placeholder="波动率变化">
+                            <div class="volatility-result" id="ivChangeDisplay">-5%</div>
+                        </div>
+
+                        <div class="volatility-item">
+                            <div class="volatility-label">借方价差影响</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="volatility-result" id="debitImpact">不利</div>
+                            <div class="volatility-description">波动率下降对借方不利</div>
+                        </div>
+
+                        <div class="volatility-item">
+                            <div class="volatility-label">贷方价差影响</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="volatility-result" id="creditImpact">有利</div>
+                            <div class="volatility-description">波动率下降对贷方有利</div>
+                        </div>
+
+                        <div class="volatility-item">
+                            <div class="volatility-label">策略推荐</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="volatility-result" id="strategyRecommendation">贷方价差</div>
+                            <div class="volatility-description">基于波动率环境推荐</div>
+                        </div>
+
+                        <div class="volatility-item">
+                            <div class="volatility-label">风险调整建议</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="volatility-result" id="riskAdjustment">降低仓位</div>
+                            <div class="volatility-description">波动率环境风险建议</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button onclick="analyzeVolatilityImpact()" style="background: linear-gradient(135deg, var(--spread-color) 0%, #b91c1c 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+                            分析波动率影响
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>熊市价差策略的高级管理技术</h3>
+                <p><strong>执行价格组合的策略性选择</strong>：熊市价差策略中执行价格的选择需要更加谨慎，因为做空策略的容错率相对较低。对于借方熊市价差，建议选择略高于当前股价的执行价格作为长期权（如虚值5-10%），短期权的执行价格设在预期的支撑位附近。执行价格之间的差距应该根据预期的下跌幅度来确定，一般10-15美元的价差比较合适。价差太小会限制收益，价差太大会增加成本和风险。</p>
+
+                <p><strong>时机选择与市场信号识别</strong>：熊市价差策略的成功很大程度上依赖于正确的时机选择。最佳建仓时机通常是在技术面出现明确的看跌信号时，如重要支撑位被跌破、移动平均线死叉、或者RSI等技术指标显示超买。基本面方面，可以关注公司盈利下调、行业前景恶化、或宏观经济数据走弱等负面因素。对于借方价差，最好在隐含波动率相对较低时建仓；对于贷方价差，可以在波动率较高时建仓。</p>
+
+                <p><strong>动态调整与止损止盈</strong>：熊市价差策略需要建立明确的动态管理规则。对于借方价差，当策略盈利达到最大潜在收益的50-70%时可以考虑获利了结；当损失达到初始投入的50%时应该考虑止损。对于贷方价差，可以在收益达到最大收益的30-50%时提前平仓，避免后期风险增加。同时要密切关注被指派的风险，特别是临近到期时的价格变动。</p>
+
+                <p><strong>组合策略与风险分散</strong>：单一的熊市价差策略可能面临方向判断错误的风险，因此可以考虑与其他策略组合使用。例如，可以同时建立多个不同股票的熊市价差，分散单一股票风险；也可以与牛市价差策略结合，构建市场中性组合；还可以与期权卖出策略结合，在不同市场环境下都能获得收益。资金管理方面，单一熊市价差头寸不应超过总资金的5-8%，总做空头寸不应超过总资金的20%。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "借方熊市价差策略的构建方式是什么？",
+                options: [
+                    "买入高执行价看跌期权，卖出低执行价看跌期权",
+                    "买入低执行价看跌期权，卖出高执行价看跌期权",
+                    "卖出低执行价看涨期权，买入高执行价看涨期权",
+                    "买入高执行价看涨期权，卖出低执行价看涨期权"
+                ],
+                correct: 0,
+                explanation: "借方熊市价差通过买入较高执行价格的看跌期权，同时卖出较低执行价格的看跌期权来构建，需要支付净权利金。"
+            },
+            {
+                question: "贷方熊市价差相比借方熊市价差的主要优势是什么？",
+                options: [
+                    "下跌获利潜力更大",
+                    "风险更小",
+                    "时间价值衰减有利且有即时现金流",
+                    "不受波动率影响"
+                ],
+                correct: 2,
+                explanation: "贷方熊市价差可以收取净权利金，提供即时现金流，同时时间价值衰减对策略有利。"
+            },
+            {
+                question: "在什么市场环境下贷方熊市价差表现最佳？",
+                options: [
+                    "强烈下跌且高波动率",
+                    "温和下跌且低波动率",
+                    "横盘且高波动率",
+                    "强烈上涨市场"
+                ],
+                correct: 1,
+                explanation: "贷方熊市价差在温和下跌且低波动率环境下表现最佳，因为时间价值衰减有利且波动率下降对卖出期权有利。"
+            },
+            {
+                question: "熊市价差策略相比单纯买入看跌期权的主要优势是什么？",
+                options: [
+                    "获利潜力更大",
+                    "降低成本但限制最大收益",
+                    "没有时间限制",
+                    "不会损失本金"
+                ],
+                correct: 1,
+                explanation: "熊市价差策略通过卖出期权收取权利金降低了成本，但同时也限制了最大收益，实现风险收益的平衡。"
+            }
+        ];
+
+        let userAnswers = [];
+        let activeTab = 'put-debit';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawBearSpreadChart();
+            updateVolatilityAnalyzer();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function switchBearTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update tab contents
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tab + '-content').classList.add('active');
+
+            activeTab = tab;
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通熊市价差策略！' : 
+                         percentage >= 60 ? '不错的理解，建议进一步学习做空策略的风险管理。' : 
+                         '需要加强对熊市价差策略构建和应用的理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawBearSpreadChart() {
+            const canvas = document.getElementById('bearSpreadChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis (profit/loss line)
+            const zeroLine = canvas.height - padding - chartHeight / 2;
+            ctx.moveTo(padding, zeroLine);
+            ctx.lineTo(canvas.width - padding, zeroLine);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Parameters for Bear Put Spread
+            const highStrike = 105;
+            const lowStrike = 95;
+            const longPutPremium = 8.0;
+            const shortPutPremium = 4.0;
+            const minStock = 70;
+            const maxStock = 130;
+            const steps = 100;
+
+            // Draw put debit spread payoff
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let longPutPayoff = Math.max(highStrike - stockPrice, 0) - longPutPremium;
+                let shortPutPayoff = -Math.max(lowStrike - stockPrice, 0) + shortPutPremium;
+                let totalPayoff = longPutPayoff + shortPutPayoff;
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (totalPayoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw call credit spread payoff (Bear Call Spread)
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+
+            const shortCallPremium = 3.5;
+            const longCallPremium = 1.5;
+            const callLowStrike = 105;
+            const callHighStrike = 115;
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let shortCallPayoff = -Math.max(stockPrice - callLowStrike, 0) + shortCallPremium;
+                let longCallPayoff = Math.max(stockPrice - callHighStrike, 0) - longCallPremium;
+                let totalPayoff = shortCallPayoff + longCallPayoff;
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (totalPayoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw simple long put for comparison
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([8, 4]);
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff = Math.max(highStrike - stockPrice, 0) - longPutPremium;
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw strike price lines
+            const lowStrikeX = padding + ((lowStrike - minStock) / (maxStock - minStock)) * chartWidth;
+            const highStrikeX = padding + ((highStrike - minStock) / (maxStock - minStock)) * chartWidth;
+
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(lowStrikeX, padding);
+            ctx.lineTo(lowStrikeX, canvas.height - padding);
+            ctx.moveTo(highStrikeX, padding);
+            ctx.lineTo(highStrikeX, canvas.height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            for (let price = 80; price <= 120; price += 10) {
+                const x = padding + ((price - minStock) / (maxStock - minStock)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('损益', 0, 0);
+            ctx.restore();
+
+            ctx.setLineDash([]);
+        }
+
+        function analyzePutDebitSpread() {
+            const stockPrice = parseFloat(document.getElementById('putDebitStockPrice').value);
+            const longStrike = parseFloat(document.getElementById('putDebitLongStrike').value);
+            const shortStrike = parseFloat(document.getElementById('putDebitShortStrike').value);
+            const longPremium = parseFloat(document.getElementById('putDebitLongPremium').value);
+            const shortPremium = parseFloat(document.getElementById('putDebitShortPremium').value);
+            const days = parseInt(document.getElementById('putDebitDays').value);
+
+            // Calculations
+            const netDebit = longPremium - shortPremium;
+            const maxProfit = (longStrike - shortStrike) - netDebit;
+            const maxLoss = netDebit;
+            const breakeven = longStrike - netDebit;
+            const profitProbability = stockPrice < breakeven ? 65 : 35;
+            const riskRewardRatio = maxProfit / maxLoss;
+
+            // ROI calculation
+            const roi = (maxProfit / netDebit) * 100;
+
+            document.getElementById('putDebitAnalysis').style.display = 'block';
+            document.getElementById('putDebitResults').innerHTML = `
+                <div class="analysis-item">
+                    <div class="analysis-value">$${netDebit.toFixed(2)}</div>
+                    <div class="analysis-label">净支付成本</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${maxProfit.toFixed(2)}</div>
+                    <div class="analysis-label">最大收益</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${maxLoss.toFixed(2)}</div>
+                    <div class="analysis-label">最大损失</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${breakeven.toFixed(2)}</div>
+                    <div class="analysis-label">盈亏平衡点</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${riskRewardRatio.toFixed(2)}:1</div>
+                    <div class="analysis-label">风险收益比</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${roi.toFixed(1)}%</div>
+                    <div class="analysis-label">最大收益率</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${profitProbability}%</div>
+                    <div class="analysis-label">盈利概率估算</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${days}天</div>
+                    <div class="analysis-label">剩余时间</div>
+                </div>
+            `;
+        }
+
+        function analyzeCallCreditSpread() {
+            const stockPrice = parseFloat(document.getElementById('callCreditStockPrice').value);
+            const shortStrike = parseFloat(document.getElementById('callCreditShortStrike').value);
+            const longStrike = parseFloat(document.getElementById('callCreditLongStrike').value);
+            const shortPremium = parseFloat(document.getElementById('callCreditShortPremium').value);
+            const longPremium = parseFloat(document.getElementById('callCreditLongPremium').value);
+            const days = parseInt(document.getElementById('callCreditDays').value);
+
+            // Calculations
+            const netCredit = shortPremium - longPremium;
+            const maxProfit = netCredit;
+            const maxLoss = (longStrike - shortStrike) - netCredit;
+            const breakeven = shortStrike + netCredit;
+            const profitProbability = stockPrice < breakeven ? 70 : 40;
+            const riskRewardRatio = maxProfit / maxLoss;
+
+            // ROI calculation
+            const roi = (maxProfit / Math.abs(maxLoss)) * 100;
+
+            document.getElementById('callCreditAnalysis').style.display = 'block';
+            document.getElementById('callCreditResults').innerHTML = `
+                <div class="analysis-item">
+                    <div class="analysis-value">$${netCredit.toFixed(2)}</div>
+                    <div class="analysis-label">净收取权利金</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${maxProfit.toFixed(2)}</div>
+                    <div class="analysis-label">最大收益</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${maxLoss.toFixed(2)}</div>
+                    <div class="analysis-label">最大损失</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${breakeven.toFixed(2)}</div>
+                    <div class="analysis-label">盈亏平衡点</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${riskRewardRatio.toFixed(2)}:1</div>
+                    <div class="analysis-label">风险收益比</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${roi.toFixed(1)}%</div>
+                    <div class="analysis-label">收益潜力</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${profitProbability}%</div>
+                    <div class="analysis-label">成功概率估算</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${days}天</div>
+                    <div class="analysis-label">剩余时间</div>
+                </div>
+            `;
+        }
+
+        function updateVolatilityAnalyzer() {
+            document.getElementById('currentIV').addEventListener('input', analyzeVolatilityImpact);
+            document.getElementById('ivChange').addEventListener('input', analyzeVolatilityImpact);
+        }
+
+        function analyzeVolatilityImpact() {
+            const currentIV = parseFloat(document.getElementById('currentIV').value) || 0;
+            const ivChange = parseFloat(document.getElementById('ivChange').value) || 0;
+
+            // Update displays
+            document.getElementById('currentIVDisplay').textContent = currentIV + '%';
+            document.getElementById('ivChangeDisplay').textContent = (ivChange >= 0 ? '+' : '') + ivChange + '%';
+
+            // Analyze impacts
+            let debitImpact, creditImpact, strategyRec, riskAdj;
+
+            if (ivChange > 2) {
+                debitImpact = '有利';
+                creditImpact = '不利';
+                strategyRec = '借方价差';
+                riskAdj = '增加仓位';
+            } else if (ivChange > -2) {
+                debitImpact = '中性';
+                creditImpact = '中性';
+                strategyRec = '灵活选择';
+                riskAdj = '保持仓位';
+            } else {
+                debitImpact = '不利';
+                creditImpact = '有利';
+                strategyRec = '贷方价差';
+                riskAdj = '谨慎建仓';
+            }
+
+            document.getElementById('debitImpact').textContent = debitImpact;
+            document.getElementById('creditImpact').textContent = creditImpact;
+            document.getElementById('strategyRecommendation').textContent = strategyRec;
+            document.getElementById('riskAdjustment').textContent = riskAdj;
+        }
+    </script>
+</body>
+</html>

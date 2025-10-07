@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第37课：高级日历价差 - OPITIOS期权课程</title>
+    <meta name="description" content="深入学习高级日历价差策略，掌握复杂时间价差的构建技巧，提高期权交易水平。">
+    <meta name="keywords" content="高级日历价差,期权价差,期权策略,期权交易,期权投资">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-37-advanced-calendar-spread.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-37-advanced-calendar-spread.html">
+    <meta property="og:title" content="第37课：高级日历价差 - OPITIOS期权课程">
+    <meta property="og:description" content="深入学习高级日历价差策略，掌握复杂时间价差的构建技巧，提高期权交易水平。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-37-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-37-advanced-calendar-spread.html">
+    <meta property="twitter:title" content="第37课：高级日历价差 - OPITIOS期权课程">
+    <meta property="twitter:description" content="深入学习高级日历价差策略，掌握复杂时间价差的构建技巧，提高期权交易水平。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-37-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第37课：高级日历价差",
+        "description": "深入学习高级日历价差策略，掌握复杂时间价差的构建技巧，提高期权交易水平。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-37-advanced-calendar-spread.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第37课：日历价差策略高级应用 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --calendar-color: #0891b2;
+            --time-color: #7c2d12;
+            --spread-color: #059669;
+            --theta-color: #dc2626;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--calendar-color) 0%, var(--time-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(8, 145, 178, 0.3);
+        }
+
+        .calendar-banner {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.2) 0%, rgba(124, 45, 18, 0.1) 100%);
+            border-left: 4px solid var(--calendar-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--calendar-color);
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .type-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .type-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .type-card.long-calendar {
+            border-color: var(--calendar-color);
+            background: rgba(8, 145, 178, 0.1);
+        }
+
+        .type-card.long-calendar:hover {
+            box-shadow: 0 15px 40px rgba(8, 145, 178, 0.2);
+        }
+
+        .type-card.short-calendar {
+            border-color: var(--time-color);
+            background: rgba(124, 45, 18, 0.1);
+        }
+
+        .type-card.short-calendar:hover {
+            box-shadow: 0 15px 40px rgba(124, 45, 18, 0.2);
+        }
+
+        .type-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .type-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--calendar-color);
+        }
+
+        .type-card.short-calendar .type-title {
+            color: var(--time-color);
+        }
+
+        .type-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .theta-analyzer {
+            background: rgba(8, 145, 178, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--calendar-color);
+        }
+
+        .theta-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-label {
+            color: var(--calendar-color);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .control-input {
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .control-input:focus {
+            outline: none;
+            border-color: var(--calendar-color);
+        }
+
+        .analyze-btn {
+            background: linear-gradient(135deg, var(--calendar-color) 0%, var(--spread-color) 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .analysis-display {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .analysis-display.show {
+            display: block;
+        }
+
+        .time-decay-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .time-decay-table th {
+            background: var(--calendar-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .time-decay-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .fast-decay {
+            background: rgba(220, 38, 38, 0.3);
+            color: var(--theta-color);
+            font-weight: 600;
+        }
+
+        .slow-decay {
+            background: rgba(5, 150, 105, 0.3);
+            color: var(--spread-color);
+            font-weight: 600;
+        }
+
+        .optimal-decay {
+            background: rgba(8, 145, 178, 0.3);
+            color: var(--calendar-color);
+            font-weight: 600;
+        }
+
+        .practical-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .scenario-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-type {
+            color: var(--calendar-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .scenario-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .calendar-types {
+                grid-template-columns: 1fr;
+            }
+            .practical-scenarios {
+                grid-template-columns: 1fr;
+            }
+            .theta-controls {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第37课：日历价差策略高级应用</h1>
+                <div class="strategy-badge">📅 时间套利策略 · 日历价差Calendar Spread专家</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">时间的价值艺术：日历价差策略的时间套利与Theta收割技术</p>
+            </section>
+
+            <div class="calendar-banner">
+                📅 日历价差策略核心：通过买卖相同执行价格但不同到期日的期权，利用时间价值衰减的差异进行套利，是时间交易的经典策略。
+            </div>
+
+            <div class="card">
+                <h3>日历价差策略的时间套利精髓</h3>
+                <p>日历价差策略（Calendar Spread Strategy），也称为时间价差策略，是通过同时买入和卖出相同执行价格但不同到期日的期权来构建的套利策略。该策略的核心理念是利用不同到期日期权时间价值衰减速度的差异来获利。近月期权的时间价值衰减速度快于远月期权，特别是在临近到期的最后几周。日历价差策略正是利用这种差异，通过卖出快速衰减的近月期权并买入衰减较慢的远月期权，从时间价值的不对称衰减中获得收益。</p>
+
+                <p><strong>长日历价差的时间收割机制</strong>：长日历价差策略通过卖出近月期权并买入同一执行价格的远月期权来构建。这种策略的盈利机制基于Theta衰减的时间差异：近月期权的Theta（时间价值衰减率）远高于远月期权，意味着近月期权的价值衰减更快。当股价保持在执行价格附近时，策略能够获得最大收益。最佳的获利时机通常是在近月期权到期前的2-3周，此时时间价值衰减达到峰值而股价波动对策略影响相对较小。</p>
+
+                <p><strong>短日历价差的波动率利用</strong>：短日历价差策略是长日历价差的相反操作，通过买入近月期权并卖出远月期权来构建。这种策略适合预期股价将出现大幅波动的情况，因为波动率的增加会使近月期权的价值增长更快。短日历价差在市场预期将出现重大事件或波动性急剧增加时特别有用，但需要承担时间价值快速衰减的风险，因此通常用于短期交易。</p>
+
+                <p><strong>波动率与时间价值的双重影响</strong>：日历价差策略对隐含波动率的变化极为敏感，但对近月和远月期权的影响程度不同。波动率上升时，远月期权价值增长更多，有利于长日历价差；波动率下降时，近月期权价值下降更多，同样有利于长日历价差。然而，这种关系在临近近月到期时会发生变化，需要根据具体情况进行动态调整。成功的日历价差交易需要对波动率结构、时间价值衰减曲线和标的资产价格稳定性有深入理解。</p>
+            </div>
+
+            <section class="calendar-types">
+                <div class="type-card long-calendar">
+                    <span class="type-icon">📅</span>
+                    <div class="type-title">长日历价差</div>
+                    <div class="type-description">
+                        卖出近月期权，买入远月期权。利用时间价值差异衰减获利，适合预期股价在执行价格附近横盘的投资者。
+                    </div>
+                </div>
+
+                <div class="type-card short-calendar">
+                    <span class="type-icon">⚡</span>
+                    <div class="type-title">短日历价差</div>
+                    <div class="type-description">
+                        买入近月期权，卖出远月期权。适合预期短期大幅波动，利用近月期权对波动率的高敏感性获利。
+                    </div>
+                </div>
+
+                <div class="type-card long-calendar">
+                    <span class="type-icon">🎯</span>
+                    <div class="type-title">Theta收割策略</div>
+                    <div class="type-description">
+                        专门利用时间价值衰减差异的套利策略，在临近近月到期前2-3周达到最大收益潜力。
+                    </div>
+                </div>
+
+                <div class="type-card short-calendar">
+                    <span class="type-icon">📊</span>
+                    <div class="type-title">波动率套利</div>
+                    <div class="type-description">
+                        利用不同期限期权对波动率敏感度差异进行套利，是专业交易者的高级工具。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 时间价值衰减分析器 -->
+            <div class="card">
+                <h3>日历价差Theta分析器</h3>
+                <div class="theta-analyzer">
+                    <h4 style="color: var(--calendar-color); text-align: center; margin-bottom: 2rem;">时间价值衰减动态分析</h4>
+                    <div class="theta-controls">
+                        <div class="control-group">
+                            <label class="control-label">当前股价 ($)</label>
+                            <input type="number" class="control-input" id="stockPrice" value="100" min="50" max="200">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">执行价格 ($)</label>
+                            <input type="number" class="control-input" id="strikePrice" value="100" min="50" max="200">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">近月到期天数</label>
+                            <input type="number" class="control-input" id="nearDays" value="30" min="1" max="60">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">远月到期天数</label>
+                            <input type="number" class="control-input" id="farDays" value="90" min="30" max="180">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">隐含波动率 (%)</label>
+                            <input type="number" class="control-input" id="volatility" value="25" min="10" max="100">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">无风险利率 (%)</label>
+                            <input type="number" class="control-input" id="riskFreeRate" value="5" min="0" max="10" step="0.1">
+                        </div>
+                    </div>
+                    <button class="analyze-btn" onclick="analyzeThetaDecay()">分析时间衰减</button>
+                    <div class="analysis-display" id="analysisDisplay">
+                        <div id="thetaResults"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 时间价值衰减表格 -->
+            <div class="card">
+                <h3>日历价差时间衰减特征分析</h3>
+                <table class="time-decay-table">
+                    <thead>
+                        <tr>
+                            <th>到期时间</th>
+                            <th>近月期权Theta</th>
+                            <th>远月期权Theta</th>
+                            <th>衰减差异</th>
+                            <th>日历价差收益</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>60天前</strong></td>
+                            <td class="slow-decay">-0.02</td>
+                            <td class="slow-decay">-0.01</td>
+                            <td class="slow-decay">-0.01</td>
+                            <td>建仓期</td>
+                        </tr>
+                        <tr>
+                            <td><strong>45天前</strong></td>
+                            <td class="optimal-decay">-0.04</td>
+                            <td class="slow-decay">-0.015</td>
+                            <td class="optimal-decay">-0.025</td>
+                            <td class="optimal-decay">开始获利</td>
+                        </tr>
+                        <tr>
+                            <td><strong>30天前</strong></td>
+                            <td class="optimal-decay">-0.08</td>
+                            <td class="slow-decay">-0.02</td>
+                            <td class="optimal-decay">-0.06</td>
+                            <td class="optimal-decay">收益加速</td>
+                        </tr>
+                        <tr>
+                            <td><strong>21天前</strong></td>
+                            <td class="fast-decay">-0.15</td>
+                            <td class="slow-decay">-0.025</td>
+                            <td class="fast-decay">-0.125</td>
+                            <td class="optimal-decay">最佳收益期</td>
+                        </tr>
+                        <tr>
+                            <td><strong>14天前</strong></td>
+                            <td class="fast-decay">-0.25</td>
+                            <td class="slow-decay">-0.03</td>
+                            <td class="fast-decay">-0.22</td>
+                            <td class="fast-decay">考虑平仓</td>
+                        </tr>
+                        <tr>
+                            <td><strong>7天前</strong></td>
+                            <td class="fast-decay">-0.45</td>
+                            <td class="optimal-decay">-0.04</td>
+                            <td class="fast-decay">-0.41</td>
+                            <td class="fast-decay">风险增加</td>
+                        </tr>
+                        <tr>
+                            <td><strong>到期日</strong></td>
+                            <td class="fast-decay">0</td>
+                            <td class="optimal-decay">-0.045</td>
+                            <td class="fast-decay">0.045</td>
+                            <td class="fast-decay">必须处理</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">日历价差时间价值演变</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">展示近月与远月期权时间价值随时间衰减的差异：</p>
+                <canvas class="chart-canvas" id="calendarChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--theta-color);">■</span> 近月期权价值
+                    <span style="margin-left: 2rem; color: var(--spread-color);">■</span> 远月期权价值
+                    <span style="margin-left: 2rem; color: var(--calendar-color);">■</span> 日历价差净值
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>日历价差策略的高级实战应用</h3>
+                <div class="practical-scenarios">
+                    <div class="scenario-card">
+                        <div class="scenario-title">📊 财报发布周期</div>
+                        <div class="scenario-type">长日历价差：事件后稳定期</div>
+                        <div class="scenario-description">
+                            在财报发布后股价趋于稳定时建立长日历价差，利用隐含波动率回落和时间价值衰减获得稳定收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🎯 技术面整理期</div>
+                        <div class="scenario-type">长日历价差：区间震荡套利</div>
+                        <div class="scenario-description">
+                            在股价处于技术支撑阻力区间震荡时，使用平值长日历价差从横盘行情中获得时间价值收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">⚡ 重大事件前夕</div>
+                        <div class="scenario-type">短日历价差：波动率爆发</div>
+                        <div class="scenario-description">
+                            在FDA批准、重要会议等重大事件前，建立短日历价差从预期波动率飙升中获得快速收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">📅 期权到期周</div>
+                        <div class="scenario-type">长日历价差：Gamma钉住效应</div>
+                        <div class="scenario-description">
+                            利用期权到期周的Gamma钉住效应，当股价被大量期权持仓"钉住"在执行价格附近时建立日历价差。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🌊 波动率曲面套利</div>
+                        <div class="scenario-type">日历价差：期限结构交易</div>
+                        <div class="scenario-description">
+                            利用不同期限隐含波动率的异常差异，通过日历价差进行波动率期限结构套利交易。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🔄 滚动日历策略</div>
+                        <div class="scenario-type">动态日历价差：持续收益</div>
+                        <div class="scenario-description">
+                            通过定期滚动日历价差头寸，将策略转化为持续的时间价值收割机器，创造稳定现金流。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>日历价差策略的精细化管理技术</h3>
+                <p><strong>最优到期时间差的选择</strong>：日历价差策略中两个期权到期时间差的选择对收益影响巨大。最常用的组合是30天对90天，这样的搭配能够最大化时间价值衰减的差异。如果时间差过小（如30天对45天），虽然风险较低但收益有限；如果时间差过大（如30天对180天），远月期权的成本过高会压缩净收益。最优选择通常基于隐含波动率期限结构、预期持有时间和风险承受能力等因素。</p>
+
+                <p><strong>执行价格的战略性选择</strong>：虽然日历价差通常使用相同执行价格，但执行价格的选择仍然至关重要。平值期权具有最大的时间价值，因此平值日历价差通常收益最高；轻微虚值的日历价差成本更低但需要股价配合；实值日历价差风险较高但在某些情况下可能更适合。执行价格的选择应该结合对股价未来走势的预期和技术分析结果。</p>
+
+                <p><strong>波动率环境的动态适应</strong>：日历价差策略对波动率环境变化非常敏感，需要建立动态适应机制。在低波动率环境中，长日历价差表现最佳，因为时间价值衰减效应更加明显；在高波动率环境中，需要谨慎使用长日历价差，因为波动率下降可能抵消时间价值收益。专业交易者会根据VIX水平、隐含波动率分位数等指标来调整策略参数。</p>
+
+                <p><strong>风险管理与平仓时机</strong>：日历价差策略需要精确的风险管理和平仓时机选择。最佳平仓时机通常在近月期权到期前2-3周，此时时间价值衰减效应达到峰值。如果股价大幅偏离执行价格，应该考虑及时止损；如果波动率急剧上升，可能需要提前获利了结。建议设置基于时间的强制平仓机制，避免持仓至近月到期日面临指派风险。此外，还可以考虑将日历价差与其他策略组合，如添加保护性期权来限制极端情况下的损失。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "长日历价差策略的核心盈利机制是什么？",
+                options: [
+                    "股价大幅上涨",
+                    "利用时间价值衰减差异",
+                    "波动率急剧上升",
+                    "收取权利金"
+                ],
+                correct: 1,
+                explanation: "长日历价差策略通过利用近月期权比远月期权时间价值衰减更快的差异来获利。"
+            },
+            {
+                question: "长日历价差策略的最佳平仓时机通常是？",
+                options: [
+                    "建仓后立即平仓",
+                    "近月期权到期日",
+                    "近月期权到期前2-3周",
+                    "远月期权到期前"
+                ],
+                correct: 2,
+                explanation: "在近月期权到期前2-3周，时间价值衰减效应达到峰值，是最佳平仓时机。"
+            },
+            {
+                question: "短日历价差策略最适合什么市场环境？",
+                options: [
+                    "股价长期横盘",
+                    "预期短期大幅波动",
+                    "低波动率环境",
+                    "股价缓慢上涨"
+                ],
+                correct: 1,
+                explanation: "短日历价差通过买入近月期权利用其对波动率的高敏感性，适合预期短期大幅波动的环境。"
+            },
+            {
+                question: "日历价差策略对什么因素最敏感？",
+                options: [
+                    "股价方向",
+                    "分红派息",
+                    "时间衰减和波动率变化",
+                    "利率变动"
+                ],
+                correct: 2,
+                explanation: "日历价差策略主要利用时间价值衰减差异，同时对波动率变化极为敏感。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawCalendarChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通日历价差策略！' : 
+                         percentage >= 60 ? '良好的理解，建议深入学习时间价值管理。' : 
+                         '需要加强对日历价差和时间套利的理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawCalendarChart() {
+            const canvas = document.getElementById('calendarChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Sample data for time decay
+            const daysToExpiry = [60, 50, 40, 30, 20, 10, 5, 0];
+            const nearMonthValues = [3.5, 3.0, 2.3, 1.5, 0.8, 0.2, 0.05, 0];
+            const farMonthValues = [5.8, 5.6, 5.3, 4.9, 4.3, 3.5, 2.8, 2.0];
+
+            // Draw near month option value
+            ctx.strokeStyle = '#dc2626';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+
+            nearMonthValues.forEach((value, i) => {
+                const x = padding + (60 - daysToExpiry[i]) / 60 * chartWidth;
+                const y = canvas.height - padding - (value / 6) * chartHeight;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.stroke();
+
+            // Draw far month option value
+            ctx.strokeStyle = '#059669';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+
+            farMonthValues.forEach((value, i) => {
+                const x = padding + (60 - daysToExpiry[i]) / 60 * chartWidth;
+                const y = canvas.height - padding - (value / 6) * chartHeight;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw calendar spread P&L
+            ctx.strokeStyle = '#0891b2';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([10, 5]);
+            ctx.beginPath();
+
+            const calendarPnL = farMonthValues.map((far, i) => far - nearMonthValues[i] - 2.3); // Net debit of 2.3
+
+            calendarPnL.forEach((pnl, i) => {
+                const x = padding + (60 - daysToExpiry[i]) / 60 * chartWidth;
+                const y = canvas.height - padding - ((pnl + 3) / 6) * chartHeight; // Offset for negative values
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            for (let days = 0; days <= 60; days += 10) {
+                const x = padding + (60 - days) / 60 * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(days + '天', x, canvas.height - padding + 20);
+            }
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('剩余天数', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('期权价值', 0, 0);
+            ctx.restore();
+
+            ctx.setLineDash([]);
+        }
+
+        function analyzeThetaDecay() {
+            const stockPrice = parseFloat(document.getElementById('stockPrice').value);
+            const strikePrice = parseFloat(document.getElementById('strikePrice').value);
+            const nearDays = parseInt(document.getElementById('nearDays').value);
+            const farDays = parseInt(document.getElementById('farDays').value);
+            const volatility = parseFloat(document.getElementById('volatility').value) / 100;
+            const riskFreeRate = parseFloat(document.getElementById('riskFreeRate').value) / 100;
+
+            // Simplified Black-Scholes calculations for demonstration
+            const nearTimeValue = Math.max(0, (stockPrice * volatility * Math.sqrt(nearDays / 365)) - Math.abs(stockPrice - strikePrice));
+            const farTimeValue = Math.max(0, (stockPrice * volatility * Math.sqrt(farDays / 365)) - Math.abs(stockPrice - strikePrice));
+
+            const nearTheta = -nearTimeValue / nearDays;
+            const farTheta = -farTimeValue / farDays;
+            const thetaDifference = nearTheta - farTheta;
+
+            const netCost = farTimeValue - nearTimeValue;
+            const expectedProfit = Math.abs(thetaDifference) * 21; // 3 weeks
+
+            const results = `
+                <h4 style="color: var(--calendar-color); margin-bottom: 1rem;">Theta衰减分析结果</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div>
+                        <strong style="color: var(--theta-color);">近月Theta:</strong><br>
+                        ${nearTheta.toFixed(4)}/天
+                    </div>
+                    <div>
+                        <strong style="color: var(--spread-color);">远月Theta:</strong><br>
+                        ${farTheta.toFixed(4)}/天
+                    </div>
+                    <div>
+                        <strong style="color: var(--calendar-color);">衰减差异:</strong><br>
+                        ${thetaDifference.toFixed(4)}/天
+                    </div>
+                    <div>
+                        <strong style="color: var(--primary-color);">净成本:</strong><br>
+                        $${netCost.toFixed(2)}
+                    </div>
+                    <div>
+                        <strong style="color: var(--success-color);">预期21天收益:</strong><br>
+                        $${expectedProfit.toFixed(2)}
+                    </div>
+                    <div>
+                        <strong style="color: var(--primary-color);">收益率:</strong><br>
+                        ${((expectedProfit / netCost) * 100).toFixed(1)}%
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; padding: 1rem; background: rgba(8, 145, 178, 0.1); border-radius: 8px;">
+                    <strong style="color: var(--calendar-color);">策略建议：</strong>
+                    ${netCost > 0 ? '建议建立长日历价差，从时间价值差异衰减中获利。' : '成本为负，考虑短日历价差或调整参数。'}
+                </div>
+            `;
+
+            document.getElementById('thetaResults').innerHTML = results;
+            document.getElementById('analysisDisplay').classList.add('show');
+        }
+    </script>
+</body>
+</html>

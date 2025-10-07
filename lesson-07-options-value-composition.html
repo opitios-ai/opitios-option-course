@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第7课：期权价值构成 - OPITIOS期权课程</title>
+    <meta name="description" content="深入理解期权价值的构成要素，包括内在价值和时间价值，掌握期权定价的基本原理。">
+    <meta name="keywords" content="期权价值,内在价值,时间价值,期权定价,期权分析">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-07-options-value-composition.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-07-options-value-composition.html">
+    <meta property="og:title" content="第7课：期权价值构成 - OPITIOS期权课程">
+    <meta property="og:description" content="深入理解期权价值的构成要素，包括内在价值和时间价值，掌握期权定价的基本原理。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-07-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-07-options-value-composition.html">
+    <meta property="twitter:title" content="第7课：期权价值构成 - OPITIOS期权课程">
+    <meta property="twitter:description" content="深入理解期权价值的构成要素，包括内在价值和时间价值，掌握期权定价的基本原理。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-07-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第7课：期权价值构成",
+        "description": "深入理解期权价值的构成要素，包括内在价值和时间价值，掌握期权定价的基本原理。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-07-options-value-composition.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第7课：期权价值构成 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --intrinsic-color: #06b6d4;
+            --time-color: #8b5cf6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .value-components {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .value-component {
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .value-component.intrinsic {
+            background: rgba(6, 182, 212, 0.1);
+            border-color: var(--intrinsic-color);
+        }
+
+        .value-component.time {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--time-color);
+        }
+
+        .value-component:hover {
+            transform: translateY(-5px);
+        }
+
+        .value-component h4 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .value-component.intrinsic h4 {
+            color: var(--intrinsic-color);
+        }
+
+        .value-component.time h4 {
+            color: var(--time-color);
+        }
+
+        .formula-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 700px;
+            height: 400px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .factor-item {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .factor-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .factor-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .value-components {
+                grid-template-columns: 1fr;
+            }
+            .factors-grid {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第7课：期权价值构成</h1>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">深度解析内在价值与时间价值的计算与影响因素</p>
+            </section>
+
+            <section>
+                <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem; font-size: 2rem;">期权价值双重构成</h2>
+                <div class="value-components">
+                    <div class="value-component intrinsic">
+                        <h4>💎 内在价值 (Intrinsic Value)</h4>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">期权立即行权的实际价值</p>
+                        <div class="formula-box">
+                            看涨期权: max(S-K, 0)<br>
+                            看跌期权: max(K-S, 0)
+                        </div>
+                        <ul style="text-align: left; color: var(--text-secondary);">
+                            <li>永不为负值</li>
+                            <li>实值期权才有内在价值</li>
+                            <li>随股价变化而变化</li>
+                        </ul>
+                    </div>
+                    <div class="value-component time">
+                        <h4>⏱️ 时间价值 (Time Value)</h4>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">期权在到期前获得更多价值的潜力</p>
+                        <div class="formula-box">
+                            时间价值 = 期权价格 - 内在价值
+                        </div>
+                        <ul style="text-align: left; color: var(--text-secondary);">
+                            <li>随时间推移而衰减</li>
+                            <li>受波动率影响巨大</li>
+                            <li>平值期权时间价值最高</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>内在价值的深度分析</h3>
+                <p>内在价值是期权价值的基础组成部分，它代表了期权在当前时点如果立即行权所能获得的实际经济价值。对于<strong>看涨期权</strong>，内在价值等于股票当前价格减去行权价格的正数部分，即max(S-K, 0)，其中S为股价，K为行权价。当股价高于行权价时，看涨期权具有内在价值；当股价低于或等于行权价时，内在价值为零。</p>
+                <p>对于<strong>看跌期权</strong>，内在价值的计算方式相反，等于行权价减去股票当前价格的正数部分，即max(K-S, 0)。当股价低于行权价时，看跌期权具有内在价值；当股价高于或等于行权价时，内在价值为零。内在价值的重要特征是它永远不会为负数，这是期权"权利而非义务"特性的直接体现。</p>
+                <p><strong>内在价值的实战意义</strong>：内在价值为期权提供了价值下限保护，是期权投资安全边际的重要指标。深度实值期权的内在价值较高，提供更好的下跌保护，但购买成本也相应增加。虚值期权没有内在价值，价格完全由时间价值构成，风险较高但杠杆效应明显。投资者在选择期权时，需要权衡内在价值保护与投资成本之间的关系。</p>
+                <p><strong>内在价值的变化规律</strong>：内在价值与标的股票价格呈线性关系变化，没有时间衰减特性。对于深度实值期权，Delta值接近1（看涨）或-1（看跌），意味着股价每变动1美元，期权价格几乎同步变动1美元。这种特性使得深度实值期权成为杠杆较低但确定性较高的投资选择，适合风险厌恶型投资者或需要精确对冲的策略。</p>
+            </div>
+
+            <div class="card">
+                <h3>时间价值的核心机制</h3>
+                <p>时间价值反映了期权在剩余存续期内股价可能发生有利变动的概率和潜力，是期权相对于股票投资独有的价值组成部分。时间价值的存在基于一个核心逻辑：在到期之前，股票价格仍有可能朝着对期权持有者有利的方向变动，这种可能性本身就具有经济价值。</p>
+                <p><strong>时间价值的衰减特性</strong>：时间价值具有显著的衰减特性，被称为"Theta衰减"。这种衰减并非线性，而是呈现加速特征，距离到期日越近，衰减速度越快。在最后30天内，时间价值衰减速度显著加快，最后一周的衰减最为剧烈。这种特性对期权买方不利，但为期权卖方提供了获利机会。</p>
+                <p><strong>时间价值的分布规律</strong>：平值期权（ATM）的时间价值最高，因为此时股价变动对期权价值的影响最大。随着期权偏离平值状态，时间价值逐渐降低。深度实值期权的时间价值较少，因为其价值主要由内在价值构成；深度虚值期权的时间价值也较少，因为在剩余时间内转为实值的概率较低。</p>
+                <p><strong>波动率对时间价值的影响</strong>：隐含波动率是时间价值的核心驱动因素。高波动率环境下，股价大幅变动的可能性增加，期权获得更高内在价值的机会也相应提高，因此时间价值上升。相反，低波动率环境下时间价值下降。这种关系在重大事件（如财报发布）前后表现得特别明显，事件前波动率升高推高时间价值，事件后波动率下降导致时间价值快速衰减。</p>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">期权价值构成可视化分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">以下图表展示不同股价下期权的内在价值与时间价值分布：</p>
+                <canvas class="chart-canvas" id="valueChart" width="700" height="400"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--intrinsic-color);">■</span> 内在价值
+                    <span style="margin-left: 2rem; color: var(--time-color);">■</span> 时间价值
+                    <span style="margin-left: 2rem; color: var(--primary-color);">■</span> 期权总价值
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>影响时间价值的关键因素</h3>
+                <div class="factors-grid">
+                    <div class="factor-item">
+                        <div class="factor-title">⏰ 剩余到期时间</div>
+                        <div class="factor-description">时间越长，期权获得有利变动的机会越多，时间价值越高。但衰减速度在最后30天内加快。</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-title">📊 隐含波动率</div>
+                        <div class="factor-description">波动率越高，股价大幅变动的可能性越大，时间价值越高。是时间价值的最重要驱动因素。</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-title">💰 距离平值程度</div>
+                        <div class="factor-description">平值期权时间价值最高，偏离平值越远，时间价值越低。ATM期权是时间价值的峰值点。</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-title">📈 无风险利率</div>
+                        <div class="factor-description">利率上升会略微增加看涨期权的时间价值，降低看跌期权的时间价值，但影响相对较小。</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-title">💵 股息收益率</div>
+                        <div class="factor-description">高股息率会降低看涨期权的时间价值，增加看跌期权的时间价值，特别在除息日前后明显。</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-title">🎯 市场情绪</div>
+                        <div class="factor-description">市场恐慌时波动率飙升推高时间价值，平静市场中时间价值相对较低。VIX指数是重要参考。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>价值构成的实战应用策略</h3>
+                <p><strong>买入策略的价值分析</strong>：购买期权时，投资者需要同时考虑内在价值和时间价值的成本。购买深度实值期权主要是为了获得内在价值保护，适合确定性较高的投资；购买虚值期权主要是看中其杠杆效应，但需要承担时间价值全部衰减的风险。平值期权在内在价值保护和杠杆效应之间取得平衡，是最受欢迎的选择。</p>
+                <p><strong>卖出策略的价值考量</strong>：期权卖方的主要收益来源是时间价值的衰减。卖出高时间价值的期权可以获得更多的权利金收入，但也承担更大的风险。最佳的卖出时机通常是隐含波动率较高、时间价值丰富的时候。距离到期30-60天是卖出期权的最佳时间窗口，此时时间价值衰减开始加速但仍有足够的缓冲。</p>
+                <p><strong>滚仓策略的价值管理</strong>：当期权接近到期、时间价值快速衰减时，可以考虑滚仓操作。将即将到期的期权平仓，同时建立新的较远到期日的期权头寸。这种操作可以有效管理时间价值风险，延长策略的有效期，但需要支付额外的交易成本和可能的时间价值损失。</p>
+                <p><strong>组合策略中的价值配置</strong>：在复杂的期权组合策略中，不同期权的价值构成应该互补。例如，在跨式策略中，两个期权的时间价值会同时衰减，需要足够的波动率来克服这种衰减；在价差策略中，可以通过卖出高时间价值期权、买入低时间价值期权来降低净时间价值成本，提高策略的胜率和盈亏比。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "看涨期权的内在价值如何计算？",
+                options: [
+                    "行权价 - 股票价格",
+                    "max(股票价格 - 行权价, 0)",
+                    "期权价格 - 时间价值",
+                    "股票价格 + 行权价"
+                ],
+                correct: 1,
+                explanation: "看涨期权的内在价值 = max(股票价格 - 行权价, 0)。只有当股票价格高于行权价时，看涨期权才有内在价值。"
+            },
+            {
+                question: "哪种期权的时间价值通常最高？",
+                options: [
+                    "深度实值期权",
+                    "深度虚值期权",
+                    "平值期权",
+                    "所有期权时间价值相同"
+                ],
+                correct: 2,
+                explanation: "平值期权（ATM）的时间价值通常最高，因为此时股价变动对期权价值的影响最大，期权具有最大的获利潜力。"
+            },
+            {
+                question: "时间价值衰减速度在什么时候最快？",
+                options: [
+                    "刚开始交易时",
+                    "距离到期90天时",
+                    "距离到期最后30天内",
+                    "波动率上升时"
+                ],
+                correct: 2,
+                explanation: "时间价值衰减在距离到期最后30天内速度最快，特别是最后一周衰减最为剧烈，这被称为'时间价值加速衰减'。"
+            },
+            {
+                question: "以下哪个因素对时间价值影响最大？",
+                options: [
+                    "股息收益率",
+                    "无风险利率",
+                    "隐含波动率",
+                    "股票价格"
+                ],
+                correct: 2,
+                explanation: "隐含波动率是影响时间价值最重要的因素。波动率越高，股价大幅变动的可能性越大，期权获得更多价值的机会也越多。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawValueChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '恭喜您，成绩优秀！' : 
+                         percentage >= 60 ? '成绩良好，继续加油！' : 
+                         '需要更多的学习和练习。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawValueChart() {
+            const canvas = document.getElementById('valueChart');
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 60;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 20, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 30, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('价值', 0, 0);
+            ctx.restore();
+
+            // Option parameters
+            const strike = 100;
+            const timeValue = 5;
+            const minPrice = 80;
+            const maxPrice = 120;
+
+            // Draw intrinsic value line
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            for (let price = minPrice; price <= maxPrice; price += 1) {
+                const intrinsicValue = Math.max(price - strike, 0);
+                const x = padding + (price - minPrice) / (maxPrice - minPrice) * chartWidth;
+                const y = canvas.height - padding - (intrinsicValue / 25) * chartHeight;
+
+                if (price === minPrice) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw time value area
+            ctx.fillStyle = 'rgba(139, 92, 246, 0.3)';
+            ctx.beginPath();
+
+            for (let price = minPrice; price <= maxPrice; price += 1) {
+                const intrinsicValue = Math.max(price - strike, 0);
+                const currentTimeValue = timeValue * Math.exp(-Math.pow((price - strike) / 20, 2));
+                const totalValue = intrinsicValue + currentTimeValue;
+
+                const x = padding + (price - minPrice) / (maxPrice - minPrice) * chartWidth;
+                const y1 = canvas.height - padding - (intrinsicValue / 25) * chartHeight;
+                const y2 = canvas.height - padding - (totalValue / 25) * chartHeight;
+
+                if (price === minPrice) {
+                    ctx.moveTo(x, y1);
+                }
+                ctx.lineTo(x, y2);
+            }
+
+            for (let price = maxPrice; price >= minPrice; price -= 1) {
+                const intrinsicValue = Math.max(price - strike, 0);
+                const x = padding + (price - minPrice) / (maxPrice - minPrice) * chartWidth;
+                const y = canvas.height - padding - (intrinsicValue / 25) * chartHeight;
+                ctx.lineTo(x, y);
+            }
+
+            ctx.closePath();
+            ctx.fill();
+
+            // Draw total option value line
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            for (let price = minPrice; price <= maxPrice; price += 1) {
+                const intrinsicValue = Math.max(price - strike, 0);
+                const currentTimeValue = timeValue * Math.exp(-Math.pow((price - strike) / 20, 2));
+                const totalValue = intrinsicValue + currentTimeValue;
+
+                const x = padding + (price - minPrice) / (maxPrice - minPrice) * chartWidth;
+                const y = canvas.height - padding - (totalValue / 25) * chartHeight;
+
+                if (price === minPrice) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Add grid lines
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            // Vertical grid lines (stock prices)
+            for (let price = 80; price <= 120; price += 10) {
+                const x = padding + (price - minPrice) / (maxPrice - minPrice) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                // Price labels
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Horizontal grid lines (values)
+            for (let value = 0; value <= 25; value += 5) {
+                const y = canvas.height - padding - (value / 25) * chartHeight;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+
+                // Value labels
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'right';
+                ctx.fillText('$' + value, padding - 10, y + 5);
+            }
+
+            ctx.setLineDash([]);
+
+            // Strike price line
+            const strikeX = padding + (strike - minPrice) / (maxPrice - minPrice) * chartWidth;
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(strikeX, padding);
+            ctx.lineTo(strikeX, canvas.height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Strike price label
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('行权价 $' + strike, strikeX, padding - 10);
+        }
+    </script>
+</body>
+</html>

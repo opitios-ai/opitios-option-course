@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第30课：价差策略综合 - OPITIOS期权课程</title>
+    <meta name="description" content="综合学习各种价差策略，掌握不同市场条件下的价差策略选择和执行技巧。">
+    <meta name="keywords" content="价差策略,期权价差,期权策略,期权交易,期权投资">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-30-spread-strategies-comprehensive.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-30-spread-strategies-comprehensive.html">
+    <meta property="og:title" content="第30课：价差策略综合 - OPITIOS期权课程">
+    <meta property="og:description" content="综合学习各种价差策略，掌握不同市场条件下的价差策略选择和执行技巧。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-30-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-30-spread-strategies-comprehensive.html">
+    <meta property="twitter:title" content="第30课：价差策略综合 - OPITIOS期权课程">
+    <meta property="twitter:description" content="综合学习各种价差策略，掌握不同市场条件下的价差策略选择和执行技巧。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-30-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第30课：价差策略综合",
+        "description": "综合学习各种价差策略，掌握不同市场条件下的价差策略选择和执行技巧。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-30-spread-strategies-comprehensive.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第30课：价差策略综合应用与最优选择 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --master-color: #8b5cf6;
+            --synthesis-color: #3b82f6;
+            --bull-color: #10b981;
+            --bear-color: #ef4444;
+            --calendar-color: #f59e0b;
+            --diagonal-color: #06b6d4;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--master-color) 0%, var(--synthesis-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .completion-banner {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-left: 4px solid var(--master-color);
+            border-radius: 8px;
+            padding: 3rem;
+            margin: 2rem 0;
+            color: var(--master-color);
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .strategy-synthesis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .synthesis-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .synthesis-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .synthesis-card.bull-spread {
+            border-color: var(--bull-color);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .synthesis-card.bull-spread:hover {
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .synthesis-card.bear-spread {
+            border-color: var(--bear-color);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .synthesis-card.bear-spread:hover {
+            box-shadow: 0 15px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        .synthesis-card.calendar-spread {
+            border-color: var(--calendar-color);
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .synthesis-card.calendar-spread:hover {
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.2);
+        }
+
+        .synthesis-card.diagonal-spread {
+            border-color: var(--diagonal-color);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .synthesis-card.diagonal-spread:hover {
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .synthesis-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .synthesis-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--bull-color);
+        }
+
+        .synthesis-card.bear-spread .synthesis-title {
+            color: var(--bear-color);
+        }
+
+        .synthesis-card.calendar-spread .synthesis-title {
+            color: var(--calendar-color);
+        }
+
+        .synthesis-card.diagonal-spread .synthesis-title {
+            color: var(--diagonal-color);
+        }
+
+        .synthesis-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .master-selector {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--master-color);
+        }
+
+        .selector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .selector-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .selector-label {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: var(--master-color);
+        }
+
+        .selector-input, .selector-select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--master-color);
+            border-radius: 8px;
+            padding: 0.8rem;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .recommendation-panel {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 2px solid var(--primary-color);
+            display: none;
+        }
+
+        .recommendation-result {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .recommended-strategy {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .detail-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .detail-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--synthesis-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .performance-matrix {
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--synthesis-color);
+        }
+
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .performance-table th {
+            background: var(--synthesis-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .performance-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .performance-excellent {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .performance-good {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .performance-fair {
+            background: rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            font-weight: 600;
+        }
+
+        .performance-poor {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+            font-weight: 600;
+        }
+
+        .advanced-portfolio {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .portfolio-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .portfolio-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-type {
+            color: var(--master-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .portfolio-card.bull-focused .portfolio-type {
+            color: var(--bull-color);
+        }
+
+        .portfolio-card.bear-focused .portfolio-type {
+            color: var(--bear-color);
+        }
+
+        .portfolio-card.time-focused .portfolio-type {
+            color: var(--calendar-color);
+        }
+
+        .portfolio-card.hybrid-focused .portfolio-type {
+            color: var(--diagonal-color);
+        }
+
+        .portfolio-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .mastery-assessment {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--master-color);
+        }
+
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .assessment-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .assessment-label {
+            color: var(--master-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .assessment-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .assessment-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .strategy-synthesis {
+                grid-template-columns: 1fr;
+            }
+            .selector-grid {
+                grid-template-columns: 1fr;
+            }
+            .advanced-portfolio {
+                grid-template-columns: 1fr;
+            }
+            .recommendation-details {
+                grid-template-columns: 1fr;
+            }
+            .assessment-grid {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第30课：价差策略综合应用与最优选择</h1>
+                <div class="strategy-badge">🎓 价差策略大师 · 综合应用精通</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">价差策略篇完美收官：四大策略的融汇贯通与实战应用</p>
+            </section>
+
+            <div class="completion-banner">
+                🎉 重大里程碑达成！您即将完成价差策略篇（第26-30课）的全部学习，掌握牛市、熊市、日历、对角四大价差策略的精髓！
+            </div>
+
+            <div class="card">
+                <h3>价差策略体系的完整架构</h3>
+                <p>经过五课的系统学习，我们已经完成了期权价差策略的完整知识体系构建。从第26课的牛市价差策略开始，我们学习了如何在看涨预期下通过买入低执行价期权、卖出高执行价期权来实现风险可控的获利；第27课的熊市价差策略让我们掌握了在看跌预期下的相应做空技巧；第28课的日历价差策略引入了时间维度，让我们学会了如何利用不同到期日期权的时间价值衰减差异进行套利；第29课的对角价差策略则将执行价格和时间两个维度结合，展现了期权策略设计的最高艺术。</p>
+
+                <p><strong>四大价差策略的内在逻辑关系</strong>：这四种价差策略并非孤立存在，而是构成了一个完整的策略矩阵。垂直价差（牛市和熊市价差）专注于方向性投资，通过不同执行价格的组合实现风险收益的优化；水平价差（日历价差）专注于时间套利，通过不同到期日的组合从时间价值衰减中获利；对角价差则是前两者的综合，既有方向性特征又有时间套利属性。理解这种内在逻辑关系对于在复杂的市场环境中选择最适合的策略至关重要。</p>
+
+                <p><strong>策略选择的多维决策框架</strong>：选择最优价差策略需要综合考虑多个维度的因素。市场预期方向决定了是选择牛市价差还是熊市价差；预期变动的幅度和时间决定了是选择垂直价差还是时间价差；波动率环境影响策略的成本和收益潜力；流动性条件影响策略的执行难度和成本；个人的风险承受能力和资金规模决定了策略的具体参数设置。只有综合考虑这些因素，才能做出最优的策略选择。</p>
+
+                <p><strong>从单一策略向组合策略的进阶</strong>：掌握了四大价差策略后，投资者可以进一步学习如何将多个价差策略组合使用，构建更复杂的投资组合。例如，可以同时使用牛市价差和熊市价差构建市场中性组合；可以将日历价差与垂直价差结合，创造出具有时间衰减优势的方向性策略；也可以通过多个对角价差的组合，构建适应不同市场情景的动态投资组合。这种组合应用是期权交易的高级境界，为后续的波动率交易策略学习奠定了基础。</p>
+            </div>
+
+            <section class="strategy-synthesis">
+                <div class="synthesis-card bull-spread">
+                    <span class="synthesis-icon">📈</span>
+                    <div class="synthesis-title">牛市价差策略</div>
+                    <div class="synthesis-description">
+                        第26课精通：借方和贷方两种实现方式，风险可控的看涨获利，适合温和到中等强度的牛市预期。
+                    </div>
+                </div>
+
+                <div class="synthesis-card bear-spread">
+                    <span class="synthesis-icon">📉</span>
+                    <div class="synthesis-title">熊市价差策略</div>
+                    <div class="synthesis-description">
+                        第27课精通：看跌借方和看涨贷方实现，安全做空工具，在下跌市场中实现风险可控的获利。
+                    </div>
+                </div>
+
+                <div class="synthesis-card calendar-spread">
+                    <span class="synthesis-icon">⏰</span>
+                    <div class="synthesis-title">日历价差策略</div>
+                    <div class="synthesis-description">
+                        第28课精通：时间套利专家工具，通过不同到期日的组合从时间价值衰减差异中获利。
+                    </div>
+                </div>
+
+                <div class="synthesis-card diagonal-spread">
+                    <span class="synthesis-icon">🔄</span>
+                    <div class="synthesis-title">对角价差策略</div>
+                    <div class="synthesis-description">
+                        第29课精通：高级混合策略，结合方向性和时间套利，提供最高的策略灵活性和精细调节能力。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">四大价差策略收益特征对比</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">综合展示四种价差策略在不同股价水平下的收益表现：</p>
+                <canvas class="chart-canvas" id="comprehensiveSpreadChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--bull-color);">■</span> 牛市价差
+                    <span style="margin-left: 2rem; color: var(--bear-color);">■</span> 熊市价差
+                    <span style="margin-left: 2rem; color: var(--calendar-color);">■</span> 日历价差
+                    <span style="margin-left: 2rem; color: var(--diagonal-color);">■</span> 对角价差
+                </div>
+            </section>
+
+            <div class="master-selector">
+                <h4 style="color: var(--master-color); text-align: center; margin-bottom: 2rem;">智能价差策略选择器</h4>
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">基于您的市场预期和投资目标，为您推荐最优的价差策略：</p>
+
+                <div class="selector-grid">
+                    <div class="selector-item">
+                        <label class="selector-label">市场方向预期</label>
+                        <select class="selector-select" id="marketDirection">
+                            <option value="strongly-bullish">强烈看涨</option>
+                            <option value="moderately-bullish">温和看涨</option>
+                            <option value="neutral" selected>中性/横盘</option>
+                            <option value="moderately-bearish">温和看跌</option>
+                            <option value="strongly-bearish">强烈看跌</option>
+                        </select>
+                    </div>
+
+                    <div class="selector-item">
+                        <label class="selector-label">投资时间视野</label>
+                        <select class="selector-select" id="timeHorizon">
+                            <option value="short">短期（1-2个月）</option>
+                            <option value="medium" selected>中期（2-4个月）</option>
+                            <option value="long">长期（4-6个月）</option>
+                        </select>
+                    </div>
+
+                    <div class="selector-item">
+                        <label class="selector-label">波动率环境</label>
+                        <select class="selector-select" id="volatilityEnv">
+                            <option value="low">低波动率</option>
+                            <option value="normal" selected>正常波动率</option>
+                            <option value="high">高波动率</option>
+                        </select>
+                    </div>
+
+                    <div class="selector-item">
+                        <label class="selector-label">风险承受能力</label>
+                        <select class="selector-select" id="riskTolerance">
+                            <option value="conservative">保守型</option>
+                            <option value="moderate" selected>稳健型</option>
+                            <option value="aggressive">积极型</option>
+                        </select>
+                    </div>
+
+                    <div class="selector-item">
+                        <label class="selector-label">资金规模</label>
+                        <select class="selector-select" id="capitalSize">
+                            <option value="small">小额（<$10,000）</option>
+                            <option value="medium" selected>中等（$10,000-$50,000）</option>
+                            <option value="large">大额（>$50,000）</option>
+                        </select>
+                    </div>
+
+                    <div class="selector-item">
+                        <label class="selector-label">策略偏好</label>
+                        <select class="selector-select" id="strategyPreference">
+                            <option value="directional">方向性策略</option>
+                            <option value="time-arbitrage">时间套利</option>
+                            <option value="hybrid" selected>混合策略</option>
+                            <option value="conservative">稳健策略</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button onclick="recommendStrategy()" style="background: linear-gradient(135deg, var(--master-color) 0%, #7c3aed 100%); color: white; border: none; padding: 1.5rem 3rem; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer;">
+                        获取智能推荐
+                    </button>
+                </div>
+
+                <div class="recommendation-panel" id="recommendationPanel">
+                    <div class="recommendation-result">
+                        <div class="recommended-strategy" id="recommendedStrategy">牛市价差策略</div>
+                        <p style="color: var(--text-secondary); margin-bottom: 2rem;" id="recommendationReason">基于您的市场预期和风险偏好推荐</p>
+
+                        <div class="recommendation-details" id="recommendationDetails">
+                            <!-- Details populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>价差策略性能对比矩阵</h3>
+                <div class="performance-matrix">
+                    <h4 style="color: var(--synthesis-color); text-align: center; margin-bottom: 2rem;">四大策略在不同市场环境下的表现评估</h4>
+                    <table class="performance-table">
+                        <thead>
+                            <tr>
+                                <th>市场环境/策略</th>
+                                <th>牛市价差</th>
+                                <th>熊市价差</th>
+                                <th>日历价差</th>
+                                <th>对角价差</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>强烈牛市</strong></td>
+                                <td class="performance-excellent">优秀</td>
+                                <td class="performance-poor">较差</td>
+                                <td class="performance-fair">一般</td>
+                                <td class="performance-good">良好</td>
+                            </tr>
+                            <tr>
+                                <td><strong>温和牛市</strong></td>
+                                <td class="performance-good">良好</td>
+                                <td class="performance-poor">较差</td>
+                                <td class="performance-good">良好</td>
+                                <td class="performance-excellent">优秀</td>
+                            </tr>
+                            <tr>
+                                <td><strong>横盘市场</strong></td>
+                                <td class="performance-fair">一般</td>
+                                <td class="performance-fair">一般</td>
+                                <td class="performance-excellent">优秀</td>
+                                <td class="performance-good">良好</td>
+                            </tr>
+                            <tr>
+                                <td><strong>温和熊市</strong></td>
+                                <td class="performance-poor">较差</td>
+                                <td class="performance-good">良好</td>
+                                <td class="performance-good">良好</td>
+                                <td class="performance-excellent">优秀</td>
+                            </tr>
+                            <tr>
+                                <td><strong>强烈熊市</strong></td>
+                                <td class="performance-poor">较差</td>
+                                <td class="performance-excellent">优秀</td>
+                                <td class="performance-fair">一般</td>
+                                <td class="performance-good">良好</td>
+                            </tr>
+                            <tr>
+                                <td><strong>高波动率</strong></td>
+                                <td class="performance-good">良好</td>
+                                <td class="performance-good">良好</td>
+                                <td class="performance-fair">一般</td>
+                                <td class="performance-good">良好</td>
+                            </tr>
+                            <tr>
+                                <td><strong>低波动率</strong></td>
+                                <td class="performance-fair">一般</td>
+                                <td class="performance-fair">一般</td>
+                                <td class="performance-excellent">优秀</td>
+                                <td class="performance-good">良好</td>
+                            </tr>
+                            <tr>
+                                <td><strong>时间衰减环境</strong></td>
+                                <td class="performance-fair">一般</td>
+                                <td class="performance-fair">一般</td>
+                                <td class="performance-excellent">优秀</td>
+                                <td class="performance-excellent">优秀</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>高级价差策略组合应用</h3>
+                <div class="advanced-portfolio">
+                    <div class="portfolio-card bull-focused">
+                        <div class="portfolio-title">📈 渐进式牛市组合</div>
+                        <div class="portfolio-type">牛市价差 + 对角价差：分阶段看涨</div>
+                        <div class="portfolio-description">
+                            结合近期牛市价差和远期对角价差，在不同时间阶段捕捉上涨机会，既有即期收益又有远期潜力。
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card bear-focused">
+                        <div class="portfolio-title">📉 结构性做空组合</div>
+                        <div class="portfolio-type">熊市价差 + 对角价差：多层做空</div>
+                        <div class="portfolio-description">
+                            通过多重执行价格和时间的组合，构建分层做空策略，在不同下跌阶段都能获得收益。
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card time-focused">
+                        <div class="portfolio-title">⏰ 时间套利组合</div>
+                        <div class="portfolio-type">日历价差 + 滚动策略：持续套利</div>
+                        <div class="portfolio-description">
+                            通过定期滚动日历价差策略，持续从时间价值衰减中获利，构建稳定的现金流来源。
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card hybrid-focused">
+                        <div class="portfolio-title">🔄 市场中性组合</div>
+                        <div class="portfolio-type">牛市价差 + 熊市价差：双向对冲</div>
+                        <div class="portfolio-description">
+                            同时建立牛市和熊市价差，构建市场中性组合，从波动率和时间价值中获利而不依赖方向。
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card bull-focused">
+                        <div class="portfolio-title">🎯 事件驱动组合</div>
+                        <div class="portfolio-type">多策略动态切换：适应性组合</div>
+                        <div class="portfolio-description">
+                            根据不同的市场事件和环境变化，在四种价差策略间动态切换，保持策略的适应性和优化性。
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card hybrid-focused">
+                        <div class="portfolio-title">💰 收益增强组合</div>
+                        <div class="portfolio-type">组合策略系统化应用：收益最大化</div>
+                        <div class="portfolio-description">
+                            系统化运用四种价差策略，通过科学的资金分配和风险控制，实现投资组合收益的最大化。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>价差策略大师级技能评估</h3>
+                <div class="mastery-assessment">
+                    <h4 style="color: var(--master-color); text-align: center; margin-bottom: 2rem;">您的价差策略精通程度评估</h4>
+                    <div class="assessment-grid">
+                        <div class="assessment-item">
+                            <div class="assessment-label">理论掌握程度</div>
+                            <div class="assessment-score" id="theoryScore">95</div>
+                            <div class="assessment-description">四大策略理论精通</div>
+                        </div>
+
+                        <div class="assessment-item">
+                            <div class="assessment-label">实战应用能力</div>
+                            <div class="assessment-score" id="practicalScore">88</div>
+                            <div class="assessment-description">策略执行与管理</div>
+                        </div>
+
+                        <div class="assessment-item">
+                            <div class="assessment-label">风险管理水平</div>
+                            <div class="assessment-score" id="riskScore">92</div>
+                            <div class="assessment-description">多维风险控制能力</div>
+                        </div>
+
+                        <div class="assessment-item">
+                            <div class="assessment-label">策略选择能力</div>
+                            <div class="assessment-score" id="selectionScore">90</div>
+                            <div class="assessment-description">最优策略决策框架</div>
+                        </div>
+
+                        <div class="assessment-item">
+                            <div class="assessment-label">组合应用技巧</div>
+                            <div class="assessment-score" id="portfolioScore">85</div>
+                            <div class="assessment-description">多策略综合运用</div>
+                        </div>
+
+                        <div class="assessment-item">
+                            <div class="assessment-label">整体精通等级</div>
+                            <div class="assessment-score" id="overallScore">A+</div>
+                            <div class="assessment-description">价差策略大师级</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button onclick="updateMasteryAssessment()" style="background: linear-gradient(135deg, var(--master-color) 0%, #7c3aed 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+                            更新技能评估
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>价差策略的未来发展与高级应用</h3>
+                <p><strong>量化交易与价差策略的结合</strong>：随着量化交易技术的发展，价差策略正在与算法交易、机器学习等技术深度结合。现代价差策略不再依赖人工判断，而是通过大数据分析历史价格、波动率、相关性等信息，自动识别最优的价差机会。人工智能可以实时监控市场变化，动态调整策略参数，实现价差策略的自动化执行。这种技术进步使得价差策略能够处理更复杂的市场环境，捕捉更微妙的套利机会。</p>
+
+                <p><strong>多资产价差策略的创新应用</strong>：传统价差策略主要应用于单一标的的期权，但现代金融市场为多资产价差策略提供了广阔空间。投资者可以构建跨股票、跨行业、跨市场的价差策略，利用不同资产间的相关性和价差进行套利。例如，可以在科技股和传统股之间建立价差策略，在美股和中概股之间构建跨市场价差，在不同到期月份的VIX期权间建立波动率价差策略。这种多资产应用大大扩展了价差策略的应用范围。</p>
+
+                <p><strong>ESG投资与可持续价差策略</strong>：随着ESG（环境、社会、治理）投资理念的兴起，价差策略也在向可持续投资方向发展。投资者可以构建ESG主题的价差策略，通过做多ESG表现优异的公司、做空ESG表现较差的公司来获利。这种策略不仅能够获得经济收益，还能促进企业改善ESG表现，实现投资的社会价值。同时，气候变化、能源转型等长期趋势也为价差策略提供了新的应用场景。</p>
+
+                <p><strong>向波动率交易策略的自然延伸</strong>：掌握了价差策略后，投资者已经具备了学习更高级策略的基础。波动率交易策略（如跨式策略、宽跨式策略、铁鹰策略等）是价差策略的自然延伸，它们更加注重对隐含波动率和实际波动率的分析和利用。这些策略通常涉及更多的期权头寸，需要更精细的风险管理和更深入的市场理解。价差策略的学习为后续的波动率交易奠定了坚实基础，是期权交易技能提升的必经之路。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">价差策略篇综合测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "在温和牛市环境中，哪种价差策略通常表现最佳？",
+                options: [
+                    "牛市价差策略",
+                    "熊市价差策略", 
+                    "日历价差策略",
+                    "对角价差策略"
+                ],
+                correct: 3,
+                explanation: "在温和牛市环境中，对角价差策略通常表现最佳，因为它既能从适度的价格上涨中获利，又能从时间价值衰减中获得额外收益。"
+            },
+            {
+                question: "四大价差策略中，哪种策略最适合横盘市场？",
+                options: [
+                    "牛市价差策略",
+                    "熊市价差策略",
+                    "日历价差策略",
+                    "对角价差策略"
+                ],
+                correct: 2,
+                explanation: "日历价差策略最适合横盘市场，因为它主要从时间价值衰减中获利，而不依赖于股价的方向性移动。"
+            },
+            {
+                question: "在选择最优价差策略时，最重要的考虑因素是什么？",
+                options: [
+                    "交易成本",
+                    "市场预期和时间视野",
+                    "期权流动性",
+                    "保证金要求"
+                ],
+                correct: 1,
+                explanation: "市场预期和时间视野是选择最优价差策略的最重要因素，它们决定了策略的基本方向和时间特征。"
+            },
+            {
+                question: "价差策略的最大优势是什么？",
+                options: [
+                    "无限收益潜力",
+                    "不需要保证金",
+                    "风险和收益都有明确界限",
+                    "适合所有市场环境"
+                ],
+                correct: 2,
+                explanation: "价差策略的最大优势是风险和收益都有明确界限，使投资者能够精确控制风险敞口和预期收益。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawComprehensiveSpreadChart();
+            updateMasteryAssessment();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您完全精通价差策略体系！' : 
+                         percentage >= 60 ? '良好的掌握程度，建议复习薄弱环节。' : 
+                         '需要进一步学习和练习价差策略的应用。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawComprehensiveSpreadChart() {
+            const canvas = document.getElementById('comprehensiveSpreadChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis (profit/loss line)
+            const zeroLine = canvas.height - padding - chartHeight / 2;
+            ctx.moveTo(padding, zeroLine);
+            ctx.lineTo(canvas.width - padding, zeroLine);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            const minStock = 80;
+            const maxStock = 120;
+            const steps = 100;
+
+            // Draw Bull Spread
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff = Math.max(0, Math.min(stockPrice - 95, 10)) - 4; // Simplified bull spread
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw Bear Spread
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff = Math.max(0, Math.min(105 - stockPrice, 10)) - 4; // Simplified bear spread
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw Calendar Spread (simplified)
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff = 3 - Math.abs(stockPrice - 100) / 10; // Simplified calendar spread
+                payoff = Math.max(-2, Math.min(payoff, 4));
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw Diagonal Spread (simplified)
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([8, 4]);
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff = (stockPrice - 95) / 3 - 2 + 2 / (1 + Math.abs(stockPrice - 100) / 10); // Simplified diagonal
+                payoff = Math.max(-3, Math.min(payoff, 6));
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            for (let price = 85; price <= 115; price += 5) {
+                const x = padding + ((price - minStock) / (maxStock - minStock)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('损益', 0, 0);
+            ctx.restore();
+
+            ctx.setLineDash([]);
+        }
+
+        function recommendStrategy() {
+            const direction = document.getElementById('marketDirection').value;
+            const timeHorizon = document.getElementById('timeHorizon').value;
+            const volatility = document.getElementById('volatilityEnv').value;
+            const riskTolerance = document.getElementById('riskTolerance').value;
+            const capitalSize = document.getElementById('capitalSize').value;
+            const preference = document.getElementById('strategyPreference').value;
+
+            let recommendation = {
+                strategy: '',
+                reason: '',
+                riskLevel: '',
+                timeFrame: '',
+                successProbability: '',
+                keyAdvantage: ''
+            };
+
+            // Simple recommendation logic
+            if (direction === 'strongly-bullish') {
+                recommendation.strategy = '牛市价差策略';
+                recommendation.reason = '强烈看涨预期下的最佳选择';
+                recommendation.riskLevel = '中等风险';
+                recommendation.successProbability = '75%';
+            } else if (direction === 'strongly-bearish') {
+                recommendation.strategy = '熊市价差策略';
+                recommendation.reason = '强烈看跌预期的专业做空工具';
+                recommendation.riskLevel = '中等风险';
+                recommendation.successProbability = '72%';
+            } else if (direction === 'neutral' && timeHorizon === 'medium') {
+                recommendation.strategy = '日历价差策略';
+                recommendation.reason = '横盘市场的时间套利专家';
+                recommendation.riskLevel = '较低风险';
+                recommendation.successProbability = '68%';
+            } else {
+                recommendation.strategy = '对角价差策略';
+                recommendation.reason = '复杂市场环境的混合策略';
+                recommendation.riskLevel = '中高风险';
+                recommendation.successProbability = '70%';
+            }
+
+            // Set time frame
+            const timeFrames = {
+                'short': '1-2个月',
+                'medium': '2-4个月',
+                'long': '4-6个月'
+            };
+            recommendation.timeFrame = timeFrames[timeHorizon];
+
+            // Set key advantage
+            const advantages = {
+                '牛市价差策略': '风险可控的看涨获利',
+                '熊市价差策略': '安全的做空工具',
+                '日历价差策略': '时间套利优势',
+                '对角价差策略': '高度灵活的混合策略'
+            };
+            recommendation.keyAdvantage = advantages[recommendation.strategy];
+
+            // Display recommendation
+            document.getElementById('recommendedStrategy').textContent = recommendation.strategy;
+            document.getElementById('recommendationReason').textContent = recommendation.reason;
+            document.getElementById('recommendationDetails').innerHTML = `
+                <div class="detail-item">
+                    <div class="detail-value">${recommendation.riskLevel}</div>
+                    <div class="detail-label">风险等级</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-value">${recommendation.timeFrame}</div>
+                    <div class="detail-label">建议时间框架</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-value">${recommendation.successProbability}</div>
+                    <div class="detail-label">成功概率估算</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-value">${recommendation.keyAdvantage}</div>
+                    <div class="detail-label">核心优势</div>
+                </div>
+            `;
+
+            document.getElementById('recommendationPanel').style.display = 'block';
+        }
+
+        function updateMasteryAssessment() {
+            // Simulate progressive scoring based on course completion
+            const scores = {
+                theory: 92 + Math.floor(Math.random() * 6),
+                practical: 85 + Math.floor(Math.random() * 8),
+                risk: 89 + Math.floor(Math.random() * 7),
+                selection: 87 + Math.floor(Math.random() * 8),
+                portfolio: 82 + Math.floor(Math.random() * 10)
+            };
+
+            document.getElementById('theoryScore').textContent = scores.theory;
+            document.getElementById('practicalScore').textContent = scores.practical;
+            document.getElementById('riskScore').textContent = scores.risk;
+            document.getElementById('selectionScore').textContent = scores.selection;
+            document.getElementById('portfolioScore').textContent = scores.portfolio;
+
+            // Calculate overall grade
+            const average = (scores.theory + scores.practical + scores.risk + scores.selection + scores.portfolio) / 5;
+            let grade = '';
+            if (average >= 95) grade = 'A++';
+            else if (average >= 90) grade = 'A+';
+            else if (average >= 85) grade = 'A';
+            else if (average >= 80) grade = 'A-';
+            else grade = 'B+';
+
+            document.getElementById('overallScore').textContent = grade;
+        }
+    </script>
+</body>
+</html>

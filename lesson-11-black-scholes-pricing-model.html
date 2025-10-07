@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第11课：Black-Scholes定价模型基础 - OPITIOS期权课程</title>
+    <meta name="description" content="深入学习Black-Scholes期权定价模型，掌握期权理论定价方法，提高期权分析能力。">
+    <meta name="keywords" content="Black-Scholes模型,期权定价模型,期权理论定价,期权分析,期权计算">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-11-black-scholes-pricing-model.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-11-black-scholes-pricing-model.html">
+    <meta property="og:title" content="第11课：Black-Scholes定价模型基础 - OPITIOS期权课程">
+    <meta property="og:description" content="深入学习Black-Scholes期权定价模型，掌握期权理论定价方法，提高期权分析能力。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-11-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-11-black-scholes-pricing-model.html">
+    <meta property="twitter:title" content="第11课：Black-Scholes定价模型基础 - OPITIOS期权课程">
+    <meta property="twitter:description" content="深入学习Black-Scholes期权定价模型，掌握期权理论定价方法，提高期权分析能力。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-11-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第11课：Black-Scholes定价模型基础",
+        "description": "深入学习Black-Scholes期权定价模型，掌握期权理论定价方法，提高期权分析能力。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-11-black-scholes-pricing-model.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第11课：Black-Scholes定价模型基础 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --model-color: #8b5cf6;
+            --formula-color: #06b6d4;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .formula-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--formula-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        .formula-title {
+            color: var(--formula-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .formula-content {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .formula-variables {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+
+        .assumptions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .assumption-item {
+            background: rgba(139, 92, 246, 0.1);
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--model-color);
+        }
+
+        .assumption-title {
+            color: var(--model-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .parameters-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .parameters-table th {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .parameters-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .parameters-table tr:hover td {
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .interactive-calculator {
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--formula-color);
+        }
+
+        .calculator-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            color: var(--formula-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--formula-color);
+            border-radius: 8px;
+            padding: 0.8rem;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--formula-color) 0%, #0891b2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .result-display {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            border: 2px solid var(--primary-color);
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .assumptions-grid {
+                grid-template-columns: 1fr;
+            }
+            .calculator-inputs {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第11课：Black-Scholes定价模型基础</h1>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">现代期权定价理论的基石与实战应用</p>
+            </section>
+
+            <div class="card">
+                <h3>Black-Scholes模型的历史意义</h3>
+                <p>Black-Scholes期权定价模型是现代金融学最重要的理论成就之一，由费舍尔·布莱克（Fischer Black）、迈伦·斯科尔斯（Myron Scholes）和罗伯特·默顿（Robert Merton）在1973年提出。这一突破性理论为期权定价提供了数学基础，使得期权从投机工具转变为精确的风险管理工具，为现代衍生品市场的发展奠定了理论基础。</p>
+
+                <p><strong>理论突破的核心意义</strong>：在Black-Scholes模型出现之前，期权定价主要依赖经验和直觉，缺乏科学的定价标准。该模型通过严格的数学推导，建立了期权价格与标的资产价格、执行价格、到期时间、无风险利率和波动率之间的精确关系。这一理论不仅解决了期权定价问题，更重要的是为整个衍生品定价理论奠定了基础。</p>
+
+                <p><strong>现实应用价值</strong>：Black-Scholes模型的提出直接推动了期权市场的快速发展。芝加哥期权交易所（CBOE）于1973年开始运营，与该模型发表时间几乎同步。交易员和投资者终于有了科学的工具来评估期权的合理价值，这极大提高了市场效率和流动性。该模型也成为现代风险管理的核心工具，广泛应用于投资银行、对冲基金和风险管理部门。</p>
+
+                <p><strong>学术影响与诺贝尔奖</strong>：Black-Scholes模型的影响远超金融学领域，其使用的随机微积分和偏微分方程方法为数量金融学的发展开辟了道路。1997年，迈伦·斯科尔斯和罗伯特·默顿因此获得诺贝尔经济学奖（费舍尔·布莱克已于1995年去世）。这一理论成果被誉为20世纪最重要的金融创新之一，深刻改变了现代金融市场的运作方式。</p>
+            </div>
+
+            <div class="formula-box">
+                <div class="formula-title">Black-Scholes公式（欧式看涨期权）</div>
+                <div class="formula-content">
+                    C = S₀ × N(d₁) - K × e^(-rT) × N(d₂)
+                </div>
+                <div class="formula-content" style="font-size: 1rem; margin-top: 1rem;">
+                    其中：<br>
+                    d₁ = [ln(S₀/K) + (r + σ²/2)T] / (σ√T)<br>
+                    d₂ = d₁ - σ√T
+                </div>
+                <div class="formula-variables">
+                    <strong>变量说明：</strong><br>
+                    C = 期权价格<br>
+                    S₀ = 当前股票价格<br>
+                    K = 执行价格<br>
+                    r = 无风险利率<br>
+                    T = 到期时间（年）<br>
+                    σ = 波动率<br>
+                    N(x) = 标准正态分布累积函数
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>模型核心假设分析</h3>
+                <div class="assumptions-grid">
+                    <div class="assumption-item">
+                        <div class="assumption-title">📊 几何布朗运动</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            股票价格遵循几何布朗运动，价格变化具有随机性且连续。这意味着股票收益率呈正态分布，价格不会出现跳跃性变动。
+                        </p>
+                    </div>
+
+                    <div class="assumption-item">
+                        <div class="assumption-title">⚡ 波动率恒定</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            股票价格波动率在期权存续期内保持恒定。实际市场中波动率会变化，这是模型的重要局限性之一。
+                        </p>
+                    </div>
+
+                    <div class="assumption-item">
+                        <div class="assumption-title">🏦 无风险利率恒定</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            无风险利率在期权存续期内保持恒定且已知。这简化了折现计算，但现实中利率会波动。
+                        </p>
+                    </div>
+
+                    <div class="assumption-item">
+                        <div class="assumption-title">🚫 无股息支付</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            标的股票在期权存续期内不支付股息。对于支付股息的股票，需要对模型进行调整。
+                        </p>
+                    </div>
+
+                    <div class="assumption-item">
+                        <div class="assumption-title">💰 无交易成本</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            市场完全有效，无交易成本、税收或买卖价差。这是理想化假设，实际交易中存在各种成本。
+                        </p>
+                    </div>
+
+                    <div class="assumption-item">
+                        <div class="assumption-title">🔄 可连续交易</div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            可以连续交易股票和期权，市场24小时开放。实际市场有交易时间限制和流动性约束。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Black-Scholes价格敏感性分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">以下图表展示期权价格对不同参数变化的敏感性：</p>
+                <canvas class="chart-canvas" id="bsChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: #3b82f6;">■</span> 股价变化影响
+                    <span style="margin-left: 2rem; color: #10b981;">■</span> 波动率变化影响
+                    <span style="margin-left: 2rem; color: #f59e0b;">■</span> 时间衰减影响
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>模型参数深度解析</h3>
+                <table class="parameters-table">
+                    <thead>
+                        <tr>
+                            <th>参数</th>
+                            <th>符号</th>
+                            <th>作用机制</th>
+                            <th>实际获取方法</th>
+                            <th>敏感性特征</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>当前股价</strong></td>
+                            <td>S₀</td>
+                            <td>直接影响内在价值</td>
+                            <td>实时市场价格</td>
+                            <td>线性正相关</td>
+                        </tr>
+                        <tr>
+                            <td><strong>执行价格</strong></td>
+                            <td>K</td>
+                            <td>决定期权货币性</td>
+                            <td>合约固定条款</td>
+                            <td>线性负相关</td>
+                        </tr>
+                        <tr>
+                            <td><strong>到期时间</strong></td>
+                            <td>T</td>
+                            <td>影响时间价值</td>
+                            <td>计算剩余天数</td>
+                            <td>正相关，非线性</td>
+                        </tr>
+                        <tr>
+                            <td><strong>无风险利率</strong></td>
+                            <td>r</td>
+                            <td>影响现值计算</td>
+                            <td>国债收益率</td>
+                            <td>弱正相关</td>
+                        </tr>
+                        <tr>
+                            <td><strong>波动率</strong></td>
+                            <td>σ</td>
+                            <td>反映价格不确定性</td>
+                            <td>历史/隐含波动率</td>
+                            <td>强正相关</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="interactive-calculator">
+                <h4 style="color: var(--formula-color); text-align: center; margin-bottom: 2rem;">Black-Scholes计算器</h4>
+                <div class="calculator-inputs">
+                    <div class="input-group">
+                        <label for="stockPrice">当前股价 (S₀)</label>
+                        <input type="number" id="stockPrice" value="100" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label for="strikePrice">执行价格 (K)</label>
+                        <input type="number" id="strikePrice" value="100" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label for="timeToExpiry">到期时间（年）(T)</label>
+                        <input type="number" id="timeToExpiry" value="0.25" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label for="riskFreeRate">无风险利率 (r)</label>
+                        <input type="number" id="riskFreeRate" value="0.05" step="0.001">
+                    </div>
+                    <div class="input-group">
+                        <label for="volatility">波动率 (σ)</label>
+                        <input type="number" id="volatility" value="0.2" step="0.01">
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button class="calculate-btn" onclick="calculateBS()">计算期权价格</button>
+                </div>
+                <div class="result-display" id="bsResult" style="display: none;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 1rem;">计算结果</h4>
+                    <div id="resultContent"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>模型局限性与改进方向</h3>
+                <p><strong>波动率假设的局限性</strong>：Black-Scholes模型假设波动率恒定，但实际市场中波动率呈现聚集性和时变性特征。市场危机期间波动率会急剧上升，平静期则相对较低。这种差异导致模型价格与市场价格存在系统性偏差，特别是对于深度虚值或实值期权更为明显。</p>
+
+                <p><strong>跳跃风险的忽略</strong>：模型假设股价遵循连续的几何布朗运动，无法处理股价的跳跃性变动。然而，现实中股价经常因重大消息、财报发布、突发事件等出现跳跃，特别是个股期权面临更大的跳跃风险。这种风险在模型中被低估，导致期权定价偏低。</p>
+
+                <p><strong>利率和股息的简化</strong>：模型假设无风险利率恒定且股票不支付股息，这与实际情况不符。利率的变化会影响期权价格，特别是长期期权更为敏感。股息的支付会降低看涨期权价值、增加看跌期权价值，需要对模型进行相应调整。</p>
+
+                <p><strong>改进模型的发展</strong>：为克服这些局限性，学者们提出了多种改进模型。随机波动率模型（如Heston模型）允许波动率随时间变化；跳跃扩散模型（如Merton跳跃扩散模型）引入跳跃过程；美式期权定价需要使用二叉树或蒙特卡洛方法。这些改进虽然增加了模型复杂性，但提高了定价准确性，在实际应用中得到广泛使用。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "Black-Scholes模型发表于哪一年，并获得了什么重要荣誉？",
+                options: [
+                    "1970年，获得图灵奖",
+                    "1973年，创立者获得诺贝尔经济学奖",
+                    "1975年，获得菲尔兹奖",
+                    "1980年，获得沃尔夫奖"
+                ],
+                correct: 1,
+                explanation: "Black-Scholes模型于1973年发表，其创立者迈伦·斯科尔斯和罗伯特·默顿于1997年获得诺贝尔经济学奖。"
+            },
+            {
+                question: "在Black-Scholes公式中，N(d₁)和N(d₂)代表什么？",
+                options: [
+                    "正态分布的概率密度函数",
+                    "标准正态分布的累积分布函数",
+                    "对数正态分布的参数",
+                    "期权的风险中性概率"
+                ],
+                correct: 1,
+                explanation: "N(d₁)和N(d₂)是标准正态分布的累积分布函数，用于计算期权在风险中性世界中被执行的概率。"
+            },
+            {
+                question: "Black-Scholes模型的哪个假设在实际市场中最容易被违背？",
+                options: [
+                    "无风险利率恒定",
+                    "股票不支付股息",
+                    "波动率恒定",
+                    "无交易成本"
+                ],
+                correct: 2,
+                explanation: "波动率恒定是最容易被违背的假设。实际市场中，波动率具有聚集性和时变性，会根据市场条件发生显著变化。"
+            },
+            {
+                question: "根据Black-Scholes模型，期权价格对哪个参数最敏感？",
+                options: [
+                    "无风险利率",
+                    "到期时间",
+                    "波动率",
+                    "股息率"
+                ],
+                correct: 2,
+                explanation: "期权价格对波动率最敏感。波动率的小幅变化就会导致期权价格的显著变动，这就是为什么波动率交易成为期权策略的核心。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawBSChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '恭喜您，对Black-Scholes模型理解优秀！' : 
+                         percentage >= 60 ? '理解良好，建议进一步深入学习定价理论。' : 
+                         '需要加强对期权定价理论的学习。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawBSChart() {
+            const canvas = document.getElementById('bsChart');
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 60;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('参数变化幅度 (%)', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 30, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('期权价格变化 (%)', 0, 0);
+            ctx.restore();
+
+            // Draw sensitivity curves
+            const minX = -50;
+            const maxX = 50;
+
+            // Stock price sensitivity (Delta effect)
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let x = minX; x <= maxX; x += 1) {
+                const y = x * 0.6; // Delta approximation
+                const canvasX = padding + ((x - minX) / (maxX - minX)) * chartWidth;
+                const canvasY = canvas.height - padding - ((y + 50) / 100) * chartHeight;
+
+                if (x === minX) {
+                    ctx.moveTo(canvasX, canvasY);
+                } else {
+                    ctx.lineTo(canvasX, canvasY);
+                }
+            }
+            ctx.stroke();
+
+            // Volatility sensitivity (Vega effect)
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let x = minX; x <= maxX; x += 1) {
+                const y = x * 0.8; // Vega approximation
+                const canvasX = padding + ((x - minX) / (maxX - minX)) * chartWidth;
+                const canvasY = canvas.height - padding - ((y + 50) / 100) * chartHeight;
+
+                if (x === minX) {
+                    ctx.moveTo(canvasX, canvasY);
+                } else {
+                    ctx.lineTo(canvasX, canvasY);
+                }
+            }
+            ctx.stroke();
+
+            // Time decay (Theta effect)
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let x = minX; x <= maxX; x += 1) {
+                const y = -x * 0.3; // Theta approximation (negative time decay)
+                const canvasX = padding + ((x - minX) / (maxX - minX)) * chartWidth;
+                const canvasY = canvas.height - padding - ((y + 50) / 100) * chartHeight;
+
+                if (x === minX) {
+                    ctx.moveTo(canvasX, canvasY);
+                } else {
+                    ctx.lineTo(canvasX, canvasY);
+                }
+            }
+            ctx.stroke();
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            // Vertical grid lines
+            for (let x = -40; x <= 40; x += 20) {
+                const canvasX = padding + ((x - minX) / (maxX - minX)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(canvasX, padding);
+                ctx.lineTo(canvasX, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(x + '%', canvasX, canvas.height - padding + 20);
+            }
+
+            // Horizontal grid lines
+            for (let y = -40; y <= 40; y += 20) {
+                const canvasY = canvas.height - padding - ((y + 50) / 100) * chartHeight;
+                ctx.beginPath();
+                ctx.moveTo(padding, canvasY);
+                ctx.lineTo(canvas.width - padding, canvasY);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'right';
+                ctx.fillText(y + '%', padding - 10, canvasY + 5);
+            }
+
+            ctx.setLineDash([]);
+
+            // Zero line
+            const zeroY = canvas.height - padding - (50 / 100) * chartHeight;
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, zeroY);
+            ctx.lineTo(canvas.width - padding, zeroY);
+            ctx.stroke();
+        }
+
+        function calculateBS() {
+            const S = parseFloat(document.getElementById('stockPrice').value);
+            const K = parseFloat(document.getElementById('strikePrice').value);
+            const T = parseFloat(document.getElementById('timeToExpiry').value);
+            const r = parseFloat(document.getElementById('riskFreeRate').value);
+            const sigma = parseFloat(document.getElementById('volatility').value);
+
+            // Calculate d1 and d2
+            const d1 = (Math.log(S / K) + (r + 0.5 * sigma * sigma) * T) / (sigma * Math.sqrt(T));
+            const d2 = d1 - sigma * Math.sqrt(T);
+
+            // Standard normal cumulative distribution function approximation
+            function normalCDF(x) {
+                return 0.5 * (1 + erf(x / Math.sqrt(2)));
+            }
+
+            function erf(x) {
+                // Approximation of error function
+                const a1 = 0.254829592;
+                const a2 = -0.284496736;
+                const a3 = 1.421413741;
+                const a4 = -1.453152027;
+                const a5 = 1.061405429;
+                const p = 0.3275911;
+
+                const sign = x >= 0 ? 1 : -1;
+                x = Math.abs(x);
+
+                const t = 1.0 / (1.0 + p * x);
+                const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+
+                return sign * y;
+            }
+
+            // Calculate option price
+            const Nd1 = normalCDF(d1);
+            const Nd2 = normalCDF(d2);
+            const callPrice = S * Nd1 - K * Math.exp(-r * T) * Nd2;
+
+            // Display results
+            document.getElementById('bsResult').style.display = 'block';
+            document.getElementById('resultContent').innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; text-align: left;">
+                    <div><strong>看涨期权价格：</strong> $${callPrice.toFixed(4)}</div>
+                    <div><strong>d₁ 值：</strong> ${d1.toFixed(4)}</div>
+                    <div><strong>d₂ 值：</strong> ${d2.toFixed(4)}</div>
+                    <div><strong>N(d₁)：</strong> ${Nd1.toFixed(4)}</div>
+                    <div><strong>N(d₂)：</strong> ${Nd2.toFixed(4)}</div>
+                    <div><strong>时间价值：</strong> $${Math.max(0, callPrice - Math.max(0, S - K)).toFixed(4)}</div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

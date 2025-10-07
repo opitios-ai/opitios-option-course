@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第32课：宽跨式策略 - OPITIOS期权课程</title>
+    <meta name="description" content="深入学习宽跨式期权策略，掌握低成本波动率交易方法，提高期权交易效率。">
+    <meta name="keywords" content="宽跨式策略,期权宽跨式,波动率策略,期权交易策略,期权投资">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-32-strangle-strategy.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-32-strangle-strategy.html">
+    <meta property="og:title" content="第32课：宽跨式策略 - OPITIOS期权课程">
+    <meta property="og:description" content="深入学习宽跨式期权策略，掌握低成本波动率交易方法，提高期权交易效率。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-32-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-32-strangle-strategy.html">
+    <meta property="twitter:title" content="第32课：宽跨式策略 - OPITIOS期权课程">
+    <meta property="twitter:description" content="深入学习宽跨式期权策略，掌握低成本波动率交易方法，提高期权交易效率。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-32-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第32课：宽跨式策略",
+        "description": "深入学习宽跨式期权策略，掌握低成本波动率交易方法，提高期权交易效率。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-32-strangle-strategy.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第32课：宽跨式策略深入应用 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --strangle-color: #3b82f6;
+            --volatility-color: #8b5cf6;
+            --long-color: #10b981;
+            --short-color: #ef4444;
+            --call-color: #06b6d4;
+            --put-color: #f59e0b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--strangle-color) 0%, var(--volatility-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .strangle-banner {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-left: 4px solid var(--strangle-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--strangle-color);
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .strangle-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .type-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .type-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .type-card.long-strangle {
+            border-color: var(--long-color);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .type-card.long-strangle:hover {
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .type-card.short-strangle {
+            border-color: var(--short-color);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .type-card.short-strangle:hover {
+            box-shadow: 0 15px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        .type-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .type-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--long-color);
+        }
+
+        .type-card.short-strangle .type-title {
+            color: var(--short-color);
+        }
+
+        .type-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: var(--strangle-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .advantage {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .neutral {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .disadvantage {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+            font-weight: 600;
+        }
+
+        .advanced-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .scenario-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-type {
+            color: var(--strangle-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .scenario-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .strangle-types {
+                grid-template-columns: 1fr;
+            }
+            .advanced-scenarios {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第32课：宽跨式策略深入应用</h1>
+                <div class="strategy-badge">🔄 波动率策略精通 · 宽跨式Strangle专家</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">成本更低的波动率交易：宽跨式策略的精妙应用</p>
+            </section>
+
+            <div class="strangle-banner">
+                🔄 宽跨式策略核心：通过不同执行价格的看涨和看跌期权组合，实现更低成本的波动率交易，是跨式策略的进阶形态。
+            </div>
+
+            <div class="card">
+                <h3>宽跨式策略的成本优化精髓</h3>
+                <p>宽跨式策略（Strangle Strategy）是跨式策略的重要变种，通过同时买入或卖出不同执行价格但相同到期日的看涨期权和看跌期权来构建头寸。与跨式策略使用相同执行价格不同，宽跨式策略通常选择虚值期权，看涨期权执行价格高于当前股价，看跌期权执行价格低于当前股价。这种设计使得宽跨式策略的建仓成本比跨式策略更低，但同时也要求更大的价格波动幅度才能实现盈利。</p>
+
+                <p><strong>做多宽跨式的成本优势</strong>：做多宽跨式策略通过买入虚值看涨期权和虚值看跌期权来构建，由于虚值期权的时间价值相对较低，因此建仓成本明显低于平值跨式策略。然而，这种成本优势是有代价的：股价必须移动到更远的距离才能使其中一个期权进入实值状态并开始盈利。具体来说，股价需要上涨到看涨期权执行价格之上，或下跌到看跌期权执行价格之下，并且移动幅度要足以覆盖支付的总权利金。</p>
+
+                <p><strong>做空宽跨式的收益稳定性</strong>：做空宽跨式策略通过卖出虚值看涨期权和虚值看跌期权来获得权利金收入。相比做空跨式，这种策略有更大的安全边际，因为股价需要大幅波动才会触及其中一个执行价格。这使得做空宽跨式在市场相对平稳时具有更高的胜率。然而，一旦股价突破某个执行价格，损失的增长速度会很快，特别是在高波动率环境中。</p>
+
+                <p><strong>执行价格选择的艺术</strong>：宽跨式策略的成功很大程度上取决于执行价格的选择。通常建议选择距离当前股价5-15%的虚值期权，具体距离取决于预期的波动幅度、剩余时间和隐含波动率水平。如果选择过于接近当前价格的执行价格，策略就接近于跨式策略，成本优势不明显；如果选择过于远离当前价格的执行价格，虽然成本很低，但盈利的概率也大大降低。最佳的选择通常是基于历史波动率和技术分析来确定合理的价格区间。</p>
+            </div>
+
+            <section class="strangle-types">
+                <div class="type-card long-strangle">
+                    <span class="type-icon">📊</span>
+                    <div class="type-title">做多宽跨式策略</div>
+                    <div class="type-description">
+                        买入虚值看涨和虚值看跌期权。成本比跨式策略低，但需要更大的价格波动才能盈利，适合预期特大行情的投资者。
+                    </div>
+                </div>
+
+                <div class="type-card short-strangle">
+                    <span class="type-icon">📉</span>
+                    <div class="type-title">做空宽跨式策略</div>
+                    <div class="type-description">
+                        卖出虚值看涨和虚值看跌期权。比做空跨式有更大安全边际，适合预期市场波动有限的环境，收益稳定但风险依然巨大。
+                    </div>
+                </div>
+
+                <div class="type-card long-strangle">
+                    <span class="type-icon">💰</span>
+                    <div class="type-title">成本效率优势</div>
+                    <div class="type-description">
+                        相比跨式策略成本更低，资金利用率更高，特别适合小资金投资者进行波动率交易。
+                    </div>
+                </div>
+
+                <div class="type-card short-strangle">
+                    <span class="type-icon">🎯</span>
+                    <div class="type-title">技术面应用</div>
+                    <div class="type-description">
+                        可以根据技术支撑阻力位选择执行价格，将技术分析与波动率交易完美结合。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 宽跨式 vs 跨式对比表 -->
+            <div class="card">
+                <h3>宽跨式策略与跨式策略全面对比</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>比较维度</th>
+                            <th>跨式策略</th>
+                            <th>宽跨式策略</th>
+                            <th>优势分析</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>建仓成本</strong></td>
+                            <td class="disadvantage">较高</td>
+                            <td class="advantage">较低</td>
+                            <td>宽跨式成本优势明显</td>
+                        </tr>
+                        <tr>
+                            <td><strong>波动要求</strong></td>
+                            <td class="advantage">较小</td>
+                            <td class="disadvantage">较大</td>
+                            <td>跨式更容易盈利</td>
+                        </tr>
+                        <tr>
+                            <td><strong>盈利概率</strong></td>
+                            <td class="advantage">较高</td>
+                            <td class="disadvantage">较低</td>
+                            <td>跨式胜率更高</td>
+                        </tr>
+                        <tr>
+                            <td><strong>最大损失</strong></td>
+                            <td class="disadvantage">权利金高</td>
+                            <td class="advantage">权利金低</td>
+                            <td>宽跨式风险更小</td>
+                        </tr>
+                        <tr>
+                            <td><strong>资金效率</strong></td>
+                            <td class="disadvantage">较低</td>
+                            <td class="advantage">较高</td>
+                            <td>宽跨式效率更佳</td>
+                        </tr>
+                        <tr>
+                            <td><strong>时间敏感性</strong></td>
+                            <td class="disadvantage">高</td>
+                            <td class="neutral">中等</td>
+                            <td>宽跨式时间压力略小</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">宽跨式策略收益分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">对比做多与做空宽跨式策略的收益特征：</p>
+                <canvas class="chart-canvas" id="strangleChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--long-color);">■</span> 做多宽跨式
+                    <span style="margin-left: 2rem; color: var(--short-color);">■</span> 做空宽跨式
+                    <span style="margin-left: 2rem; color: var(--call-color);">│</span> 看涨执行价
+                    <span style="margin-left: 2rem; color: var(--put-color);">│</span> 看跌执行价
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>宽跨式策略的高级应用场景</h3>
+                <div class="advanced-scenarios">
+                    <div class="scenario-card">
+                        <div class="scenario-title">📊 低成本事件押注</div>
+                        <div class="scenario-type">做多宽跨式：成本效率最大化</div>
+                        <div class="scenario-description">
+                            在重大事件前使用宽跨式策略，可以用更少的资金押注大幅波动，特别适合资金有限的投资者参与事件驱动交易。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🎯 技术面突破交易</div>
+                        <div class="scenario-type">做多宽跨式：技术分析结合</div>
+                        <div class="scenario-description">
+                            根据技术分析确定关键支撑阻力位，将执行价格设置在这些技术位附近，从技术面突破中获利。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">📈 波动率套利</div>
+                        <div class="scenario-type">做空宽跨式：稳定收益获取</div>
+                        <div class="scenario-description">
+                            在隐含波动率高于历史波动率时，通过做空宽跨式获得波动率回归的收益，同时享有更大的安全边际。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-type">做多宽跨式：季节性波动</div>
+                        <div class="scenario-title">📅 季节性策略</div>
+                        <div class="scenario-description">
+                            利用某些股票的季节性波动特征，在传统淡旺季转换期建立宽跨式策略，捕捉周期性的大幅波动。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">⚖️ 中性收益策略</div>
+                        <div class="scenario-type">做空宽跨式：市场中性获利</div>
+                        <div class="scenario-description">
+                            在大盘整体处于震荡期时，对多只股票同时建立做空宽跨式策略，构建市场中性的收益来源。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🔄 滚动优化策略</div>
+                        <div class="scenario-type">宽跨式组合：动态管理</div>
+                        <div class="scenario-description">
+                            通过定期调整执行价格和到期时间，维持最优的宽跨式组合，适应不断变化的市场环境和波动率条件。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>宽跨式策略的精细化管理技术</h3>
+                <p><strong>执行价格的动态优化</strong>：宽跨式策略的执行价格选择需要综合考虑多个因素。首先是技术分析因素，应该选择重要的支撑阻力位作为执行价格；其次是波动率因素，可以根据历史波动率计算出合理的价格区间；再次是流动性因素，应该选择交易活跃的执行价格以降低买卖价差成本。在策略执行过程中，还需要根据市场条件的变化动态调整执行价格，比如在技术面发生变化时及时调整策略结构。</p>
+
+                <p><strong>时机选择与波动率管理</strong>：宽跨式策略的时机选择比跨式策略更加复杂，因为需要考虑更多的变量。建仓时机应该选择在隐含波动率相对较低、预期将有重大事件发生的时点；平仓时机则要根据策略类型灵活调整，做多宽跨式应该在波动率飙升或价格大幅偏离时平仓，做空宽跨式应该在波动率下降或时间价值快速衰减时平仓。关键是要建立明确的止盈止损标准，避免因贪婪或恐惧而错失最佳平仓时机。</p>
+
+                <p><strong>风险控制与头寸管理</strong>：宽跨式策略的风险控制需要更加精细化。对于做多宽跨式，最大风险就是损失全部权利金，因此可以适当提高仓位；对于做空宽跨式，理论风险无限，必须严格控制仓位，通常建议单个策略的风险敞口不超过总资金的2-5%。此外，还应该建立分层止损体系：第一层是基于价格的止损，第二层是基于时间的止损，第三层是基于波动率的止损。</p>
+
+                <p><strong>组合策略与收益优化</strong>：高级投资者可以考虑将宽跨式策略与其他策略组合使用以优化收益。例如，可以同时建立多个不同执行价格的宽跨式，构成梯形结构；也可以将宽跨式与垂直价差组合，构成更复杂的收益结构；还可以通过期货或ETF进行Delta对冲，构建纯波动率交易策略。这些高级技巧需要深入的期权知识和丰富的实战经验，但可以显著提高策略的风险调整收益率。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "宽跨式策略相比跨式策略的最大优势是什么？",
+                options: [
+                    "建仓成本更低",
+                    "盈利概率更高",
+                    "风险更小",
+                    "不受时间衰减影响"
+                ],
+                correct: 0,
+                explanation: "宽跨式策略使用虚值期权，建仓成本比使用平值期权的跨式策略明显更低。"
+            },
+            {
+                question: "做多宽跨式策略需要什么条件才能盈利？",
+                options: [
+                    "股价小幅波动即可",
+                    "股价大幅上涨或下跌超过执行价格",
+                    "隐含波动率下降",
+                    "时间价值快速衰减"
+                ],
+                correct: 1,
+                explanation: "宽跨式策略需要股价大幅移动到虚值期权的执行价格之外才能开始盈利。"
+            },
+            {
+                question: "宽跨式策略中执行价格应该如何选择？",
+                options: [
+                    "完全随机选择",
+                    "选择平值期权",
+                    "根据技术分析和预期波动幅度选择虚值期权",
+                    "选择深度虚值期权"
+                ],
+                correct: 2,
+                explanation: "执行价格应该基于技术分析的支撑阻力位和预期的波动幅度来选择合适的虚值期权。"
+            },
+            {
+                question: "做空宽跨式策略的最大风险是什么？",
+                options: [
+                    "损失有限的权利金",
+                    "理论上无限的损失",
+                    "只能获得固定收益",
+                    "无法平仓"
+                ],
+                correct: 1,
+                explanation: "做空宽跨式策略面临理论上无限的损失风险，特别是当股价大幅突破任一执行价格时。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawStrangleChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通宽跨式策略！' : 
+                         percentage >= 60 ? '良好的理解，建议进一步学习波动率交易技巧。' : 
+                         '需要加强对宽跨式策略和成本控制的理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawStrangleChart() {
+            const canvas = document.getElementById('strangleChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis (profit/loss line)
+            const zeroLine = canvas.height - padding - chartHeight / 2;
+            ctx.moveTo(padding, zeroLine);
+            ctx.lineTo(canvas.width - padding, zeroLine);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Parameters for Strangle
+            const callStrike = 110;
+            const putStrike = 90;
+            const callPremium = 3;
+            const putPremium = 3;
+            const minStock = 70;
+            const maxStock = 130;
+            const steps = 100;
+
+            // Draw long strangle payoff
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                const callPayoff = Math.max(stockPrice - callStrike, 0) - callPremium;
+                const putPayoff = Math.max(putStrike - stockPrice, 0) - putPremium;
+                const totalPayoff = callPayoff + putPayoff;
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (totalPayoff / 20) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw short strangle payoff
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                const callPayoff = -Math.max(stockPrice - callStrike, 0) + callPremium;
+                const putPayoff = -Math.max(putStrike - stockPrice, 0) + putPremium;
+                const totalPayoff = callPayoff + putPayoff;
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (totalPayoff / 20) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw strike price lines
+            const callStrikeX = padding + ((callStrike - minStock) / (maxStock - minStock)) * chartWidth;
+            const putStrikeX = padding + ((putStrike - minStock) / (maxStock - minStock)) * chartWidth;
+
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(callStrikeX, padding);
+            ctx.lineTo(callStrikeX, canvas.height - padding);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(putStrikeX, padding);
+            ctx.lineTo(putStrikeX, canvas.height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            for (let price = 80; price <= 120; price += 10) {
+                const x = padding + ((price - minStock) / (maxStock - minStock)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('损益', 0, 0);
+            ctx.restore();
+
+            ctx.setLineDash([]);
+        }
+    </script>
+</body>
+</html>

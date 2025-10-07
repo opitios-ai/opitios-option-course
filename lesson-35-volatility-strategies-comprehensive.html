@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第35课：波动率策略综合 - OPITIOS期权课程</title>
+    <meta name="description" content="综合学习各种波动率策略，掌握不同波动率环境下的期权交易策略选择和风险管理。">
+    <meta name="keywords" content="波动率策略,期权波动率,期权交易策略,期权投资,期权风险管理">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-35-volatility-strategies-comprehensive.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-35-volatility-strategies-comprehensive.html">
+    <meta property="og:title" content="第35课：波动率策略综合 - OPITIOS期权课程">
+    <meta property="og:description" content="综合学习各种波动率策略，掌握不同波动率环境下的期权交易策略选择和风险管理。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-35-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-35-volatility-strategies-comprehensive.html">
+    <meta property="twitter:title" content="第35课：波动率策略综合 - OPITIOS期权课程">
+    <meta property="twitter:description" content="综合学习各种波动率策略，掌握不同波动率环境下的期权交易策略选择和风险管理。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-35-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第35课：波动率策略综合",
+        "description": "综合学习各种波动率策略，掌握不同波动率环境下的期权交易策略选择和风险管理。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-35-volatility-strategies-comprehensive.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第35课：波动率策略综合应用 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --master-color: #8b5cf6;
+            --advanced-color: #3b82f6;
+            --volatility-color: #f59e0b;
+            --synthesis-color: #06b6d4;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--master-color) 0%, var(--advanced-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .completion-banner {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-left: 4px solid var(--master-color);
+            border-radius: 8px;
+            padding: 3rem;
+            margin: 2rem 0;
+            color: var(--master-color);
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .strategy-pyramid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .pyramid-level {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .pyramid-level:hover {
+            transform: translateY(-5px);
+        }
+
+        .pyramid-level.foundation {
+            border-color: var(--volatility-color);
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .pyramid-level.foundation:hover {
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.2);
+        }
+
+        .pyramid-level.intermediate {
+            border-color: var(--synthesis-color);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .pyramid-level.intermediate:hover {
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .pyramid-level.advanced {
+            border-color: var(--advanced-color);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .pyramid-level.advanced:hover {
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .pyramid-level.master {
+            border-color: var(--master-color);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .pyramid-level.master:hover {
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .pyramid-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .pyramid-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--volatility-color);
+        }
+
+        .pyramid-level.intermediate .pyramid-title {
+            color: var(--synthesis-color);
+        }
+
+        .pyramid-level.advanced .pyramid-title {
+            color: var(--advanced-color);
+        }
+
+        .pyramid-level.master .pyramid-title {
+            color: var(--master-color);
+        }
+
+        .pyramid-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .synthesis-matrix {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--master-color);
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .matrix-table th {
+            background: var(--master-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .matrix-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .excellent {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .good {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .fair {
+            background: rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            font-weight: 600;
+        }
+
+        .poor {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+            font-weight: 600;
+        }
+
+        .mastery-assessment {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .assessment-card {
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .assessment-label {
+            color: var(--master-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .assessment-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .assessment-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .strategy-pyramid {
+                grid-template-columns: 1fr;
+            }
+            .mastery-assessment {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第35课：波动率策略综合应用</h1>
+                <div class="strategy-badge">🎓 波动率策略大师 · 综合应用精通</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">波动率策略篇完美收官：五大策略的融汇贯通与实战应用</p>
+            </section>
+
+            <div class="completion-banner">
+                🎉 重大里程碑达成！您即将完成波动率策略篇（第31-35课）的全部学习，掌握跨式、宽跨式、铁蝶、铁鹰四大波动率策略的精髓！
+            </div>
+
+            <div class="card">
+                <h3>波动率策略体系的完整架构</h3>
+                <p>经过五课的深入学习，我们已经构建了完整的波动率策略知识体系。从第31课的跨式策略开始，我们学习了如何通过同一执行价格的看涨看跌期权组合进行双向波动押注；第32课的宽跨式策略让我们掌握了更低成本的波动率交易技巧；第33课的铁蝶策略展现了区间交易的精妙艺术；第34课的铁鹰策略则提供了更高成功概率的宽区间收益模式。这四种策略构成了波动率交易的完整工具箱，为不同的市场环境和投资目标提供了最优解决方案。</p>
+
+                <p><strong>从方向性到波动率的策略进阶</strong>：波动率策略与前面学习的方向性策略（单腿策略和价差策略）形成了鲜明对比。方向性策略关注股价的移动方向，而波动率策略关注股价的波动幅度。这种思维转换是期权交易的重要进阶，它让投资者能够在不预测市场方向的情况下仍然获得稳定收益。波动率策略的核心是对隐含波动率与实际波动率差异的利用，以及对时间价值衰减的精确控制。</p>
+
+                <p><strong>四大波动率策略的内在逻辑关系</strong>：跨式和宽跨式策略是波动率交易的基础，它们通过做多或做空波动率来获利；铁蝶和铁鹰策略则是更高级的形态，它们通过构建有限风险的复合结构来优化风险收益比。从成本角度看，跨式成本最高但获利门槛最低，宽跨式成本较低但需要更大波动，铁蝶和铁鹰通过部分对冲降低了净成本。从风险角度看，做多波动率策略风险有限，做空波动率策略需要严格的风险管理。</p>
+
+                <p><strong>波动率策略的市场应用价值</strong>：波动率策略在现代期权交易中具有极高的实用价值。机构投资者大量使用这些策略进行风险管理和增强收益；对冲基金将波动率策略作为核心投资策略之一；个人投资者可以通过这些策略在横盘市场中获得稳定收益。特别是在市场不确定性增加的环境下，波动率策略提供了独特的投资机会，让投资者能够从市场的不确定性本身中获利，而不是依赖于对市场方向的正确判断。</p>
+            </div>
+
+            <section class="strategy-pyramid">
+                <div class="pyramid-level foundation">
+                    <span class="pyramid-icon">⚡</span>
+                    <div class="pyramid-title">跨式策略基础</div>
+                    <div class="pyramid-description">
+                        第31课精通：同一执行价格的双向押注，波动率交易的经典入门策略，风险有限收益无限。
+                    </div>
+                </div>
+
+                <div class="pyramid-level intermediate">
+                    <span class="pyramid-icon">🔄</span>
+                    <div class="pyramid-title">宽跨式优化</div>
+                    <div class="pyramid-description">
+                        第32课精通：成本更低的波动率交易，不同执行价格组合，提高资金使用效率。
+                    </div>
+                </div>
+
+                <div class="pyramid-level advanced">
+                    <span class="pyramid-icon">🦋</span>
+                    <div class="pyramid-title">铁蝶精密控制</div>
+                    <div class="pyramid-description">
+                        第33课精通：区间交易的艺术，三执行价格组合，风险收益精准控制的经典策略。
+                    </div>
+                </div>
+
+                <div class="pyramid-level master">
+                    <span class="pyramid-icon">🦅</span>
+                    <div class="pyramid-title">铁鹰稳健收益</div>
+                    <div class="pyramid-description">
+                        第34课精通：宽区间稳定收益，四执行价格组合，机构投资者的首选策略。
+                    </div>
+                </div>
+
+                <div class="pyramid-level foundation">
+                    <span class="pyramid-icon">🎯</span>
+                    <div class="pyramid-title">事件驱动应用</div>
+                    <div class="pyramid-description">
+                        财报、FDA批准、重要会议等事件前后的波动率套利，捕捉市场不确定性带来的机会。
+                    </div>
+                </div>
+
+                <div class="pyramid-level intermediate">
+                    <span class="pyramid-icon">📊</span>
+                    <div class="pyramid-title">波动率套利</div>
+                    <div class="pyramid-description">
+                        利用隐含波动率与实际波动率的差异进行套利，从市场定价偏差中获得稳定收益。
+                    </div>
+                </div>
+
+                <div class="pyramid-level advanced">
+                    <span class="pyramid-icon">⏰</span>
+                    <div class="pyramid-title">时间价值管理</div>
+                    <div class="pyramid-description">
+                        精确控制Theta衰减，通过时间价值的收割获得持续性收益，适合横盘市场环境。
+                    </div>
+                </div>
+
+                <div class="pyramid-level master">
+                    <span class="pyramid-icon">🚀</span>
+                    <div class="pyramid-title">组合策略创新</div>
+                    <div class="pyramid-description">
+                        第35课精通：多策略组合应用，动态调整机制，构建适应不同市场环境的投资组合。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">波动率策略综合收益对比</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">全面展示五大波动率策略在不同股价下的收益表现：</p>
+                <canvas class="chart-canvas" id="comprehensiveChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--master-color);">■</span> 跨式策略
+                    <span style="margin-left: 2rem; color: var(--synthesis-color);">■</span> 宽跨式策略
+                    <span style="margin-left: 2rem; color: var(--volatility-color);">■</span> 铁蝶策略
+                    <span style="margin-left: 2rem; color: var(--advanced-color);">■</span> 铁鹰策略
+                    <span style="margin-left: 2rem; color: var(--primary-color);">■</span> 组合策略
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>波动率策略的综合应用与选择框架</h3>
+                <div class="synthesis-matrix">
+                    <h4 style="color: var(--master-color); text-align: center; margin-bottom: 2rem;">四大策略在不同市场环境下的适用性评估</h4>
+                    <table class="matrix-table">
+                        <thead>
+                            <tr>
+                                <th>市场环境/策略</th>
+                                <th>跨式策略</th>
+                                <th>宽跨式策略</th>
+                                <th>铁蝶策略</th>
+                                <th>铁鹰策略</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>高波动预期</strong></td>
+                                <td class="excellent">优秀</td>
+                                <td class="good">良好</td>
+                                <td class="poor">较差</td>
+                                <td class="poor">较差</td>
+                            </tr>
+                            <tr>
+                                <td><strong>低波动横盘</strong></td>
+                                <td class="poor">较差</td>
+                                <td class="poor">较差</td>
+                                <td class="excellent">优秀</td>
+                                <td class="excellent">优秀</td>
+                            </tr>
+                            <tr>
+                                <td><strong>事件驱动</strong></td>
+                                <td class="excellent">优秀</td>
+                                <td class="excellent">优秀</td>
+                                <td class="fair">一般</td>
+                                <td class="fair">一般</td>
+                            </tr>
+                            <tr>
+                                <td><strong>资金有限</strong></td>
+                                <td class="fair">一般</td>
+                                <td class="excellent">优秀</td>
+                                <td class="good">良好</td>
+                                <td class="good">良好</td>
+                            </tr>
+                            <tr>
+                                <td><strong>新手友好</strong></td>
+                                <td class="good">良好</td>
+                                <td class="good">良好</td>
+                                <td class="fair">一般</td>
+                                <td class="excellent">优秀</td>
+                            </tr>
+                            <tr>
+                                <td><strong>专业应用</strong></td>
+                                <td class="good">良好</td>
+                                <td class="good">良好</td>
+                                <td class="excellent">优秀</td>
+                                <td class="excellent">优秀</td>
+                            </tr>
+                            <tr>
+                                <td><strong>风险控制</strong></td>
+                                <td class="good">良好</td>
+                                <td class="excellent">优秀</td>
+                                <td class="excellent">优秀</td>
+                                <td class="excellent">优秀</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>波动率策略大师级应用技术</h3>
+                <div class="mastery-assessment">
+                    <div class="assessment-card">
+                        <div class="assessment-label">策略选择能力</div>
+                        <div class="assessment-score" id="selectionScore">96</div>
+                        <div class="assessment-description">四大策略最优选择框架</div>
+                    </div>
+
+                    <div class="assessment-card">
+                        <div class="assessment-label">波动率分析</div>
+                        <div class="assessment-score" id="volatilityScore">94</div>
+                        <div class="assessment-description">IV与HV关系精准判断</div>
+                    </div>
+
+                    <div class="assessment-card">
+                        <div class="assessment-label">时间管理</div>
+                        <div class="assessment-score" id="timeScore">92</div>
+                        <div class="assessment-description">Theta衰减优化利用</div>
+                    </div>
+
+                    <div class="assessment-card">
+                        <div class="assessment-label">风险控制</div>
+                        <div class="assessment-score" id="riskScore">95</div>
+                        <div class="assessment-description">多维度风险管理能力</div>
+                    </div>
+
+                    <div class="assessment-card">
+                        <div class="assessment-label">实战执行</div>
+                        <div class="assessment-score" id="executionScore">90</div>
+                        <div class="assessment-description">策略执行与动态调整</div>
+                    </div>
+
+                    <div class="assessment-card">
+                        <div class="assessment-label">综合精通</div>
+                        <div class="assessment-score" id="overallScore">A++</div>
+                        <div class="assessment-description">波动率交易大师级</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>波动率策略的未来发展趋势</h3>
+                <p><strong>人工智能与波动率交易的深度融合</strong>：随着机器学习和人工智能技术的发展，波动率策略正在向智能化方向演进。AI系统可以实时分析大量市场数据，识别波动率异常和套利机会，自动执行最优的波动率策略。深度学习模型能够捕捉隐含波动率的复杂非线性关系，预测波动率的未来走势，为策略选择提供科学依据。量化交易平台集成了先进的波动率模型，能够同时管理数百个波动率策略头寸，实现规模化的波动率套利。</p>
+
+                <p><strong>加密货币与新兴市场的波动率机会</strong>：加密货币市场的高波动率为波动率策略提供了前所未有的机会。比特币、以太坊等主要加密货币的期权市场快速发展，隐含波动率往往远高于传统资产，为做空波动率策略创造了优异的环境。新兴市场股票的波动率特征也为全球化的波动率交易提供了新的维度。跨市场波动率套利策略正在成为机构投资者的重要工具，通过在不同市场间的波动率差异中获利。</p>
+
+                <p><strong>ESG与可持续投资的波动率应用</strong>：ESG（环境、社会、治理）因素正在成为影响股票波动率的重要变量。ESG评级变化往往会导致股价的异常波动，为事件驱动的波动率策略提供新的应用场景。气候变化、监管政策变化等长期趋势也在创造新的波动率交易机会。可持续投资基金开始将波动率策略纳入投资组合，作为实现稳定收益的重要工具。</p>
+
+                <p><strong>向更高级期权策略的自然延伸</strong>：掌握了波动率策略后，投资者已经具备了学习更复杂期权策略的基础。比例价差策略（Ratio Spreads）、日历价差策略的高级形态、以及多腿期权策略都是波动率交易的自然延伸。这些高级策略通常涉及更复杂的风险收益结构，需要更深入的数学建模和风险管理知识，但也提供了更加精细化的投资工具，是专业期权交易者必须掌握的技能。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">波动率策略篇综合测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "在高波动率预期的市场环境中，哪种策略表现最佳？",
+                options: [
+                    "铁蝶策略",
+                    "铁鹰策略",
+                    "跨式策略",
+                    "所有策略表现相同"
+                ],
+                correct: 2,
+                explanation: "在高波动率预期的环境中，跨式策略表现最佳，因为它能从任意方向的大幅波动中获利。"
+            },
+            {
+                question: "对于资金有限的投资者，最优的波动率策略选择是？",
+                options: [
+                    "跨式策略",
+                    "宽跨式策略",
+                    "铁蝶策略",
+                    "铁鹰策略"
+                ],
+                correct: 1,
+                explanation: "宽跨式策略成本最低，特别适合资金有限的投资者进行波动率交易。"
+            },
+            {
+                question: "波动率策略与价差策略的根本区别在于？",
+                options: [
+                    "风险大小不同",
+                    "关注点不同：波动幅度 vs 价格方向",
+                    "构建复杂度不同",
+                    "适用市场不同"
+                ],
+                correct: 1,
+                explanation: "波动率策略关注股价的波动幅度，而价差策略关注股价的移动方向，这是两类策略的根本区别。"
+            },
+            {
+                question: "哪种策略最适合机构投资者进行规模化应用？",
+                options: [
+                    "跨式策略",
+                    "宽跨式策略",
+                    "铁蝶策略",
+                    "铁鹰策略"
+                ],
+                correct: 3,
+                explanation: "铁鹰策略具有高成功概率、良好的风险调整收益和管理便利性，最适合机构投资者规模化应用。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawComprehensiveChart();
+            animateAssessmentScores();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您完全精通波动率策略体系！' : 
+                         percentage >= 60 ? '良好的掌握程度，建议复习薄弱环节。' : 
+                         '需要进一步学习和练习波动率策略的应用。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawComprehensiveChart() {
+            const canvas = document.getElementById('comprehensiveChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis (profit/loss line)
+            const zeroLine = canvas.height - padding - chartHeight / 2;
+            ctx.moveTo(padding, zeroLine);
+            ctx.lineTo(canvas.width - padding, zeroLine);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            const minStock = 70;
+            const maxStock = 130;
+            const steps = 100;
+
+            // Strategy data
+            const strategies = [
+                { color: '#8b5cf6', name: 'Straddle', data: [] },
+                { color: '#06b6d4', name: 'Strangle', data: [] },
+                { color: '#f59e0b', name: 'Iron Butterfly', data: [] },
+                { color: '#3b82f6', name: 'Iron Condor', data: [] },
+                { color: '#ffd700', name: 'Combined', data: [] }
+            ];
+
+            // Generate strategy payoffs
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+
+                // Straddle (long)
+                const straddlePayoff = Math.max(stockPrice - 100, 0) + Math.max(100 - stockPrice, 0) - 10;
+                strategies[0].data.push(straddlePayoff);
+
+                // Strangle (long)
+                const stranglePayoff = Math.max(stockPrice - 110, 0) + Math.max(90 - stockPrice, 0) - 6;
+                strategies[1].data.push(stranglePayoff);
+
+                // Iron Butterfly (short)
+                let butterflyPayoff;
+                if (stockPrice <= 90) butterflyPayoff = -6;
+                else if (stockPrice <= 100) butterflyPayoff = stockPrice - 90 - 6;
+                else if (stockPrice <= 110) butterflyPayoff = 110 - stockPrice - 6;
+                else butterflyPayoff = -6;
+                strategies[2].data.push(butterflyPayoff);
+
+                // Iron Condor (short)
+                let condorPayoff;
+                if (stockPrice <= 85) condorPayoff = -7;
+                else if (stockPrice <= 95) condorPayoff = stockPrice - 85 - 7;
+                else if (stockPrice <= 105) condorPayoff = 3;
+                else if (stockPrice <= 115) condorPayoff = 115 - stockPrice - 7;
+                else condorPayoff = -7;
+                strategies[3].data.push(condorPayoff);
+
+                // Combined strategy
+                const combinedPayoff = (straddlePayoff + stranglePayoff + butterflyPayoff + condorPayoff) / 4;
+                strategies[4].data.push(combinedPayoff);
+            }
+
+            // Draw strategies
+            strategies.forEach((strategy, index) => {
+                ctx.strokeStyle = strategy.color;
+                ctx.lineWidth = index === 4 ? 4 : 3;
+                ctx.setLineDash(index === 4 ? [] : index % 2 === 1 ? [5, 5] : []);
+                ctx.beginPath();
+
+                strategy.data.forEach((payoff, i) => {
+                    const x = padding + i * chartWidth / steps;
+                    const y = zeroLine - (payoff / 20) * (chartHeight / 4);
+
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+
+                ctx.stroke();
+                ctx.setLineDash([]);
+            });
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            for (let price = 80; price <= 120; price += 10) {
+                const x = padding + ((price - minStock) / (maxStock - minStock)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('损益', 0, 0);
+            ctx.restore();
+
+            ctx.setLineDash([]);
+        }
+
+        function animateAssessmentScores() {
+            const scores = [
+                { element: 'selectionScore', target: 96 },
+                { element: 'volatilityScore', target: 94 },
+                { element: 'timeScore', target: 92 },
+                { element: 'riskScore', target: 95 },
+                { element: 'executionScore', target: 90 }
+            ];
+
+            scores.forEach(score => {
+                let current = 0;
+                const increment = score.target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= score.target) {
+                        current = score.target;
+                        clearInterval(timer);
+                    }
+                    document.getElementById(score.element).textContent = Math.floor(current);
+                }, 50);
+            });
+
+            // Set overall grade
+            setTimeout(() => {
+                document.getElementById('overallScore').textContent = 'A++';
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
