@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第21课：买入看涨期权 - OPITIOS期权课程</title>
+    <meta name="description" content="学习买入看涨期权策略，掌握看涨期权的交易技巧和风险管理方法，提高做多收益。">
+    <meta name="keywords" content="买入看涨期权,看涨期权策略,期权做多,期权交易策略,期权投资">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-21-buy-call-options.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-21-buy-call-options.html">
+    <meta property="og:title" content="第21课：买入看涨期权 - OPITIOS期权课程">
+    <meta property="og:description" content="学习买入看涨期权策略，掌握看涨期权的交易技巧和风险管理方法，提高做多收益。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-21-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-21-buy-call-options.html">
+    <meta property="twitter:title" content="第21课：买入看涨期权 - OPITIOS期权课程">
+    <meta property="twitter:description" content="学习买入看涨期权策略，掌握看涨期权的交易技巧和风险管理方法，提高做多收益。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-21-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第21课：买入看涨期权",
+        "description": "学习买入看涨期权策略，掌握看涨期权的交易技巧和风险管理方法，提高做多收益。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-21-buy-call-options.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第21课：买入看涨期权 - 基础做多策略精通 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --bull-color: #10b981;
+            --strategy-color: #3b82f6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--bull-color) 0%, #059669 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .strategy-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--bull-color);
+            background: rgba(16, 185, 129, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-title {
+            color: var(--bull-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .strategy-analyzer {
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--strategy-color);
+        }
+
+        .analyzer-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            color: var(--strategy-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .control-group input, .control-group select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--strategy-color);
+            border-radius: 6px;
+            padding: 0.7rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .analyze-btn {
+            background: linear-gradient(135deg, var(--strategy-color) 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .strategy-analysis {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border: 2px solid var(--primary-color);
+            display: none;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .analysis-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .analysis-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .market-scenarios {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--bull-color);
+        }
+
+        .scenario-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .scenario-table th {
+            background: var(--bull-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .scenario-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .profit-high {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .profit-medium {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .loss-zone {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+            font-weight: 600;
+        }
+
+        .risk-management {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .risk-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .risk-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .risk-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .risk-type {
+            color: var(--bull-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .risk-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .timing-optimizer {
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid #f59e0b;
+        }
+
+        .timing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .timing-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timing-phase {
+            color: #f59e0b;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .timing-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .timing-signal {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .signal-strong {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+        }
+
+        .signal-moderate {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+        }
+
+        .signal-weak {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .strategy-features {
+                grid-template-columns: 1fr;
+            }
+            .analyzer-controls {
+                grid-template-columns: 1fr;
+            }
+            .risk-management {
+                grid-template-columns: 1fr;
+            }
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            .timing-grid {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第21课：买入看涨期权 - 基础做多策略精通</h1>
+                <div class="strategy-badge">🚀 基础策略篇开篇 · 看涨策略大师</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">最基础却最重要的期权策略：有限风险，无限收益</p>
+            </section>
+
+            <div class="card">
+                <h3>买入看涨期权的策略本质与理论基础</h3>
+                <p>买入看涨期权（Long Call）是期权交易中最基础且最重要的策略之一，它为投资者提供了一种以有限风险获得无限收益潜力的投资方式。这种策略的核心思想是通过支付权利金获得在特定时间内以特定价格买入标的资产的权利，当标的资产价格上涨时，投资者可以获得理论上无限的收益，而最大损失仅限于支付的权利金。这种不对称的风险收益特征使得买入看涨期权成为看好标的资产前景投资者的首选策略。</p>
+
+                <p><strong>策略的数学表达与收益结构</strong>：买入看涨期权的收益函数可以表达为：收益 = Max(S - K, 0) - C，其中S是到期时的股价，K是执行价格，C是支付的权利金。当S > K + C时，策略开始盈利；当S ≤ K时，期权无价值；当K < S ≤ K + C时，部分收回权利金。这种收益结构的特点是下方风险有限（最多损失权利金C），上方收益无限，盈亏平衡点为K + C。理解这种数学关系对于正确评估策略的风险收益特征至关重要。</p>
+
+                <p><strong>希腊字母风险特征分析</strong>：买入看涨期权具有独特的希腊字母风险特征。Delta为正值且随股价上涨而增加，体现了与股价的正相关性；Gamma为正值，在平值附近最大，表明Delta变化的加速度效应；Theta为负值，时间流逝对策略不利，需要股价上涨来抵消时间价值损失；Vega为正值，波动率上升有利于策略；Rho为正值，利率上升对策略有轻微的正面影响。这些希腊字母的特征决定了策略在不同市场环境下的表现。</p>
+
+                <p><strong>与股票投资的比较优势</strong>：相比直接买入股票，买入看涨期权具有几个重要优势。首先是杠杆效应，用较少的资金可以控制更多的标的资产，提高资本使用效率；其次是风险控制，最大损失有限且预先确定，而股票投资的潜在损失可能非常巨大；第三是灵活性，可以选择不同的执行价格和到期时间来匹配投资目标；最后是成本效率，在某些情况下，通过期权获得相同的市场敞口成本更低。然而，期权也存在时间价值衰减的风险，这是股票投资所没有的。</p>
+            </div>
+
+            <section class="strategy-features">
+                <div class="feature-card">
+                    <span class="feature-icon">📈</span>
+                    <div class="feature-title">无限收益潜力</div>
+                    <div class="feature-description">
+                        理论上，股价上涨没有上限，买入看涨期权的收益潜力也是无限的，这是该策略最吸引人的特征之一。
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🛡️</span>
+                    <div class="feature-title">有限风险敞口</div>
+                    <div class="feature-description">
+                        最大损失仅限于支付的权利金，无论股价如何下跌，损失都是预先确定和有限的，提供了良好的风险控制。
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🎯</span>
+                    <div class="feature-title">高杠杆效应</div>
+                    <div class="feature-description">
+                        用相对较少的资金可以获得与持有大量股票相近的价格敞口，大幅提高资本使用效率和潜在收益率。
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <div class="feature-title">时间敏感性</div>
+                    <div class="feature-description">
+                        时间价值的衰减是主要风险，需要在有限时间内实现预期的价格上涨，对时机选择要求较高。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">买入看涨期权收益曲线分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">以下图表展示不同股价水平下买入看涨期权的收益情况：</p>
+                <canvas class="chart-canvas" id="longCallChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--bull-color);">■</span> 买入看涨收益曲线
+                    <span style="margin-left: 2rem; color: var(--strategy-color);">│</span> 执行价格
+                    <span style="margin-left: 2rem; color: var(--primary-color);">│</span> 盈亏平衡点
+                </div>
+            </section>
+
+            <div class="strategy-analyzer">
+                <h4 style="color: var(--strategy-color); text-align: center; margin-bottom: 2rem;">买入看涨策略分析器</h4>
+                <div class="analyzer-controls">
+                    <div class="control-group">
+                        <label>当前股价 (S)</label>
+                        <input type="number" id="currentStockPrice" value="100" step="0.01">
+                    </div>
+                    <div class="control-group">
+                        <label>执行价格 (K)</label>
+                        <input type="number" id="strikePrice" value="105" step="0.01">
+                    </div>
+                    <div class="control-group">
+                        <label>期权价格（权利金）</label>
+                        <input type="number" id="optionPremium" value="3.50" step="0.01">
+                    </div>
+                    <div class="control-group">
+                        <label>到期时间（天）</label>
+                        <input type="number" id="daysToExpiry" value="45" step="1">
+                    </div>
+                    <div class="control-group">
+                        <label>隐含波动率 (%)</label>
+                        <input type="number" id="impliedVolatility" value="25" step="1">
+                    </div>
+                    <div class="control-group">
+                        <label>期权数量（手）</label>
+                        <input type="number" id="contractsCount" value="10" step="1">
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button class="analyze-btn" onclick="analyzeLongCall()">分析策略表现</button>
+                </div>
+                <div class="strategy-analysis" id="longCallAnalysis">
+                    <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">买入看涨策略分析结果</h4>
+                    <div class="analysis-grid" id="analysisResults">
+                        <!-- Results will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>市场情景分析与策略表现</h3>
+                <div class="market-scenarios">
+                    <h4 style="color: var(--bull-color); text-align: center; margin-bottom: 2rem;">不同市场环境下的策略表现</h4>
+                    <table class="scenario-table">
+                        <thead>
+                            <tr>
+                                <th>市场情景</th>
+                                <th>股价变动</th>
+                                <th>策略表现</th>
+                                <th>收益特征</th>
+                                <th>建议操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>强烈看涨</strong></td>
+                                <td>+20%以上</td>
+                                <td class="profit-high">高额盈利</td>
+                                <td>杠杆效应显著，收益倍增</td>
+                                <td>适时获利了结或滚动仓位</td>
+                            </tr>
+                            <tr>
+                                <td><strong>温和上涨</strong></td>
+                                <td>+5%至+20%</td>
+                                <td class="profit-medium">适度盈利</td>
+                                <td>超过盈亏平衡点后线性增长</td>
+                                <td>根据时间价值决定持有时间</td>
+                            </tr>
+                            <tr>
+                                <td><strong>小幅上涨</strong></td>
+                                <td>0至+5%</td>
+                                <td class="loss-zone">部分损失</td>
+                                <td>时间价值衰减主导</td>
+                                <td>考虑及时止损或调整策略</td>
+                            </tr>
+                            <tr>
+                                <td><strong>横盘整理</strong></td>
+                                <td>±2%</td>
+                                <td class="loss-zone">时间损失</td>
+                                <td>纯时间价值损失</td>
+                                <td>不适合该策略，考虑平仓</td>
+                            </tr>
+                            <tr>
+                                <td><strong>下跌市场</strong></td>
+                                <td>-5%以下</td>
+                                <td class="loss-zone">最大损失</td>
+                                <td>损失权利金，但风险有限</td>
+                                <td>及时止损，避免继续损失</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>买入看涨期权的风险管理策略</h3>
+                <div class="risk-management">
+                    <div class="risk-card">
+                        <div class="risk-title">💰 权利金风险管理</div>
+                        <div class="risk-type">主要风险：权利金完全损失</div>
+                        <div class="risk-description">
+                            设定明确的止损标准，当期权价值下降到初始投资的50%时考虑止损。同时，不要将超过投资组合10%的资金用于单一期权策略。
+                        </div>
+                    </div>
+
+                    <div class="risk-card">
+                        <div class="risk-title">⏰ 时间价值风险</div>
+                        <div class="risk-type">Theta风险：时间价值持续衰减</div>
+                        <div class="risk-description">
+                            避免买入距离到期不足30天的期权，除非有明确的短期催化剂。在距离到期30天前评估是否继续持有或滚动到更远期限。
+                        </div>
+                    </div>
+
+                    <div class="risk-card">
+                        <div class="risk-title">📊 波动率风险</div>
+                        <div class="risk-type">Vega风险：隐含波动率下降</div>
+                        <div class="risk-description">
+                            避免在波动率处于历史高位时建仓。使用波动率分位数分析，选择隐含波动率处于合理或偏低水平的时机建仓。
+                        </div>
+                    </div>
+
+                    <div class="risk-card">
+                        <div class="risk-title">🎯 执行价格选择</div>
+                        <div class="risk-type">Delta风险：价格敏感性权衡</div>
+                        <div class="risk-description">
+                            平值或轻度虚值期权提供最佳的成本效益比。深度虚值期权虽然便宜但成功概率低，深度实值期权成本过高影响杠杆效应。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>最佳入场时机与市场择时</h3>
+                <div class="timing-optimizer">
+                    <h4 style="color: #f59e0b; text-align: center; margin-bottom: 2rem;">买入看涨期权最佳时机分析</h4>
+                    <div class="timing-grid">
+                        <div class="timing-card">
+                            <div class="timing-phase">技术突破信号</div>
+                            <div class="timing-description">
+                                股价突破重要阻力位，成交量放大，技术指标显示强势，这是建仓看涨期权的理想时机。
+                            </div>
+                            <div class="timing-signal signal-strong">强烈信号</div>
+                        </div>
+
+                        <div class="timing-card">
+                            <div class="timing-phase">基本面改善</div>
+                            <div class="timing-description">
+                                公司基本面出现积极变化，如业绩超预期、获得重要合同、推出新产品等，提供上涨动力。
+                            </div>
+                            <div class="timing-signal signal-strong">强烈信号</div>
+                        </div>
+
+                        <div class="timing-card">
+                            <div class="timing-phase">市场超卖反弹</div>
+                            <div class="timing-description">
+                                股价经历深度调整后出现超卖信号，技术指标如RSI低于30，为反弹提供机会。
+                            </div>
+                            <div class="timing-signal signal-moderate">中等信号</div>
+                        </div>
+
+                        <div class="timing-card">
+                            <div class="timing-phase">波动率偏低期</div>
+                            <div class="timing-description">
+                                隐含波动率处于历史低位，期权价格相对便宜，为建仓提供了成本优势。
+                            </div>
+                            <div class="timing-signal signal-moderate">中等信号</div>
+                        </div>
+
+                        <div class="timing-card">
+                            <div class="timing-phase">重大事件前</div>
+                            <div class="timing-description">
+                                财报发布、FDA批准、产品发布会等重大事件前，如果预期积极，可以布局看涨期权。
+                            </div>
+                            <div class="timing-signal signal-moderate">中等信号</div>
+                        </div>
+
+                        <div class="timing-card">
+                            <div class="timing-phase">高波动率期</div>
+                            <div class="timing-description">
+                                市场波动率处于高位时期权价格昂贵，不是建仓看涨期权的理想时机，应该等待时机。
+                            </div>
+                            <div class="timing-signal signal-weak">避免信号</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>买入看涨期权的实战技巧与注意事项</h3>
+                <p><strong>期权选择的艺术</strong>：选择合适的期权是成功实施买入看涨策略的关键。执行价格的选择需要在成本和概率之间找到平衡，一般而言，平值或轻度虚值期权（Delta在0.4-0.6之间）提供最佳的成本效益比。到期时间的选择应该给股价上涨留出足够的时间，通常建议选择至少45-60天的期权，以减少时间价值快速衰减的影响。</p>
+
+                <p><strong>仓位管理与资金配置</strong>：买入看涨期权虽然风险有限，但失败率相对较高，因此仓位管理至关重要。建议单一期权策略的资金占比不超过总投资组合的5-10%，同时可以采用分批建仓的方式，在不同时间点分别买入期权，以分散时机风险。对于看好的标的，可以采用金字塔式加仓，在策略盈利后适当增加仓位。</p>
+
+                <p><strong>出场策略的制定</strong>：明确的出场策略是保护利润和控制损失的关键。盈利出场可以采用分批了结的方式，在期权价值上涨50%时了结一半仓位，在上涨100%时再了结一半，让剩余仓位享受更大的上涨空间。止损出场应该设定明确标准，当期权价值下跌到初始投资的50%或距离到期少于21天时，应该考虑平仓。</p>
+
+                <p><strong>组合策略的运用</strong>：单纯的买入看涨策略可以与其他策略结合使用，形成更复杂的组合策略。例如，可以同时买入不同执行价格的看涨期权，形成看涨价差组合；也可以与卖出看跌期权结合，形成合成长仓；还可以定期滚动期权，即在期权接近到期时平仓并建立新的期权头寸，延续看涨观点的表达。这些组合策略可以在一定程度上改善单一策略的风险收益特征。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "买入看涨期权的最大损失是什么？",
+                options: [
+                    "无限损失",
+                    "执行价格",
+                    "支付的权利金",
+                    "股价下跌的幅度"
+                ],
+                correct: 2,
+                explanation: "买入看涨期权的最大损失仅限于支付的权利金，无论股价如何下跌，损失都是有限和预先确定的。"
+            },
+            {
+                question: "买入看涨期权的盈亏平衡点在哪里？",
+                options: [
+                    "执行价格",
+                    "执行价格 + 权利金",
+                    "当前股价",
+                    "当前股价 + 权利金"
+                ],
+                correct: 1,
+                explanation: "盈亏平衡点 = 执行价格 + 权利金。只有股价超过这个水平，买入看涨期权策略才开始盈利。"
+            },
+            {
+                question: "在什么市场环境下最适合使用买入看涨期权策略？",
+                options: [
+                    "市场横盘整理",
+                    "强烈看涨预期",
+                    "波动率极高时期",
+                    "接近期权到期时"
+                ],
+                correct: 1,
+                explanation: "买入看涨期权最适合在有强烈看涨预期时使用，因为需要股价有足够的上涨幅度来覆盖权利金成本。"
+            },
+            {
+                question: "买入看涨期权相比直接买股票的主要优势是什么？",
+                options: [
+                    "没有时间限制",
+                    "杠杆效应和有限风险",
+                    "收益更高",
+                    "不受市场波动影响"
+                ],
+                correct: 1,
+                explanation: "买入看涨期权的主要优势是杠杆效应（用较少资金获得更大敞口）和风险有限（最大损失为权利金）。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawLongCallChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通买入看涨策略！' : 
+                         percentage >= 60 ? '不错的理解，建议进一步学习策略应用技巧。' : 
+                         '需要加强对买入看涨策略的基础理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawLongCallChart() {
+            const canvas = document.getElementById('longCallChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis (profit/loss line)
+            const zeroLine = canvas.height - padding - chartHeight / 2;
+            ctx.moveTo(padding, zeroLine);
+            ctx.lineTo(canvas.width - padding, zeroLine);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('损益', 0, 0);
+            ctx.restore();
+
+            // Parameters for long call
+            const strike = 105;
+            const premium = 3.5;
+            const minStock = 80;
+            const maxStock = 130;
+            const steps = 100;
+
+            // Draw long call payoff line
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff = Math.max(stockPrice - strike, 0) - premium;
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 20) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw strike price line
+            const strikeX = padding + ((strike - minStock) / (maxStock - minStock)) * chartWidth;
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(strikeX, padding);
+            ctx.lineTo(strikeX, canvas.height - padding);
+            ctx.stroke();
+
+            // Draw breakeven line
+            const breakeven = strike + premium;
+            const breakevenX = padding + ((breakeven - minStock) / (maxStock - minStock)) * chartWidth;
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(breakevenX, padding);
+            ctx.lineTo(breakevenX, canvas.height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            // Vertical grid
+            for (let price = 90; price <= 120; price += 10) {
+                const x = padding + ((price - minStock) / (maxStock - minStock)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Horizontal grid (profit/loss)
+            for (let profit = -10; profit <= 20; profit += 5) {
+                const y = zeroLine - (profit / 20) * (chartHeight / 4);
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'right';
+                ctx.fillText('$' + profit, padding - 10, y + 5);
+            }
+
+            // Add labels
+            ctx.fillStyle = '#3b82f6';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('执行价 $' + strike, strikeX + 10, padding + 20);
+
+            ctx.fillStyle = '#ffd700';
+            ctx.fillText('盈亏平衡 $' + breakeven, breakevenX + 10, padding + 40);
+
+            ctx.fillStyle = '#10b981';
+            ctx.fillText('买入看涨收益', padding + 20, padding + 30);
+
+            ctx.setLineDash([]);
+        }
+
+        function analyzeLongCall() {
+            const currentPrice = parseFloat(document.getElementById('currentStockPrice').value);
+            const strike = parseFloat(document.getElementById('strikePrice').value);
+            const premium = parseFloat(document.getElementById('optionPremium').value);
+            const days = parseInt(document.getElementById('daysToExpiry').value);
+            const iv = parseFloat(document.getElementById('impliedVolatility').value);
+            const contracts = parseInt(document.getElementById('contractsCount').value);
+
+            // Basic calculations
+            const breakeven = strike + premium;
+            const totalCost = premium * contracts * 100;
+            const maxLoss = totalCost;
+            const currentIntrinsic = Math.max(currentPrice - strike, 0);
+            const timeValue = premium - currentIntrinsic;
+
+            // Scenario analysis
+            const upside10 = Math.max(currentPrice * 1.1 - strike, 0) - premium;
+            const upside20 = Math.max(currentPrice * 1.2 - strike, 0) - premium;
+            const downside10 = Math.max(currentPrice * 0.9 - strike, 0) - premium;
+
+            // Probability estimates (simplified)
+            const moneyness = currentPrice / strike;
+            let successProb = 0;
+            if (moneyness > 1.05) successProb = 70;
+            else if (moneyness > 1.0) successProb = 60;
+            else if (moneyness > 0.95) successProb = 45;
+            else successProb = 30;
+
+            // Risk assessment
+            let riskLevel = '';
+            let riskColor = '';
+            if (timeValue / premium > 0.7) {
+                riskLevel = '高风险';
+                riskColor = '#ef4444';
+            } else if (timeValue / premium > 0.5) {
+                riskLevel = '中等风险';
+                riskColor = '#f59e0b';
+            } else {
+                riskLevel = '低风险';
+                riskColor = '#10b981';
+            }
+
+            // Display results
+            document.getElementById('longCallAnalysis').style.display = 'block';
+            document.getElementById('analysisResults').innerHTML = `
+                <div class="analysis-item">
+                    <div class="analysis-value">$${breakeven.toFixed(2)}</div>
+                    <div class="analysis-label">盈亏平衡点</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${totalCost.toFixed(0)}</div>
+                    <div class="analysis-label">总投资成本</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${maxLoss.toFixed(0)}</div>
+                    <div class="analysis-label">最大损失</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${successProb}%</div>
+                    <div class="analysis-label">盈利概率估算</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${(upside10 * contracts * 100).toFixed(0)}</div>
+                    <div class="analysis-label">+10%情景收益</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${(upside20 * contracts * 100).toFixed(0)}</div>
+                    <div class="analysis-label">+20%情景收益</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${days}天</div>
+                    <div class="analysis-label">剩余时间</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value" style="color: ${riskColor}">${riskLevel}</div>
+                    <div class="analysis-label">风险等级评估</div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

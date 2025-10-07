@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第40课：期权组合策略 - OPITIOS期权课程</title>
+    <meta name="description" content="学习期权组合策略，掌握如何构建和管理期权投资组合，提高整体投资收益。">
+    <meta name="keywords" content="期权组合策略,期权投资组合,期权管理,期权投资,期权交易">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-40-options-portfolio-strategies.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-40-options-portfolio-strategies.html">
+    <meta property="og:title" content="第40课：期权组合策略 - OPITIOS期权课程">
+    <meta property="og:description" content="学习期权组合策略，掌握如何构建和管理期权投资组合，提高整体投资收益。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-40-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-40-options-portfolio-strategies.html">
+    <meta property="twitter:title" content="第40课：期权组合策略 - OPITIOS期权课程">
+    <meta property="twitter:description" content="学习期权组合策略，掌握如何构建和管理期权投资组合，提高整体投资收益。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-40-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第40课：期权组合策略",
+        "description": "学习期权组合策略，掌握如何构建和管理期权投资组合，提高整体投资收益。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-40-options-portfolio-strategies.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第40课：期权组合策略综合应用 - OPITIOS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #ffd700; --bg-color: #0a0a0b; --card-bg: #1a1a1b;
+            --text-color: #ffffff; --text-secondary: #cccccc;
+            --success-color: #10b981; --error-color: #ef4444;
+            --master-color: #8b5cf6; --expert-color: #0ea5e9;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color); line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+        }
+        .logo-img { height: 40px; }
+        .main { margin-top: 80px; padding: 2rem 0; }
+        .course-header { text-align: center; padding: 4rem 0; }
+        .course-title {
+            font-size: 3.5rem; font-weight: 700; margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--master-color) 0%, var(--expert-color) 100%);
+            color: white; padding: 1rem 2rem; border-radius: 25px;
+            font-weight: 700; font-size: 1.1rem; margin: 1rem 0;
+        }
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px; padding: 2.5rem; margin: 2rem 0;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .card h3 { color: var(--primary-color); margin-bottom: 1.5rem; font-size: 1.8rem; }
+        .card p { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem; }
+        .completion-banner {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(14, 165, 233, 0.1) 100%);
+            border-left: 4px solid var(--master-color); border-radius: 8px;
+            padding: 3rem; margin: 2rem 0; color: var(--master-color);
+            font-weight: 600; text-align: center; font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第40课：期权组合策略综合应用</h1>
+                <div class="strategy-badge">🎓 期权大师认证 · 综合应用Complete Mastery专家</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">巅峰之路完美收官：期权组合策略的融汇贯通与大师级应用</p>
+            </section>
+
+            <div class="completion-banner">
+                🎉 重大里程碑达成！您即将完成高级组合策略篇（第36-40课）的全部学习，成为期权组合策略的综合应用大师！
+            </div>
+
+            <div class="card">
+                <h3>期权组合策略体系的完整架构回顾</h3>
+                <p>经过五个课程的深入学习，我们已经构建了完整的高级期权组合策略知识体系。从第36课的比例价差策略开始，我们掌握了非对称收益结构的精妙设计；第37课的日历价差策略让我们学会了时间套利的艺术；第38课的对角价差策略展现了多维优化的复杂魅力；第39课的多腿期权策略系统设计则将个人经验上升为系统化的交易解决方案。</p>
+            </div>
+
+            <div class="card">
+                <h3>🎊 高级组合策略篇完美收官</h3>
+                <p><strong>恭喜您完成期权交易的最高级篇章！</strong></p>
+                <p>您已经掌握了：</p>
+                <ul style="color: var(--text-secondary); margin-left: 2rem;">
+                    <li>比例价差策略的非对称收益设计</li>
+                    <li>日历价差策略的时间套利技术</li>
+                    <li>对角价差策略的多维优化管理</li>
+                    <li>多腿期权策略系统的专业设计</li>
+                    <li>期权组合策略的综合应用能力</li>
+                </ul>
+                <p style="margin-top: 2rem; padding: 1.5rem; background: rgba(139, 92, 246, 0.1); border-radius: 8px; color: var(--master-color);">
+                    <strong>🏆 您现在已经是真正的期权策略大师！</strong><br>
+                    具备了从基础策略到高级组合策略的完整知识体系，可以在任何市场环境中灵活运用最适合的策略组合。
+                </p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

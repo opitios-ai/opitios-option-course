@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第24课：卖出看跌期权 - OPITIOS期权课程</title>
+    <meta name="description" content="深入学习卖出看跌期权策略，掌握现金担保看跌期权和裸看跌期权的交易技巧。">
+    <meta name="keywords" content="卖出看跌期权,现金担保看跌期权,裸看跌期权,期权交易策略,期权收益">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-24-sell-put-options.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-24-sell-put-options.html">
+    <meta property="og:title" content="第24课：卖出看跌期权 - OPITIOS期权课程">
+    <meta property="og:description" content="深入学习卖出看跌期权策略，掌握现金担保看跌期权和裸看跌期权的交易技巧。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-24-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-24-sell-put-options.html">
+    <meta property="twitter:title" content="第24课：卖出看跌期权 - OPITIOS期权课程">
+    <meta property="twitter:description" content="深入学习卖出看跌期权策略，掌握现金担保看跌期权和裸看跌期权的交易技巧。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-24-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第24课：卖出看跌期权",
+        "description": "深入学习卖出看跌期权策略，掌握现金担保看跌期权和裸看跌期权的交易技巧。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-24-sell-put-options.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第24课：卖出看跌期权 - 现金担保与底部收集策略 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --cash-color: #06b6d4;
+            --collect-color: #8b5cf6;
+            --income-color: #10b981;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--cash-color) 0%, #0891b2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .advantage-banner {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border-left: 4px solid var(--success-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .strategy-variants {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .variant-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--cash-color);
+            background: rgba(6, 182, 212, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .variant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .variant-card.collecting {
+            border-color: var(--collect-color);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .variant-card.collecting:hover {
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .variant-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .variant-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--cash-color);
+        }
+
+        .variant-card.collecting .variant-title {
+            color: var(--collect-color);
+        }
+
+        .variant-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .dual-purpose-analyzer {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--cash-color);
+        }
+
+        .purpose-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .purpose-btn {
+            flex: 1;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .purpose-btn.active {
+            background: var(--cash-color);
+            color: white;
+        }
+
+        .purpose-btn.collecting.active {
+            background: var(--collect-color);
+        }
+
+        .purpose-content {
+            display: none;
+        }
+
+        .purpose-content.active {
+            display: block;
+        }
+
+        .analyzer-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--cash-color);
+        }
+
+        .collecting-controls .control-group label {
+            color: var(--collect-color);
+        }
+
+        .control-group input, .control-group select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--cash-color);
+            border-radius: 6px;
+            padding: 0.7rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .collecting-controls .control-group input, 
+        .collecting-controls .control-group select {
+            border-color: var(--collect-color);
+        }
+
+        .analyze-btn {
+            background: linear-gradient(135deg, var(--cash-color) 0%, #0891b2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .analyze-btn.collecting {
+            background: linear-gradient(135deg, var(--collect-color) 0%, #7c3aed 100%);
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .strategy-analysis {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border: 2px solid var(--primary-color);
+            display: none;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .analysis-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .analysis-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .assignment-matrix {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--collect-color);
+        }
+
+        .assignment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .assignment-table th {
+            background: var(--collect-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .assignment-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .assignment-great {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .assignment-good {
+            background: rgba(6, 182, 212, 0.3);
+            color: var(--cash-color);
+            font-weight: 600;
+        }
+
+        .assignment-neutral {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .assignment-poor {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+            font-weight: 600;
+        }
+
+        .income-opportunities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .opportunity-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .opportunity-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .opportunity-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .opportunity-type {
+            color: var(--cash-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .opportunity-card.collecting .opportunity-type {
+            color: var(--collect-color);
+        }
+
+        .opportunity-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .cash-efficiency-calc {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--income-color);
+        }
+
+        .efficiency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .efficiency-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .efficiency-label {
+            color: var(--income-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .efficiency-input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--income-color);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .efficiency-result {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .efficiency-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .strategy-variants {
+                grid-template-columns: 1fr;
+            }
+            .analyzer-controls {
+                grid-template-columns: 1fr;
+            }
+            .income-opportunities {
+                grid-template-columns: 1fr;
+            }
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            .efficiency-grid {
+                grid-template-columns: 1fr;
+            }
+            .purpose-tabs {
+                flex-direction: column;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第24课：卖出看跌期权 - 现金担保与底部收集策略</h1>
+                <div class="strategy-badge">💎 现金增值精通 · 价值投资与收益双重大师</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">现金的智慧运用：低位收集优质股票的专业策略</p>
+            </section>
+
+            <div class="advantage-banner">
+                💡 策略优势：卖出看跌期权相比卖出看涨期权风险更可控，最大损失是被迫以执行价格买入股票，适合愿意持有优质股票的长期投资者。
+            </div>
+
+            <div class="card">
+                <h3>卖出看跌期权的双重价值策略</h3>
+                <p>卖出看跌期权（Short Put或Cash-Secured Put）是一个兼具收益性和价值投资特征的期权策略。与卖出看涨期权的无限风险不同，卖出看跌期权的风险是有限和可控的——最坏情况是被迫以执行价格买入股票。这种特征使得卖出看跌期权成为一个既能收取权利金收益，又能在合适价位收集优质股票的双重价值策略。对于看好某只股票长期前景但希望以更低价格买入的投资者来说，这是一个理想的策略选择。</p>
+
+                <p><strong>现金担保机制的安全性</strong>：现金担保看跌期权（Cash-Secured Put）要求投资者持有足够现金来履行潜在的买入义务。这种机制提供了重要的安全保障，确保投资者有能力承担被指派的后果。与需要大量保证金的裸卖策略不同，现金担保策略让投资者完全控制风险，不会面临保证金追缴的压力。这种安全性使得现金担保看跌期权成为保守投资者和机构投资者偏爱的收益策略。</p>
+
+                <p><strong>底部收集的价值投资逻辑</strong>：卖出看跌期权天然契合价值投资的逻辑。投资者通常选择在股价调整后或技术支撑位附近卖出看跌期权，执行价格设定在认为具有价值的水平。如果股价继续下跌并被指派，投资者实际上是以预定的"合理价格"买入了心仪的股票；如果股价上涨，期权到期无价值，投资者保留权利金作为现金收益。这种"进可攻退可守"的特征使其成为优秀的底部收集策略。</p>
+
+                <p><strong>收益结构与希腊字母分析</strong>：卖出看跌期权的收益函数为：收益 = P - Max(K - S, 0)，其中P是收取的权利金，K是执行价格，S是股价。希腊字母特征包括：Delta为正值，与股价正相关；Gamma为负值，股价下跌时Delta变化对策略不利；Theta为正值，时间流逝有利于策略；Vega为负值，波动率下降有利；Rho为正值，利率上升对策略有轻微正面影响。这些特征决定了策略适合在预期股价稳定或上涨、波动率下降的环境中使用。</p>
+            </div>
+
+            <section class="strategy-variants">
+                <div class="variant-card">
+                    <span class="variant-icon">💰</span>
+                    <div class="variant-title">现金担保策略</div>
+                    <div class="variant-description">
+                        持有100%现金担保，收取权利金同时准备以执行价格买入股票，适合保守投资者的安全收益策略。
+                    </div>
+                </div>
+
+                <div class="variant-card collecting">
+                    <span class="variant-icon">💎</span>
+                    <div class="variant-title">底部收集策略</div>
+                    <div class="variant-description">
+                        在股价调整后的支撑位卖出看跌期权，主动寻求以合理价格收集优质股票的价值投资策略。
+                    </div>
+                </div>
+
+                <div class="variant-card">
+                    <span class="variant-icon">🔄</span>
+                    <div class="variant-title">滚动收益策略</div>
+                    <div class="variant-description">
+                        持续卖出短期看跌期权，通过不断滚动获得稳定的权利金收入，创造持续现金流。
+                    </div>
+                </div>
+
+                <div class="variant-card collecting">
+                    <span class="variant-icon">📊</span>
+                    <div class="variant-title">技术面建仓</div>
+                    <div class="variant-description">
+                        基于技术分析在关键支撑位卖出看跌期权，结合技术面和基本面的综合投资策略。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">卖出看跌期权策略收益分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">对比现金担保与底部收集应用的收益特征：</p>
+                <canvas class="chart-canvas" id="shortPutChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--cash-color);">■</span> 卖出看跌收益曲线
+                    <span style="margin-left: 2rem; color: var(--collect-color);">■</span> 底部收集目标区间
+                    <span style="margin-left: 2rem; color: var(--primary-color);">│</span> 执行价格
+                </div>
+            </section>
+
+            <div class="dual-purpose-analyzer">
+                <div class="purpose-tabs">
+                    <button class="purpose-btn active" onclick="switchPurposeTab('income')">现金增值</button>
+                    <button class="purpose-btn collecting" onclick="switchPurposeTab('collecting')">底部收集</button>
+                </div>
+
+                <!-- 现金增值分析器 -->
+                <div class="purpose-content active" id="income-content">
+                    <h4 style="color: var(--cash-color); text-align: center; margin-bottom: 2rem;">现金增值策略分析器</h4>
+                    <div class="analyzer-controls">
+                        <div class="control-group">
+                            <label>可用现金数量</label>
+                            <input type="number" id="availableCash" value="10000" step="100">
+                        </div>
+                        <div class="control-group">
+                            <label>当前股价 (S)</label>
+                            <input type="number" id="incomeStockPrice" value="100" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>执行价格 (K)</label>
+                            <input type="number" id="incomeStrike" value="95" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>看跌期权价格</label>
+                            <input type="number" id="incomePremium" value="2.80" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>到期时间（天）</label>
+                            <input type="number" id="incomeDays" value="45" step="1">
+                        </div>
+                        <div class="control-group">
+                            <label>隐含波动率 (%)</label>
+                            <input type="number" id="incomeIV" value="28" step="1">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <button class="analyze-btn" onclick="analyzeIncomeStrategy()">分析现金增值策略</button>
+                    </div>
+                    <div class="strategy-analysis" id="incomeAnalysis">
+                        <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">现金增值分析结果</h4>
+                        <div class="analysis-grid" id="incomeResults">
+                            <!-- Results populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 底部收集分析器 -->
+                <div class="purpose-content collecting-controls" id="collecting-content">
+                    <h4 style="color: var(--collect-color); text-align: center; margin-bottom: 2rem;">底部收集策略分析器</h4>
+                    <div class="analyzer-controls">
+                        <div class="control-group">
+                            <label>目标买入价格</label>
+                            <input type="number" id="targetPrice" value="95" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>当前股价</label>
+                            <input type="number" id="collectingStockPrice" value="100" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>期望持股数量</label>
+                            <input type="number" id="targetShares" value="1000" step="100">
+                        </div>
+                        <div class="control-group">
+                            <label>执行价格选择</label>
+                            <input type="number" id="collectingStrike" value="95" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>权利金收入</label>
+                            <input type="number" id="collectingPremium" value="2.80" step="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label>期权周期（天）</label>
+                            <input type="number" id="collectingDays" value="45" step="1">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <button class="analyze-btn collecting" onclick="analyzeCollectingStrategy()">分析底部收集策略</button>
+                    </div>
+                    <div class="strategy-analysis" id="collectingAnalysis">
+                        <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">底部收集分析结果</h4>
+                        <div class="analysis-grid" id="collectingResults">
+                            <!-- Results populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>被指派情况分析矩阵</h3>
+                <div class="assignment-matrix">
+                    <h4 style="color: var(--collect-color); text-align: center; margin-bottom: 2rem;">不同被指派情况下的策略表现</h4>
+                    <table class="assignment-table">
+                        <thead>
+                            <tr>
+                                <th>指派情况</th>
+                                <th>股价相对执行价</th>
+                                <th>策略结果</th>
+                                <th>总体评价</th>
+                                <th>后续建议</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>未被指派</strong></td>
+                                <td>高于执行价</td>
+                                <td class="assignment-great">收取全部权利金</td>
+                                <td>理想结果</td>
+                                <td>继续执行滚动策略</td>
+                            </tr>
+                            <tr>
+                                <td><strong>小幅指派</strong></td>
+                                <td>略低于执行价</td>
+                                <td class="assignment-good">实际成本降低</td>
+                                <td>良好结果</td>
+                                <td>持有股票或卖出看涨</td>
+                            </tr>
+                            <tr>
+                                <td><strong>正常指派</strong></td>
+                                <td>明显低于执行价</td>
+                                <td class="assignment-neutral">按计划买入</td>
+                                <td>符合预期</td>
+                                <td>评估是否继续持有</td>
+                            </tr>
+                            <tr>
+                                <td><strong>深度指派</strong></td>
+                                <td>大幅低于执行价</td>
+                                <td class="assignment-poor">账面损失较大</td>
+                                <td>需要耐心</td>
+                                <td>长期持有或止损考虑</td>
+                            </tr>
+                            <tr>
+                                <td><strong>极端指派</strong></td>
+                                <td>极大低于执行价</td>
+                                <td class="assignment-poor">重大账面损失</td>
+                                <td>挑战情况</td>
+                                <td>重新评估基本面</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>卖出看跌期权的实战收益机会</h3>
+                <div class="income-opportunities">
+                    <div class="opportunity-card">
+                        <div class="opportunity-title">💰 现金管理增强</div>
+                        <div class="opportunity-type">保守收益：现金替代策略</div>
+                        <div class="opportunity-description">
+                            将部分现金用于卖出看跌期权，获得比银行存款更高的收益率。适合对特定股票有信心但不急于买入的投资者。
+                        </div>
+                    </div>
+
+                    <div class="opportunity-card collecting">
+                        <div class="opportunity-title">📉 调整期抄底</div>
+                        <div class="opportunity-type">价值投资：逢低建仓</div>
+                        <div class="opportunity-description">
+                            在优质股票调整期间卖出看跌期权，主动寻求以合理价格建仓。即使被指派也能以满意价格持有优质资产。
+                        </div>
+                    </div>
+
+                    <div class="opportunity-card">
+                        <div class="opportunity-title">🔄 收益滚动策略</div>
+                        <div class="opportunity-type">持续收益：现金流优化</div>
+                        <div class="opportunity-description">
+                            定期卖出30-45天期看跌期权，创造稳定的月度现金流。通过持续滚动实现年化8-15%的现金收益率。
+                        </div>
+                    </div>
+
+                    <div class="opportunity-card collecting">
+                        <div class="opportunity-title">📊 技术面配合</div>
+                        <div class="opportunity-type">综合分析：技术价值结合</div>
+                        <div class="opportunity-description">
+                            在技术支撑位附近卖出看跌期权，结合技术分析提高成功率。利用技术面判断最佳入场时机和执行价格。
+                        </div>
+                    </div>
+
+                    <div class="opportunity-card">
+                        <div class="opportunity-title">📈 波动率收割</div>
+                        <div class="opportunity-type">高级策略：波动率套利</div>
+                        <div class="opportunity-description">
+                            在隐含波动率偏高时卖出看跌期权，随着波动率回落获得额外收益。需要对波动率有深入理解的专业策略。
+                        </div>
+                    </div>
+
+                    <div class="opportunity-card collecting">
+                        <div class="opportunity-title">💎 价值投资结合</div>
+                        <div class="opportunity-type">长期策略：资产配置优化</div>
+                        <div class="opportunity-description">
+                            将卖出看跌期权作为长期价值投资的入场工具，系统性地在目标价位收集优质股票，构建价值投资组合。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>现金使用效率优化计算</h3>
+                <div class="cash-efficiency-calc">
+                    <h4 style="color: var(--income-color); text-align: center; margin-bottom: 2rem;">现金使用效率计算器</h4>
+                    <div class="efficiency-grid">
+                        <div class="efficiency-card">
+                            <div class="efficiency-label">投入现金总额</div>
+                            <input type="number" class="efficiency-input" id="totalCash" value="50000" placeholder="输入现金总额">
+                            <div class="efficiency-result" id="cashDisplay">$50,000</div>
+                        </div>
+
+                        <div class="efficiency-card">
+                            <div class="efficiency-label">单次权利金收入</div>
+                            <input type="number" class="efficiency-input" id="premiumIncome" value="1400" placeholder="输入权利金收入">
+                            <div class="efficiency-result" id="premiumDisplay">$1,400</div>
+                        </div>
+
+                        <div class="efficiency-card">
+                            <div class="efficiency-label">持有周期（天）</div>
+                            <input type="number" class="efficiency-input" id="holdingPeriod" value="45" placeholder="输入持有天数">
+                            <div class="efficiency-result" id="periodDisplay">45天</div>
+                        </div>
+
+                        <div class="efficiency-card">
+                            <div class="efficiency-label">年化收益率</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="efficiency-result" id="annualizedYield">11.4%</div>
+                            <div class="efficiency-description">基于成功不被指派</div>
+                        </div>
+
+                        <div class="efficiency-card">
+                            <div class="efficiency-label">月均现金流</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="efficiency-result" id="monthlyCashFlow">$933</div>
+                            <div class="efficiency-description">预计月度收入</div>
+                        </div>
+
+                        <div class="efficiency-card">
+                            <div class="efficiency-label">效率评估</div>
+                            <div style="margin-bottom: 1rem;"></div>
+                            <div class="efficiency-result" id="efficiencyRating">优秀</div>
+                            <div class="efficiency-description">现金使用效率评级</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button onclick="calculateCashEfficiency()" style="background: linear-gradient(135deg, var(--income-color) 0%, #059669 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+                            计算现金效率
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>卖出看跌期权的高级实施技巧</h3>
+                <p><strong>执行价格的精准选择</strong>：执行价格的选择直接影响策略的成功率和收益率。一般建议选择比当前股价低5-15%的执行价格，这样既能收取合理的权利金，又能在被指派时以相对合理的价格买入股票。可以使用技术分析确定支撑位，将执行价格设在关键支撑位附近，提高策略成功率。同时要考虑期权的流动性，选择交易活跃的执行价格。</p>
+
+                <p><strong>时间周期的优化选择</strong>：30-60天的期权通常是最佳选择，这个时间段内时间价值衰减效率最高，同时给股价变动留出适当时间。过短的期权（如小于21天）时间价值衰减虽快但权利金较少；过长的期权（如超过90天）虽然权利金较多但时间价值衰减较慢。建议采用45天左右的期权，在时间价值和权利金之间找到最佳平衡。</p>
+
+                <p><strong>滚动和调整策略</strong>：当面临不利情况时，可以采用滚动策略进行调整。如果股价下跌接近执行价格，可以买回当前期权同时卖出更低执行价格或更远期限的期权。这种操作可以避免被指派，同时收取额外权利金。但要注意滚动成本，确保调整后的策略仍然有利可图。</p>
+
+                <p><strong>投资组合整合策略</strong>：卖出看跌期权应该与整体投资组合策略相结合。只对真正愿意长期持有的优质股票卖出看跌期权，这样即使被指派也符合长期投资目标。可以将此策略作为逐步建仓的工具，通过多次小批量操作分散风险和时机。同时要控制单一股票的敞口，避免过度集中于某一只股票。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "卖出看跌期权的最大风险是什么？",
+                options: [
+                    "损失权利金",
+                    "被迫以执行价格买入股票",
+                    "无限损失",
+                    "时间价值衰减"
+                ],
+                correct: 1,
+                explanation: "卖出看跌期权的最大风险是被迫以执行价格买入股票，但这是有限且可控的风险，不同于无限损失。"
+            },
+            {
+                question: "现金担保看跌期权策略的主要优势是什么？",
+                options: [
+                    "收益无限",
+                    "不需要资金",
+                    "风险可控且能收取权利金",
+                    "没有时间限制"
+                ],
+                correct: 2,
+                explanation: "现金担保看跌期权的主要优势是风险可控（最多是以执行价格买股票）且能收取权利金，适合保守投资者。"
+            },
+            {
+                question: "什么情况下卖出看跌期权最有利？",
+                options: [
+                    "股价大幅上涨时",
+                    "股价横盘或温和上涨时",
+                    "股价大幅下跌时",
+                    "市场极度恐慌时"
+                ],
+                correct: 1,
+                explanation: "股价横盘或温和上涨时最有利于卖出看跌期权，此时期权不会被执行，可以收取全部权利金。"
+            },
+            {
+                question: "底部收集策略的核心思想是什么？",
+                options: [
+                    "追求最大收益",
+                    "避免一切风险",
+                    "以合理价格收集优质股票",
+                    "快速获利"
+                ],
+                correct: 2,
+                explanation: "底部收集策略的核心是通过卖出看跌期权，主动寻求以合理（执行）价格收集看好的优质股票。"
+            }
+        ];
+
+        let userAnswers = [];
+        let activeTab = 'income';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawShortPutChart();
+            updateCashEfficiencyCalculator();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function switchPurposeTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.purpose-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update tab contents
+            document.querySelectorAll('.purpose-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tab + '-content').classList.add('active');
+
+            activeTab = tab;
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通卖出看跌策略！' : 
+                         percentage >= 60 ? '不错的理解，建议进一步学习现金管理技巧。' : 
+                         '需要加强对卖出看跌策略应用的理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawShortPutChart() {
+            const canvas = document.getElementById('shortPutChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis (profit/loss line)
+            const zeroLine = canvas.height - padding - chartHeight / 2;
+            ctx.moveTo(padding, zeroLine);
+            ctx.lineTo(canvas.width - padding, zeroLine);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('损益', 0, 0);
+            ctx.restore();
+
+            // Parameters
+            const strike = 95;
+            const premium = 2.8;
+            const minStock = 70;
+            const maxStock = 120;
+            const steps = 100;
+
+            // Draw short put payoff line
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let putPayoff = -Math.max(strike - stockPrice, 0) + premium;
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (putPayoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw collecting target zone
+            const targetLow = strike - 10;
+            const targetHigh = strike + 5;
+            const targetLowX = padding + ((targetLow - minStock) / (maxStock - minStock)) * chartWidth;
+            const targetHighX = padding + ((targetHigh - minStock) / (maxStock - minStock)) * chartWidth;
+
+            ctx.fillStyle = 'rgba(139, 92, 246, 0.2)';
+            ctx.fillRect(targetLowX, padding, targetHighX - targetLowX, canvas.height - 2 * padding);
+
+            // Draw strike price line
+            const strikeX = padding + ((strike - minStock) / (maxStock - minStock)) * chartWidth;
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(strikeX, padding);
+            ctx.lineTo(strikeX, canvas.height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            // Vertical grid
+            for (let price = 80; price <= 110; price += 10) {
+                const x = padding + ((price - minStock) / (maxStock - minStock)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Add labels
+            ctx.fillStyle = '#ffd700';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('执行价 $' + strike, strikeX + 10, padding + 20);
+
+            ctx.fillStyle = '#06b6d4';
+            ctx.fillText('卖出看跌收益', padding + 20, padding + 30);
+
+            ctx.fillStyle = '#8b5cf6';
+            ctx.fillText('底部收集目标区间', targetLowX + 10, padding + 50);
+
+            ctx.setLineDash([]);
+        }
+
+        function analyzeIncomeStrategy() {
+            const cash = parseFloat(document.getElementById('availableCash').value);
+            const stockPrice = parseFloat(document.getElementById('incomeStockPrice').value);
+            const strike = parseFloat(document.getElementById('incomeStrike').value);
+            const premium = parseFloat(document.getElementById('incomePremium').value);
+            const days = parseInt(document.getElementById('incomeDays').value);
+            const iv = parseFloat(document.getElementById('incomeIV').value);
+
+            // Calculations
+            const maxContracts = Math.floor(cash / (strike * 100));
+            const totalPremium = maxContracts * premium * 100;
+            const breakeven = strike - premium;
+            const maxProfit = totalPremium;
+            const annualizedReturn = (totalPremium / cash) * (365 / days) * 100;
+            const cashUtilization = (maxContracts * strike * 100) / cash * 100;
+
+            // Success probability (simplified)
+            const moneyness = stockPrice / strike;
+            let successProb = 0;
+            if (moneyness > 1.1) successProb = 85;
+            else if (moneyness > 1.05) successProb = 75;
+            else if (moneyness > 1.0) successProb = 65;
+            else if (moneyness > 0.95) successProb = 50;
+            else successProb = 35;
+
+            // Risk-adjusted return
+            const riskAdjustedReturn = annualizedReturn * (successProb / 100);
+
+            document.getElementById('incomeAnalysis').style.display = 'block';
+            document.getElementById('incomeResults').innerHTML = `
+                <div class="analysis-item">
+                    <div class="analysis-value">${maxContracts}</div>
+                    <div class="analysis-label">最大合约数</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${totalPremium.toLocaleString()}</div>
+                    <div class="analysis-label">总权利金收入</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${annualizedReturn.toFixed(2)}%</div>
+                    <div class="analysis-label">年化收益率</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${riskAdjustedReturn.toFixed(2)}%</div>
+                    <div class="analysis-label">风险调整收益</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${successProb}%</div>
+                    <div class="analysis-label">成功概率</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${breakeven.toFixed(2)}</div>
+                    <div class="analysis-label">盈亏平衡点</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${cashUtilization.toFixed(1)}%</div>
+                    <div class="analysis-label">现金利用率</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${(maxContracts * strike * 100).toLocaleString()}</div>
+                    <div class="analysis-label">现金担保需求</div>
+                </div>
+            `;
+        }
+
+        function analyzeCollectingStrategy() {
+            const targetPrice = parseFloat(document.getElementById('targetPrice').value);
+            const currentPrice = parseFloat(document.getElementById('collectingStockPrice').value);
+            const targetShares = parseInt(document.getElementById('targetShares').value);
+            const strike = parseFloat(document.getElementById('collectingStrike').value);
+            const premium = parseFloat(document.getElementById('collectingPremium').value);
+            const days = parseInt(document.getElementById('collectingDays').value);
+
+            // Calculations
+            const contractsNeeded = targetShares / 100;
+            const premiumIncome = contractsNeeded * premium * 100;
+            const cashRequired = contractsNeeded * strike * 100;
+            const effectiveCost = strike - premium;
+            const discount = ((currentPrice - effectiveCost) / currentPrice) * 100;
+            const targetDiscount = ((currentPrice - targetPrice) / currentPrice) * 100;
+
+            // Assignment scenarios
+            const assignmentProb = currentPrice < strike ? 75 : 25;
+            const totalInvestment = effectiveCost * targetShares;
+            const potentialSavings = (currentPrice - effectiveCost) * targetShares;
+
+            document.getElementById('collectingAnalysis').style.display = 'block';
+            document.getElementById('collectingResults').innerHTML = `
+                <div class="analysis-item">
+                    <div class="analysis-value">${contractsNeeded}</div>
+                    <div class="analysis-label">需要期权合约</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${premiumIncome.toLocaleString()}</div>
+                    <div class="analysis-label">权利金收入</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${effectiveCost.toFixed(2)}</div>
+                    <div class="analysis-label">实际买入成本</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${discount.toFixed(1)}%</div>
+                    <div class="analysis-label">相对当前价折扣</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">${assignmentProb}%</div>
+                    <div class="analysis-label">被指派概率</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${totalInvestment.toLocaleString()}</div>
+                    <div class="analysis-label">总投资成本</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${Math.abs(potentialSavings).toLocaleString()}</div>
+                    <div class="analysis-label">${potentialSavings >= 0 ? '节省成本' : '额外成本'}</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="analysis-value">$${cashRequired.toLocaleString()}</div>
+                    <div class="analysis-label">现金担保需求</div>
+                </div>
+            `;
+        }
+
+        function updateCashEfficiencyCalculator() {
+            document.getElementById('totalCash').addEventListener('input', calculateCashEfficiency);
+            document.getElementById('premiumIncome').addEventListener('input', calculateCashEfficiency);
+            document.getElementById('holdingPeriod').addEventListener('input', calculateCashEfficiency);
+        }
+
+        function calculateCashEfficiency() {
+            const totalCash = parseFloat(document.getElementById('totalCash').value) || 0;
+            const premiumIncome = parseFloat(document.getElementById('premiumIncome').value) || 0;
+            const holdingPeriod = parseInt(document.getElementById('holdingPeriod').value) || 0;
+
+            // Update displays
+            document.getElementById('cashDisplay').textContent = '$' + totalCash.toLocaleString();
+            document.getElementById('premiumDisplay').textContent = '$' + premiumIncome.toLocaleString();
+            document.getElementById('periodDisplay').textContent = holdingPeriod + '天';
+
+            // Calculate efficiency metrics
+            const yieldPerCycle = (premiumIncome / totalCash) * 100;
+            const annualizedYield = yieldPerCycle * (365 / holdingPeriod);
+            const monthlyCashFlow = (premiumIncome * 30) / holdingPeriod;
+
+            // Efficiency rating
+            let efficiencyRating = '';
+            if (annualizedYield > 15) {
+                efficiencyRating = '卓越';
+            } else if (annualizedYield > 12) {
+                efficiencyRating = '优秀';
+            } else if (annualizedYield > 8) {
+                efficiencyRating = '良好';
+            } else if (annualizedYield > 5) {
+                efficiencyRating = '一般';
+            } else {
+                efficiencyRating = '偏低';
+            }
+
+            document.getElementById('annualizedYield').textContent = annualizedYield.toFixed(1) + '%';
+            document.getElementById('monthlyCashFlow').textContent = '$' + Math.round(monthlyCashFlow).toLocaleString();
+            document.getElementById('efficiencyRating').textContent = efficiencyRating;
+        }
+    </script>
+</body>
+</html>

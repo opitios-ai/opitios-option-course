@@ -1,0 +1,304 @@
+{
+  "lessons": [
+    {
+      "file": "lesson-01-us-stock-options-introduction.html",
+      "title": "第1课：美股期权初探",
+      "description": "美股期权入门课程，学习期权基本概念、交易机制和投资策略。适合期权初学者，提供全面的期权基础知识。",
+      "keywords": "美股期权,期权入门,期权基础,期权交易,期权投资,期权策略,期权学习"
+    },
+    {
+      "file": "lesson-02-call-put-options-basics.html",
+      "title": "第2课：期权合约解读：看涨期权与看跌期权的基本概念",
+      "description": "深入学习看涨期权和看跌期权的基本概念，掌握期权合约的核心要素，为期权交易奠定坚实基础。",
+      "keywords": "看涨期权,看跌期权,期权合约,期权基础,期权概念,期权交易,期权投资"
+    },
+    {
+      "file": "lesson-03-options-market-structure.html",
+      "title": "第3课：期权市场结构深度解析",
+      "description": "深入理解期权市场结构，包括交易所、做市商、清算机构等关键组成部分，为期权交易打下坚实基础。",
+      "keywords": "期权市场结构,期权交易所,做市商,清算机构,期权交易机制,期权市场分析"
+    },
+    {
+      "file": "lesson-04-options-contract-elements.html",
+      "title": "第4课：期权合约要素详解",
+      "description": "详细解析期权合约的各个要素，包括标的资产、行权价格、到期时间等关键参数，深入理解期权合约结构。",
+      "keywords": "期权合约要素,期权合约结构,行权价格,到期时间,标的资产,期权参数"
+    },
+    {
+      "file": "lesson-05-american-vs-european-options.html",
+      "title": "第5课：美式期权与欧式期权的区别",
+      "description": "深入分析美式期权和欧式期权的区别，理解不同行权方式对期权价值和交易策略的影响。",
+      "keywords": "美式期权,欧式期权,期权行权,期权类型,期权区别,期权交易"
+    },
+    {
+      "file": "lesson-06-options-liquidity-analysis.html",
+      "title": "第6课：期权流动性分析",
+      "description": "学习期权流动性分析方法，掌握如何评估期权合约的流动性，提高交易执行效率。",
+      "keywords": "期权流动性,期权分析,期权交易,流动性评估,期权市场"
+    },
+    {
+      "file": "lesson-07-options-value-composition.html",
+      "title": "第7课：期权价值构成",
+      "description": "深入理解期权价值的构成要素，包括内在价值和时间价值，掌握期权定价的基本原理。",
+      "keywords": "期权价值,内在价值,时间价值,期权定价,期权分析"
+    },
+    {
+      "file": "lesson-08-options-moneyness-classification.html",
+      "title": "第8课：期权价值状态分类",
+      "description": "学习期权价值状态的分类方法，理解实值、平值、虚值期权的特点和交易策略。",
+      "keywords": "期权价值状态,实值期权,平值期权,虚值期权,期权分类,期权交易"
+    },
+    {
+      "file": "lesson-09-options-risk-management-basics.html",
+      "title": "第9课：期权风险管理基础",
+      "description": "学习期权风险管理的基础知识，包括风险识别、评估和控制方法，为期权交易提供安全保障。",
+      "keywords": "期权风险管理,风险识别,风险评估,风险控制,期权交易风险"
+    },
+    {
+      "file": "lesson-10-options-trading-platform-tools.html",
+      "title": "第10课：期权交易平台与工具",
+      "description": "了解期权交易平台的功能和工具，掌握期权交易软件的使用方法，提高交易效率。",
+      "keywords": "期权交易平台,期权交易工具,期权软件,期权分析工具,期权交易系统"
+    },
+    {
+      "file": "lesson-11-black-scholes-pricing-model.html",
+      "title": "第11课：Black-Scholes定价模型基础",
+      "description": "深入学习Black-Scholes期权定价模型，掌握期权理论定价方法，提高期权分析能力。",
+      "keywords": "Black-Scholes模型,期权定价模型,期权理论定价,期权分析,期权计算"
+    },
+    {
+      "file": "lesson-12-binomial-pricing-model.html",
+      "title": "第12课：二叉树定价模型",
+      "description": "学习二叉树期权定价模型，理解离散时间下的期权定价方法，掌握数值计算技巧。",
+      "keywords": "二叉树模型,期权定价模型,数值方法,期权计算,期权分析"
+    },
+    {
+      "file": "lesson-13-options-pricing-factors.html",
+      "title": "第13课：期权定价影响因素",
+      "description": "分析影响期权价格的各种因素，包括标的资产价格、波动率、时间等，深入理解期权定价机制。",
+      "keywords": "期权定价因素,期权价格,波动率,时间价值,期权分析"
+    },
+    {
+      "file": "lesson-14-implied-volatility.html",
+      "title": "第14课：隐含波动率",
+      "description": "深入学习隐含波动率的概念和应用，掌握如何利用隐含波动率进行期权分析和交易决策。",
+      "keywords": "隐含波动率,期权波动率,期权分析,期权交易,波动率交易"
+    },
+    {
+      "file": "lesson-15-options-pricing-arbitrage.html",
+      "title": "第15课：期权定价套利",
+      "description": "学习期权套利的基本原理和策略，掌握如何发现和利用期权定价偏差获取无风险收益。",
+      "keywords": "期权套利,期权定价,套利策略,无风险收益,期权交易"
+    },
+    {
+      "file": "lesson-16-delta-price-sensitivity.html",
+      "title": "第16课：Delta价格敏感性",
+      "description": "深入学习Delta希腊字母，理解期权价格对标的资产价格变化的敏感性，掌握Delta对冲策略。",
+      "keywords": "Delta,期权希腊字母,价格敏感性,Delta对冲,期权风险管理"
+    },
+    {
+      "file": "lesson-17-gamma-delta-change-rate.html",
+      "title": "第17课：Gamma Delta变化率",
+      "description": "学习Gamma希腊字母，理解Delta的变化率，掌握Gamma在期权交易和风险管理中的应用。",
+      "keywords": "Gamma,期权希腊字母,Delta变化率,期权风险管理,期权交易"
+    },
+    {
+      "file": "lesson-18-theta-time-decay.html",
+      "title": "第18课：Theta时间衰减",
+      "description": "深入学习Theta希腊字母，理解期权时间价值衰减规律，掌握时间衰减对期权交易的影响。",
+      "keywords": "Theta,期权希腊字母,时间衰减,时间价值,期权交易"
+    },
+    {
+      "file": "lesson-19-vega-volatility-risk.html",
+      "title": "第19课：Vega波动率风险",
+      "description": "学习Vega希腊字母，理解期权对波动率变化的敏感性，掌握波动率风险管理策略。",
+      "keywords": "Vega,期权希腊字母,波动率风险,期权风险管理,波动率交易"
+    },
+    {
+      "file": "lesson-20-rho-interest-rate-risk.html",
+      "title": "第20课：Rho利率风险",
+      "description": "深入学习Rho希腊字母，理解期权对利率变化的敏感性，掌握利率风险管理方法。",
+      "keywords": "Rho,期权希腊字母,利率风险,期权风险管理,利率敏感性"
+    },
+    {
+      "file": "lesson-21-buy-call-options.html",
+      "title": "第21课：买入看涨期权",
+      "description": "学习买入看涨期权策略，掌握看涨期权的交易技巧和风险管理方法，提高做多收益。",
+      "keywords": "买入看涨期权,看涨期权策略,期权做多,期权交易策略,期权投资"
+    },
+    {
+      "file": "lesson-22-buy-put-options.html",
+      "title": "第22课：买入看跌期权",
+      "description": "深入学习买入看跌期权策略，掌握看跌期权的交易技巧，学会利用看跌期权进行做空和对冲。",
+      "keywords": "买入看跌期权,看跌期权策略,期权做空,期权对冲,期权交易策略"
+    },
+    {
+      "file": "lesson-23-sell-call-options.html",
+      "title": "第23课：卖出看涨期权",
+      "description": "学习卖出看涨期权策略，掌握备兑看涨期权和裸看涨期权的交易技巧和风险管理。",
+      "keywords": "卖出看涨期权,备兑看涨期权,裸看涨期权,期权交易策略,期权收益"
+    },
+    {
+      "file": "lesson-24-sell-put-options.html",
+      "title": "第24课：卖出看跌期权",
+      "description": "深入学习卖出看跌期权策略，掌握现金担保看跌期权和裸看跌期权的交易技巧。",
+      "keywords": "卖出看跌期权,现金担保看跌期权,裸看跌期权,期权交易策略,期权收益"
+    },
+    {
+      "file": "lesson-25-single-leg-strategies.html",
+      "title": "第25课：单腿策略综合",
+      "description": "综合学习各种单腿期权策略，掌握不同市场环境下的期权交易策略选择和风险管理。",
+      "keywords": "单腿策略,期权策略,期权交易,期权风险管理,期权投资"
+    },
+    {
+      "file": "lesson-26-bull-spread-strategy.html",
+      "title": "第26课：牛市价差策略",
+      "description": "学习牛市价差策略，掌握看涨价差和看跌价差的构建方法，提高在上涨市场中的收益。",
+      "keywords": "牛市价差,看涨价差,看跌价差,期权价差策略,期权交易"
+    },
+    {
+      "file": "lesson-27-bear-spread-strategy.html",
+      "title": "第27课：熊市价差策略",
+      "description": "深入学习熊市价差策略，掌握在下跌市场中的期权交易技巧，学会构建有效的做空策略。",
+      "keywords": "熊市价差,期权价差策略,期权做空,期权交易策略,期权投资"
+    },
+    {
+      "file": "lesson-28-calendar-spread-strategy.html",
+      "title": "第28课：日历价差策略",
+      "description": "学习日历价差策略，掌握时间价差的构建方法，利用时间衰减获取收益。",
+      "keywords": "日历价差,时间价差,期权价差策略,时间衰减,期权交易"
+    },
+    {
+      "file": "lesson-29-diagonal-spread-strategy.html",
+      "title": "第29课：对角价差策略",
+      "description": "深入学习对角价差策略，掌握复杂价差组合的构建方法，提高期权交易策略的灵活性。",
+      "keywords": "对角价差,期权价差策略,期权组合,期权交易策略,期权投资"
+    },
+    {
+      "file": "lesson-30-spread-strategies-comprehensive.html",
+      "title": "第30课：价差策略综合",
+      "description": "综合学习各种价差策略，掌握不同市场条件下的价差策略选择和执行技巧。",
+      "keywords": "价差策略,期权价差,期权策略,期权交易,期权投资"
+    },
+    {
+      "file": "lesson-31-straddle-strategy.html",
+      "title": "第31课：跨式策略",
+      "description": "学习跨式期权策略，掌握在预期大幅波动时的期权交易技巧，提高波动率交易能力。",
+      "keywords": "跨式策略,期权跨式,波动率策略,期权交易策略,期权投资"
+    },
+    {
+      "file": "lesson-32-strangle-strategy.html",
+      "title": "第32课：宽跨式策略",
+      "description": "深入学习宽跨式期权策略，掌握低成本波动率交易方法，提高期权交易效率。",
+      "keywords": "宽跨式策略,期权宽跨式,波动率策略,期权交易策略,期权投资"
+    },
+    {
+      "file": "lesson-33-iron-butterfly-strategy.html",
+      "title": "第33课：铁蝶式策略",
+      "description": "学习铁蝶式期权策略，掌握中性市场条件下的期权交易技巧，提高收益稳定性。",
+      "keywords": "铁蝶式策略,期权铁蝶式,中性策略,期权交易策略,期权投资"
+    },
+    {
+      "file": "lesson-34-iron-condor-strategy.html",
+      "title": "第34课：铁鹰式策略",
+      "description": "深入学习铁鹰式期权策略，掌握大范围中性市场的期权交易方法，提高风险调整收益。",
+      "keywords": "铁鹰式策略,期权铁鹰式,中性策略,期权交易策略,期权投资"
+    },
+    {
+      "file": "lesson-35-volatility-strategies-comprehensive.html",
+      "title": "第35课：波动率策略综合",
+      "description": "综合学习各种波动率策略，掌握不同波动率环境下的期权交易策略选择和风险管理。",
+      "keywords": "波动率策略,期权波动率,期权交易策略,期权投资,期权风险管理"
+    },
+    {
+      "file": "lesson-36-ratio-spread-strategy.html",
+      "title": "第36课：比率价差策略",
+      "description": "学习比率价差策略，掌握非对称期权组合的构建方法，提高期权交易的灵活性。",
+      "keywords": "比率价差,期权比率价差,期权策略,期权交易,期权投资"
+    },
+    {
+      "file": "lesson-37-advanced-calendar-spread.html",
+      "title": "第37课：高级日历价差",
+      "description": "深入学习高级日历价差策略，掌握复杂时间价差的构建技巧，提高期权交易水平。",
+      "keywords": "高级日历价差,期权价差,期权策略,期权交易,期权投资"
+    },
+    {
+      "file": "lesson-38-advanced-diagonal-spread.html",
+      "title": "第38课：高级对角价差",
+      "description": "学习高级对角价差策略，掌握复杂价差组合的构建方法，提高期权交易策略的精确性。",
+      "keywords": "高级对角价差,期权价差,期权策略,期权交易,期权投资"
+    },
+    {
+      "file": "lesson-39-multi-leg-options-strategies.html",
+      "title": "第39课：多腿期权策略",
+      "description": "深入学习多腿期权策略，掌握复杂期权组合的构建方法，提高期权交易策略的多样性。",
+      "keywords": "多腿期权策略,期权组合,期权策略,期权交易,期权投资"
+    },
+    {
+      "file": "lesson-40-options-portfolio-strategies.html",
+      "title": "第40课：期权组合策略",
+      "description": "学习期权组合策略，掌握如何构建和管理期权投资组合，提高整体投资收益。",
+      "keywords": "期权组合策略,期权投资组合,期权管理,期权投资,期权交易"
+    },
+    {
+      "file": "lesson-41-trading-psychology.html",
+      "title": "第41课：交易心理学",
+      "description": "深入学习期权交易心理学，掌握情绪管理和风险控制技巧，提高交易决策质量。",
+      "keywords": "交易心理学,期权交易心理,情绪管理,风险控制,期权交易"
+    },
+    {
+      "file": "lesson-42-options-portfolio-management.html",
+      "title": "第42课：期权组合管理",
+      "description": "学习期权组合管理方法，掌握如何优化期权投资组合，提高风险调整收益。",
+      "keywords": "期权组合管理,期权投资组合,期权管理,期权投资,期权交易"
+    },
+    {
+      "file": "lesson-43-high-frequency-trading.html",
+      "title": "第43课：高频交易",
+      "description": "深入学习期权高频交易策略，掌握算法交易和量化交易技巧，提高交易执行效率。",
+      "keywords": "高频交易,期权高频交易,算法交易,量化交易,期权交易"
+    },
+    {
+      "file": "lesson-44-tax-planning-compliance.html",
+      "title": "第44课：税务规划与合规",
+      "description": "学习期权交易的税务规划和合规要求，掌握税务优化策略，确保交易合规性。",
+      "keywords": "期权税务,税务规划,期权合规,期权交易,税务优化"
+    },
+    {
+      "file": "lesson-45-future-of-options-trading.html",
+      "title": "第45课：期权交易未来",
+      "description": "探索期权交易的未来发展趋势，了解新技术和新策略对期权市场的影响。",
+      "keywords": "期权交易未来,期权发展趋势,期权创新,期权市场,期权技术"
+    },
+    {
+      "file": "lesson-46-global-options-markets.html",
+      "title": "第46课：全球期权市场",
+      "description": "了解全球主要期权市场的发展状况，掌握国际期权交易的机会和挑战。",
+      "keywords": "全球期权市场,国际期权,期权市场,期权交易,期权投资"
+    },
+    {
+      "file": "lesson-47-quantitative-modeling.html",
+      "title": "第47课：量化建模",
+      "description": "学习期权量化建模方法，掌握数学建模和统计分析在期权交易中的应用。",
+      "keywords": "量化建模,期权建模,数学建模,统计分析,期权交易"
+    },
+    {
+      "file": "lesson-48-trading-platform-development.html",
+      "title": "第48课：交易平台开发",
+      "description": "了解期权交易平台的开发技术，掌握交易系统设计和实现的基本原理。",
+      "keywords": "交易平台开发,期权交易系统,交易系统设计,期权技术,期权开发"
+    },
+    {
+      "file": "lesson-49-master-certification.html",
+      "title": "第49课：大师认证",
+      "description": "完成期权交易大师认证，综合运用所学知识，成为期权交易专家。",
+      "keywords": "期权大师认证,期权专家,期权认证,期权交易,期权学习"
+    },
+    {
+      "file": "lesson-50-options-trading-success-path.html",
+      "title": "第50课：期权交易成功之路",
+      "description": "总结期权交易成功的关键要素，制定个人期权交易发展计划，开启专业交易之路。",
+      "keywords": "期权交易成功,期权交易之路,期权发展,期权交易,期权投资"
+    }
+  ]
+}

@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第18课：Theta时间衰减 - OPITIOS期权课程</title>
+    <meta name="description" content="深入学习Theta希腊字母，理解期权时间价值衰减规律，掌握时间衰减对期权交易的影响。">
+    <meta name="keywords" content="Theta,期权希腊字母,时间衰减,时间价值,期权交易">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-18-theta-time-decay.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-18-theta-time-decay.html">
+    <meta property="og:title" content="第18课：Theta时间衰减 - OPITIOS期权课程">
+    <meta property="og:description" content="深入学习Theta希腊字母，理解期权时间价值衰减规律，掌握时间衰减对期权交易的影响。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-18-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-18-theta-time-decay.html">
+    <meta property="twitter:title" content="第18课：Theta时间衰减 - OPITIOS期权课程">
+    <meta property="twitter:description" content="深入学习Theta希腊字母，理解期权时间价值衰减规律，掌握时间衰减对期权交易的影响。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-18-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第18课：Theta时间衰减",
+        "description": "深入学习Theta希腊字母，理解期权时间价值衰减规律，掌握时间衰减对期权交易的影响。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-18-theta-time-decay.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第18课：Theta - 时间价值衰减的实战策略 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --theta-color: #ef4444;
+            --time-color: #8b5cf6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .theta-symbol {
+            font-size: 4rem;
+            color: var(--theta-color);
+            display: block;
+            text-align: center;
+            margin: 2rem 0;
+            text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .theta-aspects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .aspect-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--theta-color);
+            background: rgba(239, 68, 68, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .aspect-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        .aspect-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .aspect-title {
+            color: var(--theta-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .aspect-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .theta-simulator {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--time-color);
+        }
+
+        .simulator-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            color: var(--time-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .control-group input, .control-group select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--time-color);
+            border-radius: 6px;
+            padding: 0.7rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .simulate-btn {
+            background: linear-gradient(135deg, var(--time-color) 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .simulate-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .theta-simulation {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border: 2px solid var(--primary-color);
+            display: none;
+        }
+
+        .simulation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .simulation-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .simulation-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .simulation-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .decay-timeline {
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--theta-color);
+        }
+
+        .timeline-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .timeline-table th {
+            background: var(--theta-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .timeline-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .decay-fast {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+            font-weight: 600;
+        }
+
+        .decay-medium {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .decay-slow {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .strategy-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .showcase-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .showcase-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .showcase-type {
+            color: var(--theta-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .showcase-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .time-calendar {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--success-color);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-day:hover {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .calendar-day.expiry {
+            background: var(--theta-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .calendar-day.danger {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+        }
+
+        .calendar-day.warning {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .theta-aspects {
+                grid-template-columns: 1fr;
+            }
+            .simulator-controls {
+                grid-template-columns: 1fr;
+            }
+            .strategy-showcase {
+                grid-template-columns: 1fr;
+            }
+            .simulation-grid {
+                grid-template-columns: 1fr;
+            }
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 0.25rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第18课：Theta - 时间价值衰减的实战策略</h1>
+                <div class="theta-symbol">Θ</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">时间的力量：掌握期权价值的时间维度</p>
+            </section>
+
+            <div class="card">
+                <h3>Theta的理论基础与时间价值本质</h3>
+                <p>Theta（Θ）是衡量期权价格对时间变化敏感性的希腊字母，它反映了期权价值随时间推移而衰减的速度。从数学角度看，Theta是期权价格相对于时间的偏导数（∂C/∂t），通常以负值表示，因为随着时间流逝，期权的时间价值不断减少。理解Theta的本质对于期权交易者至关重要，它不仅影响着持仓的盈亏，更是许多期权策略成功的关键因素。</p>
+
+                <p><strong>时间价值衰减的机制</strong>：期权的时间价值体现了其在到期前获得更多内在价值的可能性。随着到期日临近，这种可能性逐渐减少，时间价值相应衰减。Theta衰减并非线性过程，而是呈现加速特征——距离到期越近，衰减速度越快。这种非线性衰减在期权交易中被称为"时间衰减曲线"，平值期权的Theta值最大，因为它们包含最多的时间价值。</p>
+
+                <p><strong>Theta的影响因素分析</strong>：Theta的大小受多个因素影响。首先是期权的货币性状态——平值期权具有最高的Theta值，深度实值或虚值期权的Theta相对较小。其次是剩余到期时间——短期期权的Theta绝对值通常更大，表明时间价值衰减更快。波动率也会影响Theta，高波动率环境下，期权的时间价值更高，相应的Theta也更大。理解这些关系有助于制定更有效的时间管理策略。</p>
+
+                <p><strong>Theta风险的双面性</strong>：Theta对期权持有者和卖方具有截然不同的意义。对于期权买方而言，Theta是一种持续的成本，即使标的价格不变，期权价值也会因时间流逝而减少。对于期权卖方来说，Theta是一种持续的收益来源，时间的流逝会使其获得权利金的概率增加。这种双面性使得基于Theta的交易策略多样化，既有利用时间衰减获利的策略，也有对冲时间风险的方法。</p>
+            </div>
+
+            <section class="theta-aspects">
+                <div class="aspect-card">
+                    <span class="aspect-icon">⏰</span>
+                    <div class="aspect-title">时间衰减速度</div>
+                    <div class="aspect-description">
+                        Theta衡量每天时间价值的损失量。平值期权Theta最大，时间价值衰减最快，需要特别关注时间管理。
+                    </div>
+                </div>
+
+                <div class="aspect-card">
+                    <span class="aspect-icon">📈</span>
+                    <div class="aspect-title">加速衰减特征</div>
+                    <div class="aspect-description">
+                        时间价值衰减呈加速特征，最后30天内衰减显著加快，最后一周变得极为剧烈，对策略影响巨大。
+                    </div>
+                </div>
+
+                <div class="aspect-card">
+                    <span class="aspect-icon">💰</span>
+                    <div class="aspect-title">策略盈利来源</div>
+                    <div class="aspect-description">
+                        期权卖方通过Theta获得持续收益，备兑开仓、现金担保看跌等策略将时间衰减转化为稳定现金流。
+                    </div>
+                </div>
+
+                <div class="aspect-card">
+                    <span class="aspect-icon">⚖️</span>
+                    <div class="aspect-title">风险管理工具</div>
+                    <div class="aspect-description">
+                        理解Theta有助于优化进出场时机，避免在时间价值衰减最快的时期持有不利头寸，提高策略成功率。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Theta时间衰减曲线分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">以下图表展示期权时间价值随到期日临近的衰减规律：</p>
+                <canvas class="chart-canvas" id="thetaChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--theta-color);">■</span> 平值期权Theta
+                    <span style="margin-left: 2rem; color: #f59e0b;">■</span> 实值期权Theta
+                    <span style="margin-left: 2rem; color: #3b82f6;">■</span> 虚值期权Theta
+                </div>
+            </section>
+
+            <div class="theta-simulator">
+                <h4 style="color: var(--time-color); text-align: center; margin-bottom: 2rem;">Theta衰减模拟器</h4>
+                <div class="simulator-controls">
+                    <div class="control-group">
+                        <label>初始期权价格</label>
+                        <input type="number" id="initialPrice" value="5.00" step="0.01">
+                    </div>
+                    <div class="control-group">
+                        <label>当前Theta值</label>
+                        <input type="number" id="thetaValue" value="-0.05" step="0.001">
+                    </div>
+                    <div class="control-group">
+                        <label>剩余天数</label>
+                        <input type="number" id="daysLeft" value="30" step="1">
+                    </div>
+                    <div class="control-group">
+                        <label>期权类型</label>
+                        <select id="optionPosition">
+                            <option value="long">持有期权（Long）</option>
+                            <option value="short">卖出期权（Short）</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>衰减加速因子</label>
+                        <input type="number" id="accelerationFactor" value="1.2" step="0.1">
+                    </div>
+                    <div class="control-group">
+                        <label>期权数量</label>
+                        <input type="number" id="contractQuantity" value="10" step="1">
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button class="simulate-btn" onclick="simulateTheta()">模拟时间衰减</button>
+                </div>
+                <div class="theta-simulation" id="thetaSimulation">
+                    <h4 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">时间衰减模拟结果</h4>
+                    <div class="simulation-grid" id="simulationResults">
+                        <!-- Results will be populated by JavaScript -->
+                    </div>
+                    <div id="decayProgressChart" style="margin-top: 2rem;">
+                        <!-- Progress visualization will be added here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Theta时间衰减的分阶段特征</h3>
+                <div class="decay-timeline">
+                    <h4 style="color: var(--theta-color); text-align: center; margin-bottom: 2rem;">期权到期时间衰减时间线</h4>
+                    <table class="timeline-table">
+                        <thead>
+                            <tr>
+                                <th>时间阶段</th>
+                                <th>剩余天数</th>
+                                <th>衰减特征</th>
+                                <th>Theta表现</th>
+                                <th>策略建议</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>长期阶段</strong></td>
+                                <td>90+ 天</td>
+                                <td class="decay-slow">缓慢线性衰减</td>
+                                <td>Theta值相对较小</td>
+                                <td>适合买入策略，时间成本可控</td>
+                            </tr>
+                            <tr>
+                                <td><strong>中期阶段</strong></td>
+                                <td>30-90 天</td>
+                                <td class="decay-medium">稳定加速衰减</td>
+                                <td>Theta值逐渐增加</td>
+                                <td>需要平衡时间成本与盈利潜力</td>
+                            </tr>
+                            <tr>
+                                <td><strong>短期阶段</strong></td>
+                                <td>7-30 天</td>
+                                <td class="decay-fast">显著加速衰减</td>
+                                <td>Theta值明显上升</td>
+                                <td>卖出策略优势明显，买入需谨慎</td>
+                            </tr>
+                            <tr>
+                                <td><strong>临期阶段</strong></td>
+                                <td>1-7 天</td>
+                                <td class="decay-fast">极速衰减</td>
+                                <td>Theta值达到峰值</td>
+                                <td>避免持有买入头寸，卖出需防Pin风险</td>
+                            </tr>
+                            <tr>
+                                <td><strong>到期日</strong></td>
+                                <td>0 天</td>
+                                <td class="decay-fast">时间价值归零</td>
+                                <td>Theta效应结束</td>
+                                <td>只剩内在价值，需处理行权事宜</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>基于Theta的经典交易策略</h3>
+                <div class="strategy-showcase">
+                    <div class="showcase-card">
+                        <div class="showcase-title">🎯 备兑看涨策略</div>
+                        <div class="showcase-type">正Theta策略：收取时间价值</div>
+                        <div class="showcase-description">
+                            持有股票同时卖出看涨期权，通过收取权利金和时间价值衰减获得额外收益。适合持股不变或轻微看涨的市场环境。
+                        </div>
+                    </div>
+
+                    <div class="showcase-card">
+                        <div class="showcase-title">🛡️ 现金担保看跌</div>
+                        <div class="showcase-type">正Theta策略：获得Theta收益</div>
+                        <div class="showcase-description">
+                            持有现金并卖出看跌期权，在股价横盘或上涨时收取权利金。如被行权则以理想价格买入股票，实现逢低买入。
+                        </div>
+                    </div>
+
+                    <div class="showcase-card">
+                        <div class="showcase-title">🔄 铁鹰策略</div>
+                        <div class="showcase-type">正Theta策略：时间价值收割</div>
+                        <div class="showcase-description">
+                            卖出跨式并买入保护头寸，在股价在特定区间内波动时收取净权利金。最大化利用时间价值衰减，适合低波动环境。
+                        </div>
+                    </div>
+
+                    <div class="showcase-card">
+                        <div class="showcase-title">⏰ Theta积极管理</div>
+                        <div class="showcase-type">时间管理策略：优化进出场</div>
+                        <div class="showcase-description">
+                            根据Theta衰减规律优化策略的进场和出场时机，避免在时间价值快速衰减期持有不利头寸，提高整体策略效率。
+                        </div>
+                    </div>
+
+                    <div class="showcase-card">
+                        <div class="showcase-title">📅 日历价差</div>
+                        <div class="showcase-type">Theta差异化策略</div>
+                        <div class="showcase-description">
+                            买入长期期权，卖出短期期权，利用近月期权Theta衰减更快的特点获利。随时间推移，短期期权价值衰减速度超过长期期权。
+                        </div>
+                    </div>
+
+                    <div class="showcase-card">
+                        <div class="showcase-title">🎪 Theta对冲</div>
+                        <div class="showcase-type">时间风险中性策略</div>
+                        <div class="showcase-description">
+                            在持有期权买入头寸时，通过卖出其他期权来对冲Theta风险，构建时间中性的投资组合，专注于其他希腊字母的交易。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Theta交易的高级技巧与风险管理</h3>
+                <p><strong>时间价值的非线性特征利用</strong>：成功的Theta交易需要深入理解时间价值衰减的非线性特征。在期权存续期的前2/3时间内，时间价值衰减相对缓慢；在最后1/3时间内，特别是最后30天，衰减速度显著加快。专业交易者常常在期权剩余30-45天时开始建立卖出头寸，以最大化捕获时间价值的快速衰减阶段。</p>
+
+                <p><strong>波动率与Theta的相互作用</strong>：Theta与隐含波动率存在复杂的相互作用关系。高隐含波动率期权具有更高的时间价值，相应地也有更大的Theta值。当隐含波动率下降时，期权价格不仅受到Vega的负面影响，还会因时间价值减少而增加Theta的负面影响。理解这种相互作用对于制定综合的希腊字母管理策略至关重要。</p>
+
+                <p><strong>周末和假期效应的利用</strong>：期权的时间价值在市场关闭期间仍在衰减，这创造了独特的交易机会。周五收盘后到周一开盘前，期权会反映三天的时间衰减；节假日期间的影响更为明显。熟练的期权交易者会利用这种效应，在长周末或假期前建立有利的Theta头寸，在市场重新开放时获得额外收益。</p>
+
+                <p><strong>Theta管理的系统化方法</strong>：专业的期权交易需要建立系统化的Theta管理框架。这包括设置Theta敞口限额、建立时间衰减监控系统、制定不同市场环境下的Theta调整规则等。许多机构投资者使用专业的风险管理系统来实时监控投资组合的Theta敞口，并根据预设规则自动执行对冲操作。动态Theta管理能够显著提高期权策略的风险调整收益率。</p>
+            </div>
+
+            <div class="time-calendar">
+                <h4 style="color: var(--success-color); text-align: center; margin-bottom: 2rem;">期权到期日历与Theta管理</h4>
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">以下日历展示期权到期周期中的关键时间节点：</p>
+                <div class="calendar-grid" id="expiryCalendar">
+                    <!-- Calendar will be populated by JavaScript -->
+                </div>
+                <div style="margin-top: 2rem;">
+                    <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem;">
+                        <span style="color: var(--success-color);">● 正常交易日</span>
+                        <span style="color: #f59e0b;">● Theta加速期</span>
+                        <span style="color: var(--error-color);">● 高风险期</span>
+                        <span style="color: var(--theta-color);">● 到期日</span>
+                    </div>
+                </div>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "Theta衰减在什么时候最为剧烈？",
+                options: [
+                    "期权刚开始交易时",
+                    "距离到期90天时",
+                    "距离到期最后30天内",
+                    "波动率上升时"
+                ],
+                correct: 2,
+                explanation: "Theta衰减呈加速特征，在距离到期最后30天内变得最为剧烈，特别是最后一周衰减极为快速。"
+            },
+            {
+                question: "对于期权卖方而言，Theta代表什么？",
+                options: [
+                    "每天的损失",
+                    "每天的收益",
+                    "风险敞口",
+                    "对冲成本"
+                ],
+                correct: 1,
+                explanation: "对于期权卖方，Theta是正收益，代表每天从时间价值衰减中获得的收益。时间流逝对卖方有利。"
+            },
+            {
+                question: "哪种期权的Theta值（绝对值）最大？",
+                options: [
+                    "深度实值期权",
+                    "平值期权",
+                    "深度虚值期权",
+                    "所有期权Theta相同"
+                ],
+                correct: 1,
+                explanation: "平值期权具有最大的时间价值，因此其Theta值（绝对值）最大，时间价值衰减最快。"
+            },
+            {
+                question: "备兑看涨策略如何从Theta中获益？",
+                options: [
+                    "通过Delta对冲",
+                    "通过收取权利金和时间价值衰减",
+                    "通过波动率上升",
+                    "通过利率变化"
+                ],
+                correct: 1,
+                explanation: "备兑看涨策略通过卖出看涨期权收取权利金，并从时间价值的持续衰减中获得Theta收益。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawThetaChart();
+            generateExpiryCalendar();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '恭喜您，对Theta概念理解深入！' : 
+                         percentage >= 60 ? '理解良好，建议进一步学习Theta策略应用。' : 
+                         '需要加强对Theta和时间价值的学习。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawThetaChart() {
+            const canvas = document.getElementById('thetaChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('剩余天数', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Theta值（绝对值）', 0, 0);
+            ctx.restore();
+
+            const maxDays = 90;
+            const steps = 90;
+
+            // Draw ATM theta curve (most sensitive)
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const days = (steps - i) * maxDays / steps + 1;
+                const theta = Math.abs(-0.02 * Math.exp(-days / 20) * (30 / days));
+
+                const x = padding + i * chartWidth / steps;
+                const y = canvas.height - padding - theta * chartHeight / 0.15;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw ITM theta curve
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const days = (steps - i) * maxDays / steps + 1;
+                const theta = Math.abs(-0.015 * Math.exp(-days / 25) * (25 / days));
+
+                const x = padding + i * chartWidth / steps;
+                const y = canvas.height - padding - theta * chartHeight / 0.15;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw OTM theta curve
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const days = (steps - i) * maxDays / steps + 1;
+                const theta = Math.abs(-0.01 * Math.exp(-days / 30) * (20 / days));
+
+                const x = padding + i * chartWidth / steps;
+                const y = canvas.height - padding - theta * chartHeight / 0.15;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Add critical period markers
+            const day30X = padding + (60 / 90) * chartWidth;
+            const day7X = padding + (83 / 90) * chartWidth;
+
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+
+            // 30 days marker
+            ctx.beginPath();
+            ctx.moveTo(day30X, padding);
+            ctx.lineTo(day30X, canvas.height - padding);
+            ctx.stroke();
+
+            // 7 days marker  
+            ctx.beginPath();
+            ctx.moveTo(day7X, padding);
+            ctx.lineTo(day7X, canvas.height - padding);
+            ctx.stroke();
+
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            // Vertical grid
+            for (let days = 15; days <= 75; days += 15) {
+                const x = padding + ((90 - days) / 90) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(days + '天', x, canvas.height - padding + 20);
+            }
+
+            // Add labels
+            ctx.fillStyle = '#ffd700';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('30天加速期', day30X + 10, padding + 20);
+            ctx.fillText('7天危险期', day7X + 10, padding + 40);
+
+            ctx.setLineDash([]);
+        }
+
+        function generateExpiryCalendar() {
+            const calendar = document.getElementById('expiryCalendar');
+            const today = new Date();
+
+            // Generate a month view
+            for (let day = 1; day <= 35; day++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'calendar-day';
+
+                if (day <= 28) {
+                    dayDiv.textContent = day;
+
+                    // Mark different risk periods
+                    if (day === 15) {
+                        dayDiv.classList.add('expiry');
+                        dayDiv.title = '期权到期日';
+                    } else if (day >= 8 && day <= 14) {
+                        dayDiv.classList.add('danger');
+                        dayDiv.title = '高风险期 - Theta急剧衰减';
+                    } else if (day >= 1 && day <= 7) {
+                        dayDiv.classList.add('warning');
+                        dayDiv.title = 'Theta加速期';
+                    }
+                }
+
+                calendar.appendChild(dayDiv);
+            }
+        }
+
+        function simulateTheta() {
+            const initialPrice = parseFloat(document.getElementById('initialPrice').value);
+            const thetaValue = parseFloat(document.getElementById('thetaValue').value);
+            const daysLeft = parseInt(document.getElementById('daysLeft').value);
+            const position = document.getElementById('optionPosition').value;
+            const acceleration = parseFloat(document.getElementById('accelerationFactor').value);
+            const quantity = parseInt(document.getElementById('contractQuantity').value);
+
+            // Calculate various time periods
+            const day1Impact = thetaValue * (position === 'long' ? 1 : -1);
+            const week1Impact = day1Impact * 7 * Math.pow(acceleration, 0.2);
+            const week2Impact = week1Impact * Math.pow(acceleration, 0.5);
+            const month1Impact = week2Impact * 2 * Math.pow(acceleration, 0.8);
+
+            const totalPositionImpact = day1Impact * quantity * 100; // Per contract impact
+            const weeklyPositionImpact = week1Impact * quantity * 100;
+
+            // Current option value after daily decay
+            const projectedValue1Day = initialPrice + day1Impact;
+            const projectedValue1Week = initialPrice + week1Impact;
+            const projectedValue1Month = initialPrice + month1Impact;
+
+            // Risk assessment
+            const dailyRisk = Math.abs(totalPositionImpact);
+            let riskLevel = '';
+            let riskColor = '';
+
+            if (dailyRisk > 500) {
+                riskLevel = '高风险';
+                riskColor = '#ef4444';
+            } else if (dailyRisk > 200) {
+                riskLevel = '中等风险';  
+                riskColor = '#f59e0b';
+            } else {
+                riskLevel = '低风险';
+                riskColor = '#10b981';
+            }
+
+            // Display results
+            document.getElementById('thetaSimulation').style.display = 'block';
+            document.getElementById('simulationResults').innerHTML = `
+                <div class="simulation-item">
+                    <div class="simulation-value">$${projectedValue1Day.toFixed(3)}</div>
+                    <div class="simulation-label">1天后期权价值</div>
+                </div>
+                <div class="simulation-item">
+                    <div class="simulation-value">$${projectedValue1Week.toFixed(3)}</div>
+                    <div class="simulation-label">1周后期权价值</div>
+                </div>
+                <div class="simulation-item">
+                    <div class="simulation-value">$${projectedValue1Month.toFixed(3)}</div>
+                    <div class="simulation-label">1月后期权价值</div>
+                </div>
+                <div class="simulation-item">
+                    <div class="simulation-value">$${totalPositionImpact.toFixed(2)}</div>
+                    <div class="simulation-label">每日P&L影响</div>
+                </div>
+                <div class="simulation-item">
+                    <div class="simulation-value">$${weeklyPositionImpact.toFixed(2)}</div>
+                    <div class="simulation-label">每周P&L影响</div>
+                </div>
+                <div class="simulation-item">
+                    <div class="simulation-value" style="color: ${riskColor}">${riskLevel}</div>
+                    <div class="simulation-label">时间风险等级</div>
+                </div>
+            `;
+
+            // Add decay visualization
+            const progressChart = document.getElementById('decayProgressChart');
+            const decayPercentage = Math.max(0, Math.min(100, (daysLeft / 90) * 100));
+            progressChart.innerHTML = `
+                <div style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 1rem; margin-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <span style="color: var(--text-secondary);">时间价值剩余进度</span>
+                        <span style="color: var(--primary-color); font-weight: 600;">${decayPercentage.toFixed(1)}%</span>
+                    </div>
+                    <div style="width: 100%; background: rgba(255,255,255,0.1); border-radius: 5px; height: 10px;">
+                        <div style="width: ${decayPercentage}%; background: linear-gradient(90deg, var(--success-color) 0%, var(--error-color) 100%); height: 100%; border-radius: 5px; transition: width 0.3s ease;"></div>
+                    </div>
+                    <div style="text-align: center; margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">
+                        剩余${daysLeft}天 · 时间价值${decayPercentage < 30 ? '快速' : decayPercentage < 60 ? '中速' : '缓慢'}衰减中
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

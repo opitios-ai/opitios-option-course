@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第9课：期权风险管理基础 - OPITIOS期权课程</title>
+    <meta name="description" content="学习期权风险管理的基础知识，包括风险识别、评估和控制方法，为期权交易提供安全保障。">
+    <meta name="keywords" content="期权风险管理,风险识别,风险评估,风险控制,期权交易风险">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-09-options-risk-management-basics.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-09-options-risk-management-basics.html">
+    <meta property="og:title" content="第9课：期权风险管理基础 - OPITIOS期权课程">
+    <meta property="og:description" content="学习期权风险管理的基础知识，包括风险识别、评估和控制方法，为期权交易提供安全保障。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-09-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-09-options-risk-management-basics.html">
+    <meta property="twitter:title" content="第9课：期权风险管理基础 - OPITIOS期权课程">
+    <meta property="twitter:description" content="学习期权风险管理的基础知识，包括风险识别、评估和控制方法，为期权交易提供安全保障。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-09-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第9课：期权风险管理基础",
+        "description": "学习期权风险管理的基础知识，包括风险识别、评估和控制方法，为期权交易提供安全保障。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-09-options-risk-management-basics.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第9课：期权买方与卖方：权利与义务的风险收益分析 - OPITIOS</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="深度解析期权买方与卖方的权利义务关系，掌握期权交易中买卖双方的风险收益结构，学习期权角色分析的核心概念和实战应用技巧。">
+    <meta name="keywords" content="期权买方,期权卖方,期权权利义务,期权风险收益,期权交易角色,期权基础分析,美股期权,期权教育">
+    <meta name="author" content="OPITIOS">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="第9课：期权买方与卖方：权利与义务的风险收益分析 - OPITIOS">
+    <meta property="og:description" content="深度解析期权买方与卖方的权利义务关系，掌握期权交易中买卖双方的风险收益结构，学习期权角色分析的核心概念和实战应用技巧。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/lesson-09-options-buyer-seller-analysis.html">
+    <meta property="og:image" content="https://opitios.com/wp-content/uploads/2025/08/logo1.png">
+    <meta property="og:site_name" content="OPITIOS期权教育">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="第9课：期权买方与卖方：权利与义务的风险收益分析 - OPITIOS">
+    <meta name="twitter:description" content="深度解析期权买方与卖方的权利义务关系，掌握期权交易中买卖双方的风险收益结构，学习期权角色分析的核心概念和实战应用技巧。">
+    <meta name="twitter:image" content="https://opitios.com/wp-content/uploads/2025/08/logo1.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://opitios.com/lesson-09-options-buyer-seller-analysis.html">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOccupationalCredential",
+        "name": "期权买方与卖方：权利与义务的风险收益分析",
+        "description": "深度解析期权买方与卖方的权利义务关系，掌握期权交易中买卖双方的风险收益结构",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS",
+            "url": "https://opitios.com"
+        },
+        "credentialCategory": "期权基础篇",
+        "educationalLevel": "中级",
+        "competencyRequired": "期权基础知识"
+    }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --buyer-color: #3b82f6;
+            --seller-color: #ef4444;
+            --neutral-color: #8b5cf6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--buyer-color) 0%, var(--seller-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .role-banner {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%);
+            border-left: 4px solid var(--buyer-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--buyer-color);
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .role-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .role-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .role-card.buyer {
+            border-color: var(--buyer-color);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .role-card.buyer:hover {
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .role-card.seller {
+            border-color: var(--seller-color);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .role-card.seller:hover {
+            box-shadow: 0 15px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        .role-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .role-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .role-card.buyer .role-title {
+            color: var(--buyer-color);
+        }
+
+        .role-card.seller .role-title {
+            color: var(--seller-color);
+        }
+
+        .role-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: var(--neutral-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .buyer-cell {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--buyer-color);
+            font-weight: 600;
+        }
+
+        .seller-cell {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--seller-color);
+            font-weight: 600;
+        }
+
+        .profit-loss-simulator {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--neutral-color);
+        }
+
+        .simulator-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-label {
+            color: var(--neutral-color);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .control-input, .control-select {
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .control-input:focus, .control-select:focus {
+            outline: none;
+            border-color: var(--neutral-color);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--neutral-color) 0%, var(--buyer-color) 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .simulation-results {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .simulation-results.show {
+            display: block;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            .simulator-controls {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第9课：期权买方与卖方</h1>
+                <div class="strategy-badge">⚖️ 期权基础篇 · 角色分析Role Analysis专家</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">权利与义务的平衡：深度解析期权买卖双方的风险收益结构</p>
+            </section>
+
+            <div class="role-banner">
+                ⚖️ 期权交易核心：期权市场由买方和卖方组成，双方承担不同的权利义务，面临截然不同的风险收益结构。理解买卖双方的特点，是制定有效期权策略和风险管理的基础。
+            </div>
+
+            <div class="card">
+                <h3>期权买卖双方的基本概念与角色定位</h3>
+                <p>期权交易涉及买方和卖方两个核心角色，各自扮演着截然不同的功能。期权买方（Long Position）支付权利金获得选择权，可以选择是否行权，享有权利但不承担义务。期权卖方（Short Position）收取权利金，承担履约义务，在买方选择行权时必须履行合约。这种权利与义务的不对称分配，创造了期权市场独特的风险收益结构。买方面临有限风险和潜在无限收益，而卖方面临有限收益和潜在巨大风险。理解这种基本的对称性是掌握期权交易的关键起点，也是风险管理和策略设计的理论基础。</p>
+
+                <p><strong>期权买方的权利与特征</strong>：期权买方享有选择权，这是期权合约的核心价值所在。买方支付权利金后，获得在特定时间内以特定价格买入或卖出标的资产的权利，但没有义务。这种选择权具有时间价值，随着到期日临近而衰减。买方的最大损失限于支付的权利金，风险可控且明确。然而，买方必须承担时间价值衰减的压力，需要在期权到期前实现足够的价格变动来弥补时间价值的损失。买方策略通常适合预期市场会出现较大波动的情况，无论是向上还是向下的波动都可能带来盈利机会。</p>
+
+                <p><strong>期权卖方的义务与风险</strong>：期权卖方与买方形成对手方关系，承担履约义务以换取权利金收入。当买方选择行权时，看涨期权卖方必须以行权价出售标的资产，看跌期权卖方必须以行权价购买标的资产。卖方的最大收益限于收取的权利金，但潜在损失可能远超权利金数额。这种有限收益、无限风险的特征要求卖方必须具备充足的资本和严格的风险管理措施。卖方策略通常适合预期市场相对稳定或波动有限的情况，通过收取权利金获得稳定的现金流收入。</p>
+
+                <p><strong>时间价值对买卖双方的差异化影响</strong>：时间价值衰减（Theta）对买卖双方产生相反的影响，这是期权交易的重要特征之一。对买方而言，时间流逝是敌人，每过一天都会损失一部分时间价值，特别是在接近到期时，时间价值衰减加速。因此买方需要快速的价格变动来抵消时间成本。对卖方而言，时间流逝是朋友，每过一天都会获得一部分时间价值收益，只要市场价格保持在预期范围内，卖方就能逐步获得全部权利金。这种时间价值的差异化影响，使得买卖双方需要采用不同的交易策略和时间管理方法。</p>
+            </div>
+
+            <section class="comparison-grid">
+                <div class="role-card buyer">
+                    <span class="role-icon">🛒</span>
+                    <div class="role-title">期权买方（Long）</div>
+                    <div class="role-description">
+                        支付权利金获得选择权，享有权利但不承担义务。风险有限，收益潜力大，面临时间价值衰减压力。
+                    </div>
+                </div>
+
+                <div class="role-card seller">
+                    <span class="role-icon">🏪</span>
+                    <div class="role-title">期权卖方（Short）</div>
+                    <div class="role-description">
+                        收取权利金承担履约义务，收益有限但风险较大。受益于时间价值衰减，需要充足保证金。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 买卖双方对比表格 -->
+            <div class="card">
+                <h3>期权买卖双方特征详细对比</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>对比维度</th>
+                            <th>期权买方</th>
+                            <th>期权卖方</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>权利金</strong></td>
+                            <td class="buyer-cell">支付权利金</td>
+                            <td class="seller-cell">收取权利金</td>
+                        </tr>
+                        <tr>
+                            <td><strong>行权权利</strong></td>
+                            <td class="buyer-cell">有权选择是否行权</td>
+                            <td class="seller-cell">被动履约义务</td>
+                        </tr>
+                        <tr>
+                            <td><strong>最大风险</strong></td>
+                            <td class="buyer-cell">权利金（有限）</td>
+                            <td class="seller-cell">理论上无限</td>
+                        </tr>
+                        <tr>
+                            <td><strong>最大收益</strong></td>
+                            <td class="buyer-cell">理论上无限</td>
+                            <td class="seller-cell">权利金（有限）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>时间价值影响</strong></td>
+                            <td class="buyer-cell">负面（-Theta）</td>
+                            <td class="seller-cell">正面（+Theta）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>胜率</strong></td>
+                            <td class="buyer-cell">较低（30-40%）</td>
+                            <td class="seller-cell">较高（60-70%）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>保证金要求</strong></td>
+                            <td class="buyer-cell">仅权利金</td>
+                            <td class="seller-cell">大量保证金</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 盈亏模拟器 -->
+            <div class="card">
+                <h3>期权买卖盈亏模拟器</h3>
+                <div class="profit-loss-simulator">
+                    <h4 style="color: var(--neutral-color); text-align: center; margin-bottom: 2rem;">期权损益计算工具</h4>
+                    <div class="simulator-controls">
+                        <div class="control-group">
+                            <label class="control-label">期权类型</label>
+                            <select class="control-select" id="optionType">
+                                <option value="call">看涨期权（Call）</option>
+                                <option value="put">看跌期权（Put）</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">交易角色</label>
+                            <select class="control-select" id="tradeRole">
+                                <option value="buy">买方（Long）</option>
+                                <option value="sell">卖方（Short）</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">当前股价 ($)</label>
+                            <input type="number" class="control-input" id="currentPrice" value="100" min="1" step="0.01">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">行权价 ($)</label>
+                            <input type="number" class="control-input" id="strikePrice" value="105" min="1" step="0.01">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">权利金 ($)</label>
+                            <input type="number" class="control-input" id="premium" value="3" min="0.01" step="0.01">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">到期股价 ($)</label>
+                            <input type="number" class="control-input" id="finalPrice" value="110" min="1" step="0.01">
+                        </div>
+                    </div>
+                    <button class="calculate-btn" onclick="calculateProfitLoss()">计算盈亏</button>
+                    <div class="simulation-results" id="simulationResults">
+                        <div id="simulationOutput"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">期权买方与卖方特征对比</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">展示买卖双方在各维度的特征差异：</p>
+                <canvas class="chart-canvas" id="comparisonChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--buyer-color);">■</span> 期权买方
+                    <span style="margin-left: 2rem; color: var(--seller-color);">■</span> 期权卖方
+                </div>
+            </section>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "期权买方面临的最大风险是？",
+                options: [
+                    "支付的权利金",
+                    "标的资产价格下跌",
+                    "无限损失",
+                    "保证金追加"
+                ],
+                correct: 0,
+                explanation: "期权买方的最大风险就是支付的权利金，这是其风险有限的特征。"
+            },
+            {
+                question: "时间价值衰减对期权卖方的影响是？",
+                options: [
+                    "负面影响，每日损失",
+                    "正面影响，每日获益",
+                    "无影响",
+                    "不确定影响"
+                ],
+                correct: 1,
+                explanation: "时间价值衰减对期权卖方是正面影响，每过一天卖方都会获得一部分时间价值收益。"
+            },
+            {
+                question: "期权卖方相对于买方的优势是？",
+                options: [
+                    "收益潜力更大",
+                    "风险更小",
+                    "胜率更高",
+                    "不需要保证金"
+                ],
+                correct: 2,
+                explanation: "期权卖方的胜率通常比买方高（60-70% vs 30-40%），这是其主要优势之一。"
+            },
+            {
+                question: "什么情况下期权买方策略最适合？",
+                options: [
+                    "预期市场横盘整理",
+                    "预期市场大幅波动",
+                    "追求稳定收入",
+                    "资金量有限"
+                ],
+                correct: 1,
+                explanation: "期权买方策略最适合预期市场会出现大幅波动的情况，无论向上还是向下都可能盈利。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawComparisonChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通期权买卖双方分析！' : 
+                         percentage >= 60 ? '良好的理解，建议深入学习风险收益特征。' : 
+                         '需要加强对期权买卖双方特点的理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function calculateProfitLoss() {
+            const optionType = document.getElementById('optionType').value;
+            const tradeRole = document.getElementById('tradeRole').value;
+            const currentPrice = parseFloat(document.getElementById('currentPrice').value);
+            const strikePrice = parseFloat(document.getElementById('strikePrice').value);
+            const premium = parseFloat(document.getElementById('premium').value);
+            const finalPrice = parseFloat(document.getElementById('finalPrice').value);
+
+            let intrinsicValue = 0;
+            let profitLoss = 0;
+            let breakEvenPoint = 0;
+
+            if (optionType === 'call') {
+                intrinsicValue = Math.max(0, finalPrice - strikePrice);
+                breakEvenPoint = strikePrice + premium;
+                if (tradeRole === 'buy') {
+                    profitLoss = intrinsicValue - premium;
+                } else {
+                    profitLoss = premium - intrinsicValue;
+                }
+            } else {
+                intrinsicValue = Math.max(0, strikePrice - finalPrice);
+                breakEvenPoint = strikePrice - premium;
+                if (tradeRole === 'buy') {
+                    profitLoss = intrinsicValue - premium;
+                } else {
+                    profitLoss = premium - intrinsicValue;
+                }
+            }
+
+            const profitLossPerContract = profitLoss * 100; // 每张合约
+            const percentage = profitLoss / premium * 100;
+
+            const optionTypeText = optionType === 'call' ? '看涨期权' : '看跌期权';
+            const roleText = tradeRole === 'buy' ? '买方' : '卖方';
+            const profitLossColor = profitLoss >= 0 ? 'var(--success-color)' : 'var(--error-color)';
+
+            const results = `
+                <h4 style="color: var(--neutral-color); margin-bottom: 1.5rem;">💰 盈亏计算结果</h4>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                    <div style="text-align: center; padding: 1rem; background: rgba(59, 130, 246, 0.1); border-radius: 8px;">
+                        <strong style="color: var(--buyer-color);">策略类型</strong><br>
+                        <span style="color: var(--primary-color);">${optionTypeText}${roleText}</span>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: rgba(139, 92, 246, 0.1); border-radius: 8px;">
+                        <strong style="color: var(--neutral-color);">内在价值</strong><br>
+                        <span style="color: var(--primary-color);">$${intrinsicValue.toFixed(2)}</span>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px;">
+                        <strong style="color: var(--warning-color);">盈亏平衡点</strong><br>
+                        <span style="color: var(--primary-color);">$${breakEvenPoint.toFixed(2)}</span>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: ${profitLoss >= 0 ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)'}; border-radius: 8px;">
+                        <strong style="color: ${profitLossColor};">单股盈亏</strong><br>
+                        <span style="color: ${profitLossColor}; font-size: 1.2em;">${profitLoss >= 0 ? '+' : ''}$${profitLoss.toFixed(2)}</span>
+                    </div>
+                </div>
+
+                <div style="margin: 2rem 0; padding: 2rem; background: rgba(0, 0, 0, 0.2); border-radius: 12px; border-left: 4px solid ${profitLossColor};">
+                    <h5 style="color: ${profitLossColor}; margin-bottom: 1rem;">📊 详细分析</h5>
+                    <div>
+                        <strong>每张合约盈亏：</strong> <span style="color: ${profitLossColor};">${profitLoss >= 0 ? '+' : ''}$${profitLossPerContract.toFixed(2)}</span><br>
+                        <strong>收益率：</strong> <span style="color: ${profitLossColor};">${percentage >= 0 ? '+' : ''}${percentage.toFixed(1)}%</span><br>
+                        <strong>策略状态：</strong> ${finalPrice > breakEvenPoint ? (optionType === 'call' && tradeRole === 'buy' ? '盈利' : (optionType === 'put' && tradeRole === 'sell' ? '盈利' : '亏损')) : (finalPrice < breakEvenPoint ? (optionType === 'put' && tradeRole === 'buy' ? '盈利' : (optionType === 'call' && tradeRole === 'sell' ? '盈利' : '亏损')) : '盈亏平衡')}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('simulationOutput').innerHTML = results;
+            document.getElementById('simulationResults').classList.add('show');
+        }
+
+        function drawComparisonChart() {
+            const canvas = document.getElementById('comparisonChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+            const centerX = padding + chartWidth / 2;
+            const centerY = padding + chartHeight / 2;
+            const maxRadius = Math.min(chartWidth, chartHeight) / 3;
+
+            // Data for buyer vs seller comparison
+            const categories = ['风险水平', '收益潜力', '胜率', '时间价值', '资金要求', '心理压力'];
+            const buyer = [30, 95, 35, 20, 40, 60];
+            const seller = [90, 25, 70, 85, 80, 85];
+
+            const numAxes = categories.length;
+
+            // Draw axis lines and labels
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < numAxes; i++) {
+                const angle = (i * 2 * Math.PI) / numAxes - Math.PI / 2;
+                const x = centerX + maxRadius * Math.cos(angle);
+                const y = centerY + maxRadius * Math.sin(angle);
+
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+
+                // Labels
+                ctx.fillStyle = '#ccc';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'center';
+                const labelX = centerX + (maxRadius + 20) * Math.cos(angle);
+                const labelY = centerY + (maxRadius + 20) * Math.sin(angle);
+                ctx.fillText(categories[i], labelX, labelY);
+            }
+
+            // Draw concentric circles
+            ctx.setLineDash([2, 2]);
+            for (let ring = 1; ring <= 4; ring++) {
+                const radius = (maxRadius * ring) / 4;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
+            ctx.setLineDash([]);
+
+            // Draw buyer polygon
+            ctx.strokeStyle = '#3b82f6';
+            ctx.fillStyle = '#3b82f620';
+            ctx.lineWidth = 3;
+
+            ctx.beginPath();
+            for (let i = 0; i < numAxes; i++) {
+                const angle = (i * 2 * Math.PI) / numAxes - Math.PI / 2;
+                const value = buyer[i];
+                const normalizedValue = Math.min(value / 100, 1);
+                const radius = maxRadius * normalizedValue;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Draw seller polygon
+            ctx.strokeStyle = '#ef4444';
+            ctx.fillStyle = '#ef444420';
+
+            ctx.beginPath();
+            for (let i = 0; i < numAxes; i++) {
+                const angle = (i * 2 * Math.PI) / numAxes - Math.PI / 2;
+                const value = seller[i];
+                const normalizedValue = Math.min(value / 100, 1);
+                const radius = maxRadius * normalizedValue;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Add title
+            ctx.fillStyle = '#ffd700';
+            ctx.font = '18px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('期权买方与卖方特征对比', centerX, 30);
+        }
+    </script>
+</body>
+</html>

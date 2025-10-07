@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第33课：铁蝶式策略 - OPITIOS期权课程</title>
+    <meta name="description" content="学习铁蝶式期权策略，掌握中性市场条件下的期权交易技巧，提高收益稳定性。">
+    <meta name="keywords" content="铁蝶式策略,期权铁蝶式,中性策略,期权交易策略,期权投资">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-33-iron-butterfly-strategy.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-33-iron-butterfly-strategy.html">
+    <meta property="og:title" content="第33课：铁蝶式策略 - OPITIOS期权课程">
+    <meta property="og:description" content="学习铁蝶式期权策略，掌握中性市场条件下的期权交易技巧，提高收益稳定性。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-33-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-33-iron-butterfly-strategy.html">
+    <meta property="twitter:title" content="第33课：铁蝶式策略 - OPITIOS期权课程">
+    <meta property="twitter:description" content="学习铁蝶式期权策略，掌握中性市场条件下的期权交易技巧，提高收益稳定性。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-33-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第33课：铁蝶式策略",
+        "description": "学习铁蝶式期权策略，掌握中性市场条件下的期权交易技巧，提高收益稳定性。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-33-iron-butterfly-strategy.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第33课：铁蝶策略实战 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --butterfly-color: #8b5cf6;
+            --wing-color: #06b6d4;
+            --body-color: #f59e0b;
+            --iron-color: #64748b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--butterfly-color) 0%, var(--wing-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .butterfly-banner {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border-left: 4px solid var(--butterfly-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--butterfly-color);
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .butterfly-structure {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .structure-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .structure-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .structure-card.sell-butterfly {
+            border-color: var(--butterfly-color);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .structure-card.sell-butterfly:hover {
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .structure-card.buy-butterfly {
+            border-color: var(--wing-color);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .structure-card.buy-butterfly:hover {
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .structure-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .structure-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--butterfly-color);
+        }
+
+        .structure-card.buy-butterfly .structure-title {
+            color: var(--wing-color);
+        }
+
+        .structure-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .butterfly-components {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--butterfly-color);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .component-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .component-label {
+            color: var(--butterfly-color);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .component-action {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .component-action.buy {
+            color: var(--success-color);
+        }
+
+        .component-action.sell {
+            color: var(--error-color);
+        }
+
+        .component-details {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .risk-reward-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .risk-reward-table th {
+            background: var(--butterfly-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .risk-reward-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .max-profit {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .max-loss {
+            background: rgba(239, 68, 68, 0.3);
+            color: var(--error-color);
+            font-weight: 600;
+        }
+
+        .breakeven {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .practical-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .scenario-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-type {
+            color: var(--butterfly-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .scenario-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .butterfly-structure {
+                grid-template-columns: 1fr;
+            }
+            .practical-scenarios {
+                grid-template-columns: 1fr;
+            }
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第33课：铁蝶策略实战</h1>
+                <div class="strategy-badge">🦋 区间策略精通 · 铁蝶Iron Butterfly专家</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">区间套利的经典策略：铁蝶策略的精妙构建与实战应用</p>
+            </section>
+
+            <div class="butterfly-banner">
+                🦋 铁蝶策略核心：通过三个执行价格的期权组合构建蝴蝶形状的收益结构，在预期股价区间波动时实现稳定收益的经典区间策略。
+            </div>
+
+            <div class="card">
+                <h3>铁蝶策略的结构精髓与收益特征</h3>
+                <p>铁蝶策略（Iron Butterfly Strategy）是一种高度复杂但极具实用价值的期权组合策略，因其收益曲线形似蝴蝶而得名。该策略通过同时使用三个不同执行价格的期权来构建，形成一个有限风险、有限收益的投资组合。铁蝶策略的核心理念是对股价区间的精准预测，适合在预期标的资产价格将在特定区间内波动的市场环境中使用。与简单的跨式或宽跨式策略相比，铁蝶策略提供了更加精细的风险收益控制能力。</p>
+
+                <p><strong>卖出铁蝶的经典构建</strong>：卖出铁蝶是最常用的铁蝶策略形式，通过以下四个部分构建：卖出1个平值看涨期权，卖出1个平值看跌期权，买入1个虚值看涨期权（执行价格更高），买入1个虚值看跌期权（执行价格更低）。这种结构让投资者能够收取净权利金，当股价在到期时保持在中间执行价格附近时，可以获得最大收益。卖出铁蝶的最大收益等于收取的净权利金，最大损失等于相邻执行价格之间的差距减去收取的净权利金。</p>
+
+                <p><strong>买入铁蝶的防御特征</strong>：买入铁蝶策略是卖出铁蝶的镜像，通过买入中间执行价格的看涨看跌期权，同时卖出两边的虚值期权来构建。这种策略需要支付净权利金，但在股价大幅偏离中间执行价格时可以获利。买入铁蝶适合预期股价将出现大幅波动但不确定方向的情况，虽然使用较少，但在某些特殊市场环境下具有独特价值。其最大损失就是支付的净权利金，最大收益等于相邻执行价格差距减去支付的权利金。</p>
+
+                <p><strong>时间价值与波动率的双重博弈</strong>：铁蝶策略对时间价值衰减和隐含波动率变化都极为敏感。对于卖出铁蝶，时间价值衰减是有利因素，特别是当股价保持在中间执行价格附近时；隐含波动率下降也有利于策略，因为这会降低外围期权的价值。相反，买入铁蝶则受益于波动率上升和时间充裕的情况。成功运用铁蝶策略需要对这些希腊字母参数有深入理解，特别是Theta、Vega和Gamma的变化规律。</p>
+            </div>
+
+            <section class="butterfly-structure">
+                <div class="structure-card sell-butterfly">
+                    <span class="structure-icon">🦋</span>
+                    <div class="structure-title">卖出铁蝶策略</div>
+                    <div class="structure-description">
+                        收取净权利金的区间策略。卖出中间执行价的看涨看跌，买入两边的虚值期权，适合预期股价横盘的稳健投资者。
+                    </div>
+                </div>
+
+                <div class="structure-card buy-butterfly">
+                    <span class="structure-icon">🦋</span>
+                    <div class="structure-title">买入铁蝶策略</div>
+                    <div class="structure-description">
+                        支付净权利金的波动策略。买入中间执行价期权，卖出两边期权，适合预期大幅波动的积极投资者。
+                    </div>
+                </div>
+
+                <div class="structure-card sell-butterfly">
+                    <span class="structure-icon">⚖️</span>
+                    <div class="structure-title">风险收益平衡</div>
+                    <div class="structure-description">
+                        提供明确的最大盈亏界限，风险可控且收益预期明确，是专业投资者喜爱的精密策略工具。
+                    </div>
+                </div>
+
+                <div class="structure-card buy-butterfly">
+                    <span class="structure-icon">🎯</span>
+                    <div class="structure-title">精准区间预测</div>
+                    <div class="structure-description">
+                        要求对股价未来走势有相对精准的区间预测能力，是技术分析与期权策略完美结合的体现。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 铁蝶组件分解 -->
+            <div class="card">
+                <h3>铁蝶策略组件详解</h3>
+                <div class="butterfly-components">
+                    <h4 style="color: var(--butterfly-color); text-align: center; margin-bottom: 2rem;">卖出铁蝶策略构建（以$100为中心价格为例）</h4>
+                    <div class="component-grid">
+                        <div class="component-item">
+                            <div class="component-label">虚值看跌</div>
+                            <div class="component-action buy">买入</div>
+                            <div class="component-details">执行价 $90<br>保护下行风险</div>
+                        </div>
+
+                        <div class="component-item">
+                            <div class="component-label">平值看跌</div>
+                            <div class="component-action sell">卖出</div>
+                            <div class="component-details">执行价 $100<br>收取权利金</div>
+                        </div>
+
+                        <div class="component-item">
+                            <div class="component-label">平值看涨</div>
+                            <div class="component-action sell">卖出</div>
+                            <div class="component-details">执行价 $100<br>收取权利金</div>
+                        </div>
+
+                        <div class="component-item">
+                            <div class="component-label">虚值看涨</div>
+                            <div class="component-action buy">买入</div>
+                            <div class="component-details">执行价 $110<br>保护上行风险</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">铁蝶策略收益分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">展示卖出与买入铁蝶策略的收益特征对比：</p>
+                <canvas class="chart-canvas" id="butterflyChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--butterfly-color);">■</span> 卖出铁蝶
+                    <span style="margin-left: 2rem; color: var(--wing-color);">■</span> 买入铁蝶
+                    <span style="margin-left: 2rem; color: var(--primary-color);">│</span> 中心执行价
+                    <span style="margin-left: 2rem; color: var(--body-color);">│</span> 翼执行价
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>铁蝶策略风险收益特征分析</h3>
+                <table class="risk-reward-table">
+                    <thead>
+                        <tr>
+                            <th>策略类型</th>
+                            <th>最大收益</th>
+                            <th>最大损失</th>
+                            <th>盈亏平衡点</th>
+                            <th>最佳市场环境</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>卖出铁蝶</strong></td>
+                            <td class="max-profit">收取的净权利金</td>
+                            <td class="max-loss">执行价差-净权利金</td>
+                            <td class="breakeven">中心价±净权利金</td>
+                            <td>低波动横盘市场</td>
+                        </tr>
+                        <tr>
+                            <td><strong>买入铁蝶</strong></td>
+                            <td class="max-profit">执行价差-净权利金</td>
+                            <td class="max-loss">支付的净权利金</td>
+                            <td class="breakeven">翼价格±净权利金</td>
+                            <td>高波动突破市场</td>
+                        </tr>
+                        <tr>
+                            <td><strong>成功概率</strong></td>
+                            <td class="breakeven">卖出：60-70%</td>
+                            <td class="breakeven">买入：30-40%</td>
+                            <td class="breakeven">依赖精准预测</td>
+                            <td>需要市场环境配合</td>
+                        </tr>
+                        <tr>
+                            <td><strong>时间敏感性</strong></td>
+                            <td class="breakeven">卖出：有利</td>
+                            <td class="breakeven">买入：不利</td>
+                            <td class="breakeven">Theta衰减影响</td>
+                            <td>临近到期影响巨大</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>铁蝶策略的实战应用场景</h3>
+                <div class="practical-scenarios">
+                    <div class="scenario-card">
+                        <div class="scenario-title">📊 财报前横盘期</div>
+                        <div class="scenario-type">卖出铁蝶：事件前稳定期</div>
+                        <div class="scenario-description">
+                            在重要财报发布前的横盘整理期，通过卖出铁蝶策略收取时间价值，利用投资者观望情绪获得稳定收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🔥 高波动率回归</div>
+                        <div class="scenario-type">卖出铁蝶：波动率套利</div>
+                        <div class="scenario-description">
+                            当隐含波动率处于历史高位，预期将回归正常水平时，卖出铁蝶可以从波动率下降中获得双重收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">⚡ 突破前夕部署</div>
+                        <div class="scenario-type">买入铁蝶：突破预期</div>
+                        <div class="scenario-description">
+                            在技术面即将突破重要关键位时，买入铁蝶可以从任意方向的大幅突破中获利，成本相对较低。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🎯 区间震荡交易</div>
+                        <div class="scenario-type">卖出铁蝶：技术面应用</div>
+                        <div class="scenario-description">
+                            在明确的技术区间内，将铁蝶的执行价格设置在区间边界，从股价在区间内震荡中持续获利。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">📅 期权到期周效应</div>
+                        <div class="scenario-type">卖出铁蝶：时间价值收割</div>
+                        <div class="scenario-description">
+                            利用期权到期周的时间价值快速衰减特征，建立短期铁蝶策略收割最后的时间价值。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🌊 市场情绪转换</div>
+                        <div class="scenario-type">买入铁蝶：情绪波动</div>
+                        <div class="scenario-description">
+                            在市场情绪即将发生重大转换时，买入铁蝶可以从情绪驱动的剧烈价格波动中获得收益。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>铁蝶策略的高级管理技术</h3>
+                <p><strong>执行价格的精准配置</strong>：铁蝶策略的成功很大程度上取决于执行价格的合理选择。中心执行价格应该选择在预期股价最可能停留的位置，通常是当前股价或重要的技术支撑阻力位；两翼执行价格的选择要平衡成本与保护效果，一般选择距离中心价格10-20%的位置。如果价格区间选择过窄，虽然收益潜力大但成功概率低；如果选择过宽，成功概率高但收益有限。最佳选择需要结合历史波动率、技术分析和基本面因素综合判断。</p>
+
+                <p><strong>时间与波动率的双重管理</strong>：铁蝶策略对时间衰减和波动率变化都非常敏感，需要建立动态管理机制。对于卖出铁蝶，应该在时间价值衰减加速期（最后30天）建仓，在获得50-75%的最大收益时提前平仓；对于买入铁蝶，应该在有充足时间且预期波动率上升时建仓。波动率管理方面，要密切关注VIX等波动率指标，在波动率处于极值时考虑策略调整。</p>
+
+                <p><strong>动态调整与风险控制</strong>：铁蝶策略需要积极的动态管理来应对市场变化。当股价偏离预期区间时，可以考虑滚动调整执行价格，或者部分平仓减少风险敞口；当波动率环境发生变化时，可以调整策略的Vega敞口；当接近到期时，要决定是否让期权自然到期还是提前平仓。风险控制方面，应该设置明确的止损线，一般在损失达到最大可能损失的50%时考虑止损。</p>
+
+                <p><strong>组合策略与收益增强</strong>：铁蝶策略可以与其他策略组合使用来增强收益或降低风险。例如，可以同时建立多个不同到期日的铁蝶，构成铁蝶日历组合；也可以建立不同执行价格的铁蝶，构成铁蝶比例组合；还可以与其他波动率策略组合，构建更复杂的波动率交易组合。这些高级应用需要深入的期权知识和丰富的实战经验，但能显著提高策略的适应性和收益潜力。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "铁蝶策略最适合什么市场环境？",
+                options: [
+                    "股价剧烈波动",
+                    "股价在预期区间内横盘",
+                    "单边强烈上涨",
+                    "单边强烈下跌"
+                ],
+                correct: 1,
+                explanation: "铁蝶策略最适合股价在预期区间内横盘的市场环境，这时可以从时间价值衰减中获得收益。"
+            },
+            {
+                question: "卖出铁蝶策略的最大收益是什么？",
+                options: [
+                    "无限收益",
+                    "执行价差减去净权利金",
+                    "收取的净权利金",
+                    "执行价差"
+                ],
+                correct: 2,
+                explanation: "卖出铁蝶策略的最大收益是收取的净权利金，发生在股价恰好等于中心执行价格时。"
+            },
+            {
+                question: "铁蝶策略由几个期权组合构成？",
+                options: [
+                    "2个期权",
+                    "3个期权",
+                    "4个期权",
+                    "5个期权"
+                ],
+                correct: 2,
+                explanation: "铁蝶策略由4个期权构成：买入低执行价看跌、卖出中执行价看跌、卖出中执行价看涨、买入高执行价看涨。"
+            },
+            {
+                question: "铁蝶策略对什么因素最敏感？",
+                options: [
+                    "股价方向",
+                    "时间价值衰减和波动率变化",
+                    "分红派息",
+                    "利率变化"
+                ],
+                correct: 1,
+                explanation: "铁蝶策略对时间价值衰减和波动率变化最敏感，这两个因素直接影响策略的盈亏。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawButterflyChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通铁蝶策略！' : 
+                         percentage >= 60 ? '良好的理解，建议进一步学习区间策略管理。' : 
+                         '需要加强对铁蝶策略结构和应用的理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawButterflyChart() {
+            const canvas = document.getElementById('butterflyChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis (profit/loss line)
+            const zeroLine = canvas.height - padding - chartHeight / 2;
+            ctx.moveTo(padding, zeroLine);
+            ctx.lineTo(canvas.width - padding, zeroLine);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Parameters for Iron Butterfly
+            const centerStrike = 100;
+            const wingStrike = 10; // Distance from center
+            const netCredit = 4; // Net credit received for short iron butterfly
+            const minStock = 75;
+            const maxStock = 125;
+            const steps = 100;
+
+            // Draw short iron butterfly payoff
+            ctx.strokeStyle = '#8b5cf6';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff;
+
+                if (stockPrice <= centerStrike - wingStrike) {
+                    payoff = -(wingStrike - netCredit);
+                } else if (stockPrice <= centerStrike) {
+                    payoff = stockPrice - (centerStrike - wingStrike) - wingStrike + netCredit;
+                } else if (stockPrice <= centerStrike + wingStrike) {
+                    payoff = (centerStrike + wingStrike) - stockPrice - wingStrike + netCredit;
+                } else {
+                    payoff = -(wingStrike - netCredit);
+                }
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw long iron butterfly payoff (inverse of short)
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff;
+
+                if (stockPrice <= centerStrike - wingStrike) {
+                    payoff = wingStrike - netCredit;
+                } else if (stockPrice <= centerStrike) {
+                    payoff = -stockPrice + (centerStrike - wingStrike) + wingStrike - netCredit;
+                } else if (stockPrice <= centerStrike + wingStrike) {
+                    payoff = -(centerStrike + wingStrike) + stockPrice + wingStrike - netCredit;
+                } else {
+                    payoff = wingStrike - netCredit;
+                }
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw strike price lines
+            const centerX = padding + ((centerStrike - minStock) / (maxStock - minStock)) * chartWidth;
+            const leftWingX = padding + ((centerStrike - wingStrike - minStock) / (maxStock - minStock)) * chartWidth;
+            const rightWingX = padding + ((centerStrike + wingStrike - minStock) / (maxStock - minStock)) * chartWidth;
+
+            // Center strike
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(centerX, padding);
+            ctx.lineTo(centerX, canvas.height - padding);
+            ctx.stroke();
+
+            // Wing strikes
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(leftWingX, padding);
+            ctx.lineTo(leftWingX, canvas.height - padding);
+            ctx.moveTo(rightWingX, padding);
+            ctx.lineTo(rightWingX, canvas.height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            for (let price = 80; price <= 120; price += 10) {
+                const x = padding + ((price - minStock) / (maxStock - minStock)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('损益', 0, 0);
+            ctx.restore();
+
+            ctx.setLineDash([]);
+        }
+    </script>
+</body>
+</html>

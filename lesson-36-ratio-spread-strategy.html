@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第36课：比率价差策略 - OPITIOS期权课程</title>
+    <meta name="description" content="学习比率价差策略，掌握非对称期权组合的构建方法，提高期权交易的灵活性。">
+    <meta name="keywords" content="比率价差,期权比率价差,期权策略,期权交易,期权投资">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-36-ratio-spread-strategy.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-36-ratio-spread-strategy.html">
+    <meta property="og:title" content="第36课：比率价差策略 - OPITIOS期权课程">
+    <meta property="og:description" content="学习比率价差策略，掌握非对称期权组合的构建方法，提高期权交易的灵活性。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-36-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-36-ratio-spread-strategy.html">
+    <meta property="twitter:title" content="第36课：比率价差策略 - OPITIOS期权课程">
+    <meta property="twitter:description" content="学习比率价差策略，掌握非对称期权组合的构建方法，提高期权交易的灵活性。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-36-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第36课：比率价差策略",
+        "description": "学习比率价差策略，掌握非对称期权组合的构建方法，提高期权交易的灵活性。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-36-ratio-spread-strategy.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第36课：比例价差策略 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --ratio-color: #e11d48;
+            --spread-color: #7c3aed;
+            --advanced-color: #0ea5e9;
+            --warning-color: #f59e0b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--ratio-color) 0%, var(--spread-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(225, 29, 72, 0.3);
+        }
+
+        .ratio-banner {
+            background: linear-gradient(135deg, rgba(225, 29, 72, 0.2) 0%, rgba(124, 58, 237, 0.1) 100%);
+            border-left: 4px solid var(--ratio-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--ratio-color);
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .ratio-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .type-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .type-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .type-card.call-ratio {
+            border-color: var(--ratio-color);
+            background: rgba(225, 29, 72, 0.1);
+        }
+
+        .type-card.call-ratio:hover {
+            box-shadow: 0 15px 40px rgba(225, 29, 72, 0.2);
+        }
+
+        .type-card.put-ratio {
+            border-color: var(--spread-color);
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .type-card.put-ratio:hover {
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        .type-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .type-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--ratio-color);
+        }
+
+        .type-card.put-ratio .type-title {
+            color: var(--spread-color);
+        }
+
+        .type-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 2px solid var(--warning-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .warning-title {
+            color: var(--warning-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning-content {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .ratio-calculator {
+            background: rgba(225, 29, 72, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--ratio-color);
+        }
+
+        .calculator-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-label {
+            color: var(--ratio-color);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .control-input {
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .control-input:focus {
+            outline: none;
+            border-color: var(--ratio-color);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, var(--ratio-color) 0%, var(--spread-color) 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .result-display {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .result-display.show {
+            display: block;
+        }
+
+        .practical-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .scenario-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-type {
+            color: var(--ratio-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .scenario-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .ratio-types {
+                grid-template-columns: 1fr;
+            }
+            .practical-scenarios {
+                grid-template-columns: 1fr;
+            }
+            .calculator-controls {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第36课：比例价差策略</h1>
+                <div class="strategy-badge">⚖️ 高级组合策略 · 比例价差Ratio Spreads专家</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">非对称收益的艺术：比例价差策略的精妙构建与风险管理</p>
+            </section>
+
+            <div class="ratio-banner">
+                ⚖️ 比例价差策略核心：通过不等比例的期权组合构建非对称收益结构，实现有限风险下的无限收益潜力，是高级期权交易的精髓体现。
+            </div>
+
+            <div class="card">
+                <h3>比例价差策略的非对称收益精髓</h3>
+                <p>比例价差策略（Ratio Spreads）是高级期权交易中最具挑战性也最具潜力的策略之一。与传统的1:1期权组合不同，比例价差策略采用不等比例的期权组合，如1:2或2:3的比例，创造出独特的非对称收益结构。这种策略允许投资者在承担有限初始成本甚至获得净权利金收入的情况下，获得某个方向上理论无限的收益潜力。然而，这种策略也带来了相应的风险，特别是在不利方向上可能面临巨大损失，需要极其精细的风险管理。</p>
+
+                <p><strong>看涨比例价差的攻击性特征</strong>：看涨比例价差策略通过买入较少数量的低执行价看涨期权，同时卖出较多数量的高执行价看涨期权来构建。例如，买入1个100美元执行价的看涨期权，同时卖出2个110美元执行价的看涨期权，形成1:2的比例。这种结构在股价适度上涨时能够获得最大收益，但当股价大幅上涨超过上方盈亏平衡点时，策略将面临无限损失。看涨比例价差适合对股价有温和看涨但不预期大幅上涨的投资者，是一种攻击性与防御性并存的复杂策略。</p>
+
+                <p><strong>看跌比例价差的防御性应用</strong>：看跌比例价差策略是看涨比例价差的镜像，通过买入较少数量的高执行价看跌期权，同时卖出较多数量的低执行价看跌期权来构建。这种策略在股价适度下跌时获得最大收益，但当股价大幅下跌时面临巨大损失风险。相比看涨比例价差，看跌比例价差的风险相对有限，因为股价不能跌至负数，但仍需要严格的风险控制。这种策略适合在熊市中寻求有限风险下的高收益机会。</p>
+
+                <p><strong>Delta中性与Gamma风险管理</strong>：比例价差策略的成功很大程度上取决于对Delta和Gamma的精确管理。初始建仓时，策略通常接近Delta中性，意味着小幅价格变动对策略影响有限。然而，由于期权数量不等，策略具有显著的Gamma敞口，股价大幅变动时Delta会快速变化。专业交易者会通过动态对冲来管理这种风险，或者选择合适的执行价格来优化Gamma敞口。理解并管理希腊字母风险是成功运用比例价差策略的关键。</p>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">
+                    ⚠️ 重要风险警示
+                </div>
+                <div class="warning-content">
+                    比例价差策略具有无限损失风险！当股价大幅偏离预期区间时，策略可能面临巨额亏损。投资者必须建立严格的风险管理机制，包括止损价位、头寸规模控制和动态调整策略。建议只有经验丰富的期权交易者才尝试使用此策略，且仓位不应超过总资产的5%。
+                </div>
+            </div>
+
+            <section class="ratio-types">
+                <div class="type-card call-ratio">
+                    <span class="type-icon">📈</span>
+                    <div class="type-title">看涨比例价差</div>
+                    <div class="type-description">
+                        买入低执行价看涨期权，卖出更多高执行价看涨期权。适合温和看涨预期，在目标价位获得最大收益，但上涨过度面临无限风险。
+                    </div>
+                </div>
+
+                <div class="type-card put-ratio">
+                    <span class="type-icon">📉</span>
+                    <div class="type-title">看跌比例价差</div>
+                    <div class="type-description">
+                        买入高执行价看跌期权，卖出更多低执行价看跌期权。适合温和看跌预期，下跌风险相对有限但仍需严格控制。
+                    </div>
+                </div>
+
+                <div class="type-card call-ratio">
+                    <span class="type-icon">🎯</span>
+                    <div class="type-title">Delta中性构建</div>
+                    <div class="type-description">
+                        初始建仓接近Delta中性，小幅波动影响有限。但Gamma敞口显著，需要动态管理和精确的希腊字母风险控制。
+                    </div>
+                </div>
+
+                <div class="type-card put-ratio">
+                    <span class="type-icon">⚡</span>
+                    <div class="type-title">高级风险管理</div>
+                    <div class="type-description">
+                        需要最高级别的风险管理技术，包括实时监控、动态对冲、严格止损和头寸限制，是专业交易者的挑战。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 交互式比例价差计算器 -->
+            <div class="card">
+                <h3>比例价差策略交互计算器</h3>
+                <div class="ratio-calculator">
+                    <h4 style="color: var(--ratio-color); text-align: center; margin-bottom: 2rem;">看涨比例价差收益计算器</h4>
+                    <div class="calculator-controls">
+                        <div class="control-group">
+                            <label class="control-label">当前股价 ($)</label>
+                            <input type="number" class="control-input" id="currentPrice" value="100" min="50" max="200">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">买入执行价 ($)</label>
+                            <input type="number" class="control-input" id="longStrike" value="100" min="50" max="200">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">卖出执行价 ($)</label>
+                            <input type="number" class="control-input" id="shortStrike" value="110" min="50" max="200">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">比例 (买:卖)</label>
+                            <select class="control-input" id="ratio">
+                                <option value="1:2">1:2</option>
+                                <option value="1:3">1:3</option>
+                                <option value="2:3">2:3</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">买入期权价格 ($)</label>
+                            <input type="number" class="control-input" id="longPrice" value="5.00" min="0.1" max="20" step="0.1">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">卖出期权价格 ($)</label>
+                            <input type="number" class="control-input" id="shortPrice" value="2.50" min="0.1" max="20" step="0.1">
+                        </div>
+                    </div>
+                    <button class="calculate-btn" onclick="calculateRatio()">计算收益特征</button>
+                    <div class="result-display" id="resultDisplay">
+                        <div id="calculationResults"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">比例价差策略收益分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">展示看涨与看跌比例价差策略的非对称收益特征：</p>
+                <canvas class="chart-canvas" id="ratioChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--ratio-color);">■</span> 看涨比例价差 (1:2)
+                    <span style="margin-left: 2rem; color: var(--spread-color);">■</span> 看跌比例价差 (1:2)
+                    <span style="margin-left: 2rem; color: var(--primary-color);">│</span> 最大收益点
+                    <span style="margin-left: 2rem; color: var(--warning-color);">│</span> 盈亏平衡点
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>比例价差策略的实战应用场景</h3>
+                <div class="practical-scenarios">
+                    <div class="scenario-card">
+                        <div class="scenario-title">📊 财报前温和预期</div>
+                        <div class="scenario-type">看涨比例价差：有限风险获利</div>
+                        <div class="scenario-description">
+                            在财报发布前，预期股价温和上涨但不会出现暴涨时，使用看涨比例价差可以在有限风险下获得较高收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🎯 技术面阻力位交易</div>
+                        <div class="scenario-type">看涨比例价差：区间突破策略</div>
+                        <div class="scenario-description">
+                            当股价接近重要技术阻力位时，使用比例价差可以从适度突破中获利，同时避免假突破的风险。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">📉 熊市反弹交易</div>
+                        <div class="scenario-type">看跌比例价差：逢高做空</div>
+                        <div class="scenario-description">
+                            在熊市反弹至关键阻力位时，使用看跌比例价差可以从后续回落中获利，风险相对可控。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">⚡ 波动率收缩期</div>
+                        <div class="scenario-type">比例价差：时间价值收割</div>
+                        <div class="scenario-description">
+                            在波动率从高位回落时，比例价差策略可以从时间价值快速衰减中获得额外收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🔄 Delta中性交易</div>
+                        <div class="scenario-type">比例价差：希腊字母套利</div>
+                        <div class="scenario-description">
+                            专业交易者使用Delta中性的比例价差进行Gamma和Theta套利，从期权定价偏差中获利。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">📅 到期日效应利用</div>
+                        <div class="scenario-type">比例价差：时间衰减优化</div>
+                        <div class="scenario-description">
+                            利用期权到期日前的时间价值加速衰减，通过精确的比例设计最大化Theta收益。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>比例价差策略的高级管理技术</h3>
+                <p><strong>比例选择的科学方法</strong>：比例价差策略中比例的选择是策略成功的关键因素。1:2比例是最常用的配置，提供良好的风险收益平衡；1:3比例风险较高但收益潜力更大；2:3比例相对保守，适合风险厌恶型投资者。比例选择应该基于对股价波动范围的预期、风险承受能力和市场环境等因素综合考虑。量化分析显示，最优比例通常与标的资产的历史波动率和隐含波动率水平相关。</p>
+
+                <p><strong>执行价格的精确配置</strong>：执行价格的选择直接影响策略的风险收益特征。两个执行价格之间的距离决定了最大收益的大小和实现概率。距离过小虽然实现概率高但收益有限；距离过大收益潜力大但实现难度高。最佳配置通常是选择距离为一个标准差波动幅度的执行价格组合。此外，还要考虑期权的流动性、买卖价差和到期时间等实际交易因素。</p>
+
+                <p><strong>动态风险监控与调整</strong>：比例价差策略需要实时的风险监控和动态调整机制。关键监控指标包括Delta敞口、Gamma风险、Theta衰减和Vega敏感性。当股价接近危险区域时，应该考虑部分平仓或通过购买保护性期权来限制损失。专业交易者通常会设置多层止损机制：第一层基于价格的止损，第二层基于损失金额的止损，第三层基于时间的强制平仓。</p>
+
+                <p><strong>组合优化与资金管理</strong>：成功的比例价差交易需要严格的资金管理和组合优化。单个比例价差策略的仓位不应超过总资金的3-5%，以防止单一策略失败对整体组合造成重大影响。可以考虑在不同标的、不同到期日建立多个小仓位的比例价差，通过分散化降低集中风险。此外，还可以将比例价差与其他策略组合使用，如与保护性期权结合来限制下行风险，或与波动率策略结合来对冲方向性风险。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "比例价差策略的最大特征是什么？",
+                options: [
+                    "风险完全可控",
+                    "非对称收益结构",
+                    "适合所有投资者",
+                    "不受时间影响"
+                ],
+                correct: 1,
+                explanation: "比例价差策略的核心特征是创造非对称收益结构，在一个方向上有有限收益，另一个方向上可能面临无限损失。"
+            },
+            {
+                question: "1:2看涨比例价差策略面临的最大风险是什么？",
+                options: [
+                    "股价下跌",
+                    "股价不动",
+                    "股价大幅上涨",
+                    "时间价值衰减"
+                ],
+                correct: 2,
+                explanation: "看涨比例价差在股价大幅上涨超过上方盈亏平衡点时面临无限损失风险，这是其最大威胁。"
+            },
+            {
+                question: "比例价差策略最适合哪类投资者？",
+                options: [
+                    "所有期权新手",
+                    "保守型投资者",
+                    "经验丰富的专业交易者",
+                    "长期投资者"
+                ],
+                correct: 2,
+                explanation: "比例价差策略风险复杂，需要精细的风险管理，只适合经验丰富的专业交易者使用。"
+            },
+            {
+                question: "比例价差策略建仓时通常具有什么特征？",
+                options: [
+                    "显著的Delta敞口",
+                    "接近Delta中性",
+                    "无Gamma风险",
+                    "不受波动率影响"
+                ],
+                correct: 1,
+                explanation: "比例价差策略初始建仓时通常接近Delta中性，但具有显著的Gamma敞口，需要动态管理。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawRatioChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通比例价差策略！' : 
+                         percentage >= 60 ? '良好的理解，建议深入学习风险管理技术。' : 
+                         '需要加强对比例价差策略和风险控制的理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawRatioChart() {
+            const canvas = document.getElementById('ratioChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis (profit/loss line)
+            const zeroLine = canvas.height - padding - chartHeight / 2;
+            ctx.moveTo(padding, zeroLine);
+            ctx.lineTo(canvas.width - padding, zeroLine);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Parameters for Ratio Spreads
+            const longStrike = 100;
+            const shortStrike = 110;
+            const longPremium = 5;
+            const shortPremium = 2.5;
+            const ratio = 2; // 1:2 ratio
+            const minStock = 70;
+            const maxStock = 140;
+            const steps = 140;
+
+            // Draw call ratio spread payoff
+            ctx.strokeStyle = '#e11d48';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff;
+
+                const longValue = Math.max(stockPrice - longStrike, 0);
+                const shortValue = Math.max(stockPrice - shortStrike, 0);
+
+                payoff = longValue - longPremium - ratio * (shortValue - shortPremium);
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 30) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw put ratio spread payoff
+            ctx.strokeStyle = '#7c3aed';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+
+            const putLongStrike = 100;
+            const putShortStrike = 90;
+            const putLongPremium = 4;
+            const putShortPremium = 2;
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff;
+
+                const longValue = Math.max(putLongStrike - stockPrice, 0);
+                const shortValue = Math.max(putShortStrike - stockPrice, 0);
+
+                payoff = longValue - putLongPremium - ratio * (shortValue - putShortPremium);
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 30) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Mark key points
+            const maxProfitX = padding + ((shortStrike - minStock) / (maxStock - minStock)) * chartWidth;
+            const breakevenX1 = padding + ((longStrike - minStock) / (maxStock - minStock)) * chartWidth;
+            const breakevenX2 = padding + ((shortStrike + 5 - minStock) / (maxStock - minStock)) * chartWidth; // Approximate
+
+            // Max profit line
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(maxProfitX, padding);
+            ctx.lineTo(maxProfitX, canvas.height - padding);
+            ctx.stroke();
+
+            // Breakeven lines
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(breakevenX1, padding);
+            ctx.lineTo(breakevenX1, canvas.height - padding);
+            ctx.moveTo(breakevenX2, padding);
+            ctx.lineTo(breakevenX2, canvas.height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            for (let price = 80; price <= 130; price += 10) {
+                const x = padding + ((price - minStock) / (maxStock - minStock)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('损益', 0, 0);
+            ctx.restore();
+
+            ctx.setLineDash([]);
+        }
+
+        function calculateRatio() {
+            const currentPrice = parseFloat(document.getElementById('currentPrice').value);
+            const longStrike = parseFloat(document.getElementById('longStrike').value);
+            const shortStrike = parseFloat(document.getElementById('shortStrike').value);
+            const ratioText = document.getElementById('ratio').value;
+            const longPrice = parseFloat(document.getElementById('longPrice').value);
+            const shortPrice = parseFloat(document.getElementById('shortPrice').value);
+
+            const [longQty, shortQty] = ratioText.split(':').map(x => parseInt(x));
+            const ratio = shortQty / longQty;
+
+            const netCost = longQty * longPrice - shortQty * shortPrice;
+            const maxProfit = longQty * (shortStrike - longStrike) - netCost;
+            const upperBreakeven = shortStrike + maxProfit / shortQty;
+
+            const results = `
+                <h4 style="color: var(--ratio-color); margin-bottom: 1rem;">计算结果</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div>
+                        <strong style="color: var(--primary-color);">净成本:</strong><br>
+                        $${netCost.toFixed(2)}
+                    </div>
+                    <div>
+                        <strong style="color: var(--success-color);">最大收益:</strong><br>
+                        $${maxProfit.toFixed(2)}
+                    </div>
+                    <div>
+                        <strong style="color: var(--warning-color);">上方盈亏平衡点:</strong><br>
+                        $${upperBreakeven.toFixed(2)}
+                    </div>
+                    <div>
+                        <strong style="color: var(--error-color);">风险提示:</strong><br>
+                        上涨超过 $${upperBreakeven.toFixed(2)} 面临无限损失
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('calculationResults').innerHTML = results;
+            document.getElementById('resultDisplay').classList.add('show');
+        }
+    </script>
+</body>
+</html>

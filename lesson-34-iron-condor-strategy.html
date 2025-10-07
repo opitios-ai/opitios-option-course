@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第34课：铁鹰式策略 - OPITIOS期权课程</title>
+    <meta name="description" content="深入学习铁鹰式期权策略，掌握大范围中性市场的期权交易方法，提高风险调整收益。">
+    <meta name="keywords" content="铁鹰式策略,期权铁鹰式,中性策略,期权交易策略,期权投资">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-34-iron-condor-strategy.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-34-iron-condor-strategy.html">
+    <meta property="og:title" content="第34课：铁鹰式策略 - OPITIOS期权课程">
+    <meta property="og:description" content="深入学习铁鹰式期权策略，掌握大范围中性市场的期权交易方法，提高风险调整收益。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-34-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-34-iron-condor-strategy.html">
+    <meta property="twitter:title" content="第34课：铁鹰式策略 - OPITIOS期权课程">
+    <meta property="twitter:description" content="深入学习铁鹰式期权策略，掌握大范围中性市场的期权交易方法，提高风险调整收益。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-34-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第34课：铁鹰式策略",
+        "description": "深入学习铁鹰式期权策略，掌握大范围中性市场的期权交易方法，提高风险调整收益。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-34-iron-condor-strategy.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第34课：铁鹰策略进阶 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --condor-color: #6366f1;
+            --wing-color: #8b5cf6;
+            --body-color: #06b6d4;
+            --iron-color: #64748b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--condor-color) 0%, var(--wing-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .condor-banner {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-left: 4px solid var(--condor-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--condor-color);
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .condor-structure {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .structure-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .structure-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .structure-card.short-condor {
+            border-color: var(--condor-color);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .structure-card.short-condor:hover {
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .structure-card.long-condor {
+            border-color: var(--wing-color);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .structure-card.long-condor:hover {
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .structure-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .structure-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--condor-color);
+        }
+
+        .structure-card.long-condor .structure-title {
+            color: var(--wing-color);
+        }
+
+        .structure-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .condor-components {
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--condor-color);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .component-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .component-label {
+            color: var(--condor-color);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .component-action {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .component-action.buy {
+            color: var(--success-color);
+        }
+
+        .component-action.sell {
+            color: var(--error-color);
+        }
+
+        .component-details {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .comparison-analysis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            padding: 2rem;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .comparison-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-points {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-points li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-points li:last-child {
+            border-bottom: none;
+        }
+
+        .advantage {
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .disadvantage {
+            color: var(--error-color);
+            font-weight: 600;
+        }
+
+        .neutral {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .practical-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .scenario-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-type {
+            color: var(--condor-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .scenario-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .condor-structure {
+                grid-template-columns: 1fr;
+            }
+            .practical-scenarios {
+                grid-template-columns: 1fr;
+            }
+            .comparison-analysis {
+                grid-template-columns: 1fr;
+            }
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第34课：铁鹰策略进阶</h1>
+                <div class="strategy-badge">🦅 区间策略精通 · 铁鹰Iron Condor专家</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">宽区间稳定收益：铁鹰策略的进阶应用与精细管理</p>
+            </section>
+
+            <div class="condor-banner">
+                🦅 铁鹰策略核心：通过四个不同执行价格的期权组合构建鹰翼形状的收益结构，在更宽的区间内获得稳定收益，是区间策略的进阶形态。
+            </div>
+
+            <div class="card">
+                <h3>铁鹰策略的宽区间收益精髓</h3>
+                <p>铁鹰策略（Iron Condor Strategy）是铁蝶策略的重要进阶形态，通过同时使用四个不同执行价格的期权来构建更宽的收益区间。与铁蝶策略使用相同中心执行价格不同，铁鹰策略的中间两个执行价格是分离的，形成一个平台状的收益区间。这种设计使得铁鹰策略在股价在较宽范围内波动时都能获得收益，大大提高了策略的成功概率，但同时也降低了单位风险的收益潜力。铁鹰策略是专业期权交易者最喜爱的策略之一，因其提供了优秀的风险调整收益。</p>
+
+                <p><strong>卖出铁鹰的稳健收益模式</strong>：卖出铁鹰策略通过以下组合构建：卖出1个虚值看跌期权（较低执行价），买入1个更虚值的看跌期权（保护性执行价），卖出1个虚值看涨期权（较高执行价），买入1个更虚值的看涨期权（保护性执行价）。这种结构让投资者能够收取净权利金，当股价在到期时保持在中间两个执行价格之间时，可以获得最大收益。卖出铁鹰的最大收益等于收取的净权利金，最大损失等于任一边执行价格差减去净权利金。</p>
+
+                <p><strong>买入铁鹰的突破交易特征</strong>：买入铁鹰策略是卖出铁鹰的相反操作，通过买入中间的虚值期权，同时卖出外围的保护性期权来构建。这种策略需要支付净权利金，但在股价突破任一方向的执行价格区间时可以获利。买入铁鹰适合预期股价将出现较大幅度突破但不确定方向的情况。虽然在实际交易中使用较少，但在某些特殊的市场环境下，如重大事件前期，具有一定的应用价值。</p>
+
+                <p><strong>与铁蝶策略的关键差异</strong>：铁鹰策略与铁蝶策略的主要区别在于收益平台的宽度。铁蝶策略的收益区间是一个尖峰，只有股价恰好停留在中心执行价格时才能获得最大收益；而铁鹰策略的收益区间是一个平台，股价在两个中间执行价格之间的任何位置都能获得最大收益。这种差异使得铁鹰策略具有更高的成功概率但相对较低的单位风险收益。选择使用哪种策略取决于对股价波动范围的预期和风险偏好。</p>
+            </div>
+
+            <section class="condor-structure">
+                <div class="structure-card short-condor">
+                    <span class="structure-icon">🦅</span>
+                    <div class="structure-title">卖出铁鹰策略</div>
+                    <div class="structure-description">
+                        通过卖出中间区间的虚值期权收取权利金，买入外围期权提供保护。适合预期股价在较宽区间内波动的稳健投资。
+                    </div>
+                </div>
+
+                <div class="structure-card long-condor">
+                    <span class="structure-icon">🦅</span>
+                    <div class="structure-title">买入铁鹰策略</div>
+                    <div class="structure-description">
+                        支付净权利金获得突破收益权利。买入中间虚值期权，卖出外围期权，适合预期大幅突破的积极策略。
+                    </div>
+                </div>
+
+                <div class="structure-card short-condor">
+                    <span class="structure-icon">📊</span>
+                    <div class="structure-title">成功概率优势</div>
+                    <div class="structure-description">
+                        相比铁蝶策略有更高的成功概率，因为收益区间更宽，市场更容易配合策略预期。
+                    </div>
+                </div>
+
+                <div class="structure-card long-condor">
+                    <span class="structure-icon">⚖️</span>
+                    <div class="structure-title">风险收益平衡</div>
+                    <div class="structure-description">
+                        提供了期权策略中最佳的风险调整收益比，是机构投资者和专业交易者的首选策略之一。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 铁鹰组件分解 -->
+            <div class="card">
+                <h3>铁鹰策略组件详解</h3>
+                <div class="condor-components">
+                    <h4 style="color: var(--condor-color); text-align: center; margin-bottom: 2rem;">卖出铁鹰策略构建（以当前价格$100为中心）</h4>
+                    <div class="component-grid">
+                        <div class="component-item">
+                            <div class="component-label">保护看跌</div>
+                            <div class="component-action buy">买入</div>
+                            <div class="component-details">执行价 $85<br>限制下行损失</div>
+                        </div>
+
+                        <div class="component-item">
+                            <div class="component-label">虚值看跌</div>
+                            <div class="component-action sell">卖出</div>
+                            <div class="component-details">执行价 $95<br>收取权利金</div>
+                        </div>
+
+                        <div class="component-item">
+                            <div class="component-label">虚值看涨</div>
+                            <div class="component-action sell">卖出</div>
+                            <div class="component-details">执行价 $105<br>收取权利金</div>
+                        </div>
+
+                        <div class="component-item">
+                            <div class="component-label">保护看涨</div>
+                            <div class="component-action buy">买入</div>
+                            <div class="component-details">执行价 $115<br>限制上行损失</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 2rem; color: var(--condor-color); font-weight: 600;">
+                        收益区间：$95 - $105 | 最大收益：净权利金 | 最大损失：$10 - 净权利金
+                    </div>
+                </div>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">铁鹰策略收益分析</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">展示卖出与买入铁鹰策略的收益特征对比：</p>
+                <canvas class="chart-canvas" id="condorChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--condor-color);">■</span> 卖出铁鹰
+                    <span style="margin-left: 2rem; color: var(--wing-color);">■</span> 买入铁鹰
+                    <span style="margin-left: 2rem; color: var(--primary-color);">│</span> 收益区间
+                    <span style="margin-left: 2rem; color: var(--body-color);">│</span> 保护区间
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>铁鹰 vs 铁蝶策略深度对比分析</h3>
+                <div class="comparison-analysis">
+                    <div class="comparison-card">
+                        <div class="comparison-title">🎯 成功概率对比</div>
+                        <ul class="comparison-points">
+                            <li><span class="advantage">铁鹰：70-80%</span> - 收益区间更宽</li>
+                            <li><span class="neutral">铁蝶：50-60%</span> - 需要精准停留</li>
+                            <li><span class="advantage">铁鹰适合区间预测</span></li>
+                            <li><span class="neutral">铁蝶适合点位预测</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-card">
+                        <div class="comparison-title">💰 收益风险特征</div>
+                        <ul class="comparison-points">
+                            <li><span class="neutral">铁鹰：收益率中等</span></li>
+                            <li><span class="advantage">铁蝶：收益率较高</span></li>
+                            <li><span class="advantage">铁鹰：风险调整收益佳</span></li>
+                            <li><span class="neutral">铁蝶：风险集中度高</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-card">
+                        <div class="comparison-title">⏰ 时间管理复杂度</div>
+                        <ul class="comparison-points">
+                            <li><span class="advantage">铁鹰：管理相对简单</span></li>
+                            <li><span class="disadvantage">铁蝶：需要精细管理</span></li>
+                            <li><span class="advantage">铁鹰：调整灵活性高</span></li>
+                            <li><span class="neutral">铁蝶：调整选择有限</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-card">
+                        <div class="comparison-title">📈 市场适应性</div>
+                        <ul class="comparison-points">
+                            <li><span class="advantage">铁鹰：适应多种环境</span></li>
+                            <li><span class="neutral">铁蝶：环境要求严格</span></li>
+                            <li><span class="advantage">铁鹰：波动容忍度高</span></li>
+                            <li><span class="disadvantage">铁蝶：波动敏感性强</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-card">
+                        <div class="comparison-title">🛠️ 实施难度评估</div>
+                        <ul class="comparison-points">
+                            <li><span class="advantage">铁鹰：初学者友好</span></li>
+                            <li><span class="disadvantage">铁蝶：需要经验积累</span></li>
+                            <li><span class="advantage">铁鹰：流动性要求低</span></li>
+                            <li><span class="neutral">铁蝶：流动性要求中等</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-card">
+                        <div class="comparison-title">📊 专业应用场景</div>
+                        <ul class="comparison-points">
+                            <li><span class="advantage">铁鹰：机构投资首选</span></li>
+                            <li><span class="neutral">铁蝶：专业交易工具</span></li>
+                            <li><span class="advantage">铁鹰：批量化执行</span></li>
+                            <li><span class="neutral">铁蝶：精准化操作</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>铁鹰策略的高级实战应用</h3>
+                <div class="practical-scenarios">
+                    <div class="scenario-card">
+                        <div class="scenario-title">📊 市场整体中性期</div>
+                        <div class="scenario-type">卖出铁鹰：宏观环境稳定</div>
+                        <div class="scenario-description">
+                            在宏观经济相对稳定、市场整体处于中性态度时，通过卖出铁鹰策略获得稳定的时间价值收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🎯 技术面区间交易</div>
+                        <div class="scenario-type">卖出铁鹰：区间震荡套利</div>
+                        <div class="scenario-description">
+                            根据技术分析确定的价格区间，将铁鹰的收益区间设置在技术支撑阻力位之间，从区间震荡中获利。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">📈 波动率环境套利</div>
+                        <div class="scenario-type">卖出铁鹰：高IV回归交易</div>
+                        <div class="scenario-description">
+                            当隐含波动率处于历史高位时，卖出铁鹰策略可以从波动率均值回归中获得额外收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">⚡ 重大突破预期</div>
+                        <div class="scenario-type">买入铁鹰：双向突破押注</div>
+                        <div class="scenario-description">
+                            在预期股价将突破现有交易区间但不确定方向时，买入铁鹰可以从任意方向的大幅突破中获利。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">📅 季度末效应</div>
+                        <div class="scenario-type">卖出铁鹰：资金流动稳定期</div>
+                        <div class="scenario-description">
+                            利用季度末机构资金重新配置期间市场相对稳定的特点，建立铁鹰策略获得稳定收益。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🔄 组合策略应用</div>
+                        <div class="scenario-type">多重铁鹰：分散化收益</div>
+                        <div class="scenario-description">
+                            在不同股票或不同到期日建立多个铁鹰策略，构建分散化的收益来源，提高整体胜率。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>铁鹰策略的专业化管理技术</h3>
+                <p><strong>执行价格的系统性选择</strong>：铁鹰策略的执行价格选择需要更加系统化的方法。首先要确定收益区间的宽度，一般建议选择覆盖一个标准差波动范围的区间；然后要确定保护区间的距离，通常选择再外推半个标准差的位置。具体选择时要考虑历史波动率、技术支撑阻力位、期权链的流动性等多个因素。最佳实践是使用量化模型来优化执行价格组合，确保在给定风险水平下获得最大预期收益。</p>
+
+                <p><strong>Delta中性与动态对冲</strong>：铁鹰策略通常接近Delta中性，但随着股价变动和时间流逝，Delta会发生变化。专业交易者会通过买卖股票或ETF来维持Delta中性，这样可以将策略转化为纯粹的波动率和时间价值交易。动态对冲的频率取决于市场波动程度和交易成本，一般建议当Delta偏离中性位置0.1以上时进行调整。这种管理方式可以显著提高策略的稳定性和收益预期。</p>
+
+                <p><strong>分层平仓与滚动策略</strong>：铁鹰策略的平仓管理需要更加精细化。建议采用分层平仓策略：当获得25-50%的最大收益时平仓一半头寸锁定收益；当获得50-75%的最大收益时再平仓一半；剩余部分可以持有到接近到期。对于亏损的策略，当损失达到收取权利金的150-200%时应该止损。滚动策略方面，可以将即将到期的铁鹰滚动到下个月，继续获得时间价值收益。</p>
+
+                <p><strong>批量化与规模化应用</strong>：铁鹰策略特别适合批量化和规模化应用。机构投资者通常会在多个标的上同时建立铁鹰策略，通过分散化降低个股风险；也会在不同到期日建立铁鹰，形成连续的收益流；还会根据不同的波动率环境调整策略参数，形成适应性的交易系统。这种规模化应用需要强大的风险管理系统和自动化交易平台支持，但可以创造非常稳定的超额收益。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "铁鹰策略相比铁蝶策略的最大优势是什么？",
+                options: [
+                    "收益率更高",
+                    "成功概率更高",
+                    "风险更小",
+                    "构建更简单"
+                ],
+                correct: 1,
+                explanation: "铁鹰策略有更宽的收益区间，因此成功概率比铁蝶策略更高，通常可达70-80%。"
+            },
+            {
+                question: "卖出铁鹰策略由几个期权组合构成？",
+                options: [
+                    "2个期权",
+                    "3个期权",
+                    "4个期权",
+                    "6个期权"
+                ],
+                correct: 2,
+                explanation: "铁鹰策略由4个期权构成：买入保护看跌、卖出虚值看跌、卖出虚值看涨、买入保护看涨。"
+            },
+            {
+                question: "铁鹰策略最适合什么市场环境？",
+                options: [
+                    "剧烈单边上涨",
+                    "剧烈单边下跌",
+                    "在较宽区间内波动",
+                    "极低波动率环境"
+                ],
+                correct: 2,
+                explanation: "铁鹰策略最适合股价在较宽区间内波动的市场环境，这时可以获得最大收益。"
+            },
+            {
+                question: "卖出铁鹰策略的最大收益发生在什么情况下？",
+                options: [
+                    "股价等于最高执行价",
+                    "股价等于最低执行价",
+                    "股价在中间两个执行价之间",
+                    "股价剧烈波动"
+                ],
+                correct: 2,
+                explanation: "卖出铁鹰策略的最大收益发生在股价在中间两个执行价格之间的任何位置。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawCondorChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通铁鹰策略！' : 
+                         percentage >= 60 ? '良好的理解，建议进一步学习高级区间策略。' : 
+                         '需要加强对铁鹰策略和区间交易的理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawCondorChart() {
+            const canvas = document.getElementById('condorChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 80;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis (profit/loss line)
+            const zeroLine = canvas.height - padding - chartHeight / 2;
+            ctx.moveTo(padding, zeroLine);
+            ctx.lineTo(canvas.width - padding, zeroLine);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Parameters for Iron Condor
+            const strike1 = 85; // Long put
+            const strike2 = 95; // Short put
+            const strike3 = 105; // Short call
+            const strike4 = 115; // Long call
+            const netCredit = 3.5; // Net credit received
+            const minStock = 70;
+            const maxStock = 130;
+            const steps = 100;
+
+            // Draw short iron condor payoff
+            ctx.strokeStyle = '#6366f1';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff;
+
+                if (stockPrice <= strike1) {
+                    payoff = -(strike2 - strike1 - netCredit);
+                } else if (stockPrice <= strike2) {
+                    payoff = stockPrice - strike1 - (strike2 - strike1 - netCredit);
+                } else if (stockPrice <= strike3) {
+                    payoff = netCredit;
+                } else if (stockPrice <= strike4) {
+                    payoff = strike4 - stockPrice - (strike4 - strike3 - netCredit);
+                } else {
+                    payoff = -(strike4 - strike3 - netCredit);
+                }
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Draw long iron condor payoff (inverse of short)
+            ctx.strokeStyle = '#8b5cf6';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+
+            for (let i = 0; i <= steps; i++) {
+                const stockPrice = minStock + (maxStock - minStock) * i / steps;
+                let payoff;
+
+                if (stockPrice <= strike1) {
+                    payoff = strike2 - strike1 - netCredit;
+                } else if (stockPrice <= strike2) {
+                    payoff = -stockPrice + strike1 + (strike2 - strike1 - netCredit);
+                } else if (stockPrice <= strike3) {
+                    payoff = -netCredit;
+                } else if (stockPrice <= strike4) {
+                    payoff = -strike4 + stockPrice + (strike4 - strike3 - netCredit);
+                } else {
+                    payoff = strike4 - strike3 - netCredit;
+                }
+
+                const x = padding + i * chartWidth / steps;
+                const y = zeroLine - (payoff / 15) * (chartHeight / 4);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw strike price lines
+            const strike2X = padding + ((strike2 - minStock) / (maxStock - minStock)) * chartWidth;
+            const strike3X = padding + ((strike3 - minStock) / (maxStock - minStock)) * chartWidth;
+
+            // Profit zone
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(strike2X, padding);
+            ctx.lineTo(strike2X, canvas.height - padding);
+            ctx.moveTo(strike3X, padding);
+            ctx.lineTo(strike3X, canvas.height - padding);
+            ctx.stroke();
+
+            // Protection lines
+            const strike1X = padding + ((strike1 - minStock) / (maxStock - minStock)) * chartWidth;
+            const strike4X = padding + ((strike4 - minStock) / (maxStock - minStock)) * chartWidth;
+
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(strike1X, padding);
+            ctx.lineTo(strike1X, canvas.height - padding);
+            ctx.moveTo(strike4X, padding);
+            ctx.lineTo(strike4X, canvas.height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Add grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            for (let price = 80; price <= 120; price += 10) {
+                const x = padding + ((price - minStock) / (maxStock - minStock)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 30, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 50, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('损益', 0, 0);
+            ctx.restore();
+
+            ctx.setLineDash([]);
+        }
+    </script>
+</body>
+</html>

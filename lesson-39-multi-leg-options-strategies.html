@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第39课：多腿期权策略 - OPITIOS期权课程</title>
+    <meta name="description" content="深入学习多腿期权策略，掌握复杂期权组合的构建方法，提高期权交易策略的多样性。">
+    <meta name="keywords" content="多腿期权策略,期权组合,期权策略,期权交易,期权投资">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-39-multi-leg-options-strategies.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-39-multi-leg-options-strategies.html">
+    <meta property="og:title" content="第39课：多腿期权策略 - OPITIOS期权课程">
+    <meta property="og:description" content="深入学习多腿期权策略，掌握复杂期权组合的构建方法，提高期权交易策略的多样性。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-39-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-39-multi-leg-options-strategies.html">
+    <meta property="twitter:title" content="第39课：多腿期权策略 - OPITIOS期权课程">
+    <meta property="twitter:description" content="深入学习多腿期权策略，掌握复杂期权组合的构建方法，提高期权交易策略的多样性。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-39-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第39课：多腿期权策略",
+        "description": "深入学习多腿期权策略，掌握复杂期权组合的构建方法，提高期权交易策略的多样性。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-39-multi-leg-options-strategies.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第39课：多腿期权策略系统设计 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --system-color: #2563eb;
+            --design-color: #7c3aed;
+            --architecture-color: #0891b2;
+            --flow-color: #dc2626;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .strategy-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--system-color) 0%, var(--design-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .system-banner {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(124, 58, 237, 0.1) 100%);
+            border-left: 4px solid var(--system-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--system-color);
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .system-layers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .layer-card {
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layer-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .layer-card.analysis-layer {
+            border-color: var(--system-color);
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .layer-card.analysis-layer:hover {
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.2);
+        }
+
+        .layer-card.strategy-layer {
+            border-color: var(--design-color);
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .layer-card.strategy-layer:hover {
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        .layer-card.execution-layer {
+            border-color: var(--architecture-color);
+            background: rgba(8, 145, 178, 0.1);
+        }
+
+        .layer-card.execution-layer:hover {
+            box-shadow: 0 15px 40px rgba(8, 145, 178, 0.2);
+        }
+
+        .layer-card.monitoring-layer {
+            border-color: var(--flow-color);
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        .layer-card.monitoring-layer:hover {
+            box-shadow: 0 15px 40px rgba(220, 38, 38, 0.2);
+        }
+
+        .layer-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .layer-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .layer-card.analysis-layer .layer-title {
+            color: var(--system-color);
+        }
+
+        .layer-card.strategy-layer .layer-title {
+            color: var(--design-color);
+        }
+
+        .layer-card.execution-layer .layer-title {
+            color: var(--architecture-color);
+        }
+
+        .layer-card.monitoring-layer .layer-title {
+            color: var(--flow-color);
+        }
+
+        .layer-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .system-builder {
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--system-color);
+        }
+
+        .builder-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-label {
+            color: var(--system-color);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .control-input, .control-select {
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .control-input:focus, .control-select:focus {
+            outline: none;
+            border-color: var(--system-color);
+        }
+
+        .build-btn {
+            background: linear-gradient(135deg, var(--system-color) 0%, var(--design-color) 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .build-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .system-output {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .system-output.show {
+            display: block;
+        }
+
+        .architecture-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .architecture-table th {
+            background: var(--system-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .architecture-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .critical-component {
+            background: rgba(220, 38, 38, 0.3);
+            color: var(--flow-color);
+            font-weight: 600;
+        }
+
+        .important-component {
+            background: rgba(124, 58, 237, 0.3);
+            color: var(--design-color);
+            font-weight: 600;
+        }
+
+        .support-component {
+            background: rgba(8, 145, 178, 0.3);
+            color: var(--architecture-color);
+            font-weight: 600;
+        }
+
+        .practical-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .scenario-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-type {
+            color: var(--system-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .scenario-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .system-layers {
+                grid-template-columns: 1fr;
+            }
+            .practical-scenarios {
+                grid-template-columns: 1fr;
+            }
+            .builder-controls {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第39课：多腿期权策略系统设计</h1>
+                <div class="strategy-badge">🏗️ 系统架构设计 · 多腿期权Multi-Leg System专家</div>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">系统化的艺术：构建专业级多腿期权策略交易系统</p>
+            </section>
+
+            <div class="system-banner">
+                🏗️ 多腿期权策略系统核心：通过系统化的设计方法，构建包含市场分析、策略选择、风险管理、执行监控的完整交易系统，实现专业级期权交易能力。
+            </div>
+
+            <div class="card">
+                <h3>多腿期权策略系统的架构精髓</h3>
+                <p>多腿期权策略系统设计（Multi-Leg Options Strategy System Design）是现代期权交易的最高形态，它将复杂的期权策略转化为系统化、自动化的交易解决方案。这种系统不仅仅是简单的策略执行工具，而是一个集成了市场分析、策略优化、风险管理、执行监控和性能评估的综合性交易平台。系统设计的核心目标是通过标准化流程、模块化架构和智能化决策，将人为经验转化为可重复执行的交易系统，从而实现期权交易的规模化和专业化。</p>
+
+                <p><strong>分层架构的系统设计理念</strong>：多腿期权策略系统采用分层架构设计，从底层的数据处理到顶层的用户接口，每一层都有明确的功能定义和接口标准。数据层负责实时市场数据的获取、清洗和存储；分析层包含技术分析、基本面分析和量化模型；策略层实现各种期权策略的逻辑和参数优化；执行层处理订单路由、成交确认和头寸管理；监控层提供实时风险监控和绩效评估。这种分层设计确保了系统的可扩展性、可维护性和高可靠性。</p>
+
+                <p><strong>模块化组件的协同机制</strong>：系统中的每个功能模块都被设计为独立的组件，具有标准化的输入输出接口，可以灵活组合和配置。策略生成器模块根据市场条件自动筛选适合的期权策略；参数优化器使用机器学习算法寻找最优的执行价格和时间组合；风险评估器实时计算各种希腊字母和VaR指标；执行引擎负责将策略转化为具体的交易指令；监控面板提供直观的可视化界面。这些模块通过消息总线和事件驱动机制实现高效协同工作。</p>
+
+                <p><strong>智能化决策引擎的核心价值</strong>：系统的决策引擎是整个架构的核心，它集成了机器学习、人工智能和量化模型来实现智能化的策略选择和参数优化。决策引擎能够处理大量的市场数据、历史回测结果和实时风险指标，通过深度学习模型识别市场模式，预测策略表现，并自动调整策略参数。同时，引擎还具备自适应能力，能够从历史交易中学习和改进，不断优化决策质量。这种智能化能力使系统能够在复杂多变的市场环境中保持稳定的表现。</p>
+            </div>
+
+            <section class="system-layers">
+                <div class="layer-card analysis-layer">
+                    <span class="layer-icon">📊</span>
+                    <div class="layer-title">市场分析层</div>
+                    <div class="layer-description">
+                        实时数据获取、技术分析、基本面分析、市场情绪分析，为策略选择提供全方位的市场洞察和投资依据。
+                    </div>
+                </div>
+
+                <div class="layer-card strategy-layer">
+                    <span class="layer-icon">🧠</span>
+                    <div class="layer-title">策略决策层</div>
+                    <div class="layer-description">
+                        智能策略筛选、参数优化、组合构建、风险评估，通过AI算法实现最优策略组合的自动化生成。
+                    </div>
+                </div>
+
+                <div class="layer-card execution-layer">
+                    <span class="layer-icon">⚡</span>
+                    <div class="layer-title">执行管理层</div>
+                    <div class="layer-description">
+                        订单管理、交易路由、成交确认、头寸跟踪，确保策略的精确执行和高效的订单处理。
+                    </div>
+                </div>
+
+                <div class="layer-card monitoring-layer">
+                    <span class="layer-icon">🎯</span>
+                    <div class="layer-title">监控控制层</div>
+                    <div class="layer-description">
+                        实时风险监控、绩效追踪、异常预警、动态调整，提供全面的交易监控和风险管理能力。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 系统架构组件表 -->
+            <div class="card">
+                <h3>多腿期权系统架构组件分析</h3>
+                <table class="architecture-table">
+                    <thead>
+                        <tr>
+                            <th>系统层级</th>
+                            <th>核心组件</th>
+                            <th>主要功能</th>
+                            <th>技术要求</th>
+                            <th>重要程度</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>数据基础层</strong></td>
+                            <td>数据采集引擎</td>
+                            <td>实时市场数据获取</td>
+                            <td>低延迟、高并发</td>
+                            <td class="critical-component">关键</td>
+                        </tr>
+                        <tr>
+                            <td><strong>分析计算层</strong></td>
+                            <td>量化分析引擎</td>
+                            <td>技术指标、希腊字母计算</td>
+                            <td>高精度数学库</td>
+                            <td class="critical-component">关键</td>
+                        </tr>
+                        <tr>
+                            <td><strong>策略逻辑层</strong></td>
+                            <td>策略生成器</td>
+                            <td>多腿策略自动构建</td>
+                            <td>复杂算法实现</td>
+                            <td class="important-component">重要</td>
+                        </tr>
+                        <tr>
+                            <td><strong>优化决策层</strong></td>
+                            <td>参数优化器</td>
+                            <td>策略参数智能优化</td>
+                            <td>机器学习算法</td>
+                            <td class="important-component">重要</td>
+                        </tr>
+                        <tr>
+                            <td><strong>风险管理层</strong></td>
+                            <td>风险监控器</td>
+                            <td>实时风险评估控制</td>
+                            <td>高频计算能力</td>
+                            <td class="critical-component">关键</td>
+                        </tr>
+                        <tr>
+                            <td><strong>执行交易层</strong></td>
+                            <td>订单管理系统</td>
+                            <td>多腿订单协调执行</td>
+                            <td>原子性事务处理</td>
+                            <td class="critical-component">关键</td>
+                        </tr>
+                        <tr>
+                            <td><strong>监控展示层</strong></td>
+                            <td>可视化面板</td>
+                            <td>实时监控和报告</td>
+                            <td>友好用户界面</td>
+                            <td class="support-component">支持</td>
+                        </tr>
+                        <tr>
+                            <td><strong>配置管理层</strong></td>
+                            <td>参数配置器</td>
+                            <td>系统参数动态配置</td>
+                            <td>灵活配置框架</td>
+                            <td class="support-component">支持</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 多腿期权策略系统构建器 -->
+            <div class="card">
+                <h3>多腿期权策略系统构建器</h3>
+                <div class="system-builder">
+                    <h4 style="color: var(--system-color); text-align: center; margin-bottom: 2rem;">智能系统配置与构建工具</h4>
+                    <div class="builder-controls">
+                        <div class="control-group">
+                            <label class="control-label">交易目标</label>
+                            <select class="control-select" id="tradingObjective">
+                                <option value="income">稳定收益</option>
+                                <option value="growth">资本增长</option>
+                                <option value="hedge">风险对冲</option>
+                                <option value="speculation">投机获利</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">风险承受度</label>
+                            <select class="control-select" id="riskTolerance">
+                                <option value="low">保守型</option>
+                                <option value="medium">平衡型</option>
+                                <option value="high">积极型</option>
+                                <option value="aggressive">激进型</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">市场预期</label>
+                            <select class="control-select" id="marketOutlook">
+                                <option value="bullish">看涨</option>
+                                <option value="bearish">看跌</option>
+                                <option value="neutral">中性</option>
+                                <option value="volatile">高波动</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">时间框架</label>
+                            <select class="control-select" id="timeFrame">
+                                <option value="short">短期 (1-4周)</option>
+                                <option value="medium">中期 (1-3月)</option>
+                                <option value="long">长期 (3月以上)</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">资金规模 ($)</label>
+                            <input type="number" class="control-input" id="capitalSize" value="50000" min="10000" max="1000000" step="10000">
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">经验水平</label>
+                            <select class="control-select" id="experienceLevel">
+                                <option value="beginner">初学者</option>
+                                <option value="intermediate">中级</option>
+                                <option value="advanced">高级</option>
+                                <option value="professional">专业</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">自动化程度</label>
+                            <select class="control-select" id="automationLevel">
+                                <option value="manual">手动执行</option>
+                                <option value="semi">半自动化</option>
+                                <option value="auto">全自动化</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">监控频率</label>
+                            <select class="control-select" id="monitoringFreq">
+                                <option value="realtime">实时监控</option>
+                                <option value="hourly">每小时</option>
+                                <option value="daily">每日</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="build-btn" onclick="buildSystem()">构建个性化系统</button>
+                    <div class="system-output" id="systemOutput">
+                        <div id="buildResults"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">多腿期权策略系统流程图</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">展示系统化期权交易的完整流程和决策路径：</p>
+                <canvas class="chart-canvas" id="systemChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--system-color);">■</span> 分析模块
+                    <span style="margin-left: 2rem; color: var(--design-color);">■</span> 决策模块
+                    <span style="margin-left: 2rem; color: var(--architecture-color);">■</span> 执行模块
+                    <span style="margin-left: 2rem; color: var(--flow-color);">■</span> 监控模块
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>多腿期权策略系统的实战应用场景</h3>
+                <div class="practical-scenarios">
+                    <div class="scenario-card">
+                        <div class="scenario-title">🏦 机构投资管理</div>
+                        <div class="scenario-type">大规模系统化交易</div>
+                        <div class="scenario-description">
+                            为大型投资机构设计的多账户、多策略、多资产的综合性期权交易系统，支持复杂的风险预算和合规要求。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🎯 个人财富管理</div>
+                        <div class="scenario-type">个性化投资顾问</div>
+                        <div class="scenario-description">
+                            针对高净值个人投资者的智能期权投资系统，提供个性化的策略推荐和自动化执行服务。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🏢 企业风险管理</div>
+                        <div class="scenario-type">公司财务对冲</div>
+                        <div class="scenario-description">
+                            为企业财务部门设计的期权对冲系统，自动识别公司面临的市场风险并构建相应的对冲策略。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">📈 量化基金策略</div>
+                        <div class="scenario-type">策略工厂系统</div>
+                        <div class="scenario-description">
+                            为量化基金打造的期权策略工厂，能够批量生成、测试和部署各种期权策略，实现策略的工业化生产。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🎓 教育培训平台</div>
+                        <div class="scenario-type">模拟交易系统</div>
+                        <div class="scenario-description">
+                            专为期权教育设计的模拟交易系统，提供真实的交易环境和策略练习，帮助学习者掌握期权交易技能。
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">🔬 研究分析工具</div>
+                        <div class="scenario-type">策略回测平台</div>
+                        <div class="scenario-description">
+                            为期权研究人员提供的高级回测和分析平台，支持复杂策略的历史验证和性能评估。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>多腿期权策略系统的高级开发技术</h3>
+                <p><strong>微服务架构与容器化部署</strong>：现代的多腿期权策略系统采用微服务架构，将不同功能模块拆分为独立的服务，通过API网关进行统一管理。每个微服务都被容器化部署，使用Docker和Kubernetes进行编排，确保系统的高可用性和可扩展性。这种架构使得系统能够根据负载动态调整资源分配，支持弹性伸缩，并且便于持续集成和持续部署（CI/CD）。服务间通过消息队列（如RabbitMQ、Kafka）进行异步通信，提高系统的响应速度和可靠性。</p>
+
+                <p><strong>实时数据流处理与缓存策略</strong>：期权交易系统需要处理大量的实时市场数据，采用流式处理技术（如Apache Kafka Streams、Apache Flink）来处理高频数据流。数据缓存策略使用Redis集群来存储常用的市场数据和计算结果，大大提高数据访问速度。时序数据库（如InfluxDB、TimescaleDB）专门用于存储历史价格数据和绩效指标。数据一致性通过事件溯源和CQRS（命令查询责任分离）模式来保证，确保系统状态的准确性。</p>
+
+                <p><strong>机器学习与人工智能集成</strong>：系统集成了多种机器学习算法来实现智能化决策，包括深度强化学习用于策略优化，时间序列预测模型用于市场趋势判断，异常检测算法用于风险识别。MLOps流水线确保模型的持续训练和部署，使用TensorFlow Serving或PyTorch Serve进行模型服务化。特征工程自动化通过Apache Airflow进行调度，数据科学家可以通过Jupyter Notebook进行模型开发和实验。</p>
+
+                <p><strong>高级风险管理与合规监控</strong>：系统内置了复杂的风险管理框架，支持多种风险度量方法（VaR、CVaR、压力测试）和动态对冲策略。合规监控模块确保所有交易符合监管要求，包括头寸限制、集中度控制、最佳执行要求等。审计追踪功能记录所有交易决策的完整路径，支持监管检查和内部审计。系统还集成了第三方风险管理平台（如MSCI RiskMetrics、Bloomberg PORT）来提供专业的风险分析服务。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "多腿期权策略系统的核心架构设计原则是什么？",
+                options: [
+                    "单体架构，集中处理",
+                    "分层架构，模块化设计",
+                    "简单架构，易于维护",
+                    "复制架构，提高性能"
+                ],
+                correct: 1,
+                explanation: "多腿期权策略系统采用分层架构和模块化设计，确保系统的可扩展性、可维护性和高可靠性。"
+            },
+            {
+                question: "系统中哪个组件负责最关键的功能？",
+                options: [
+                    "用户界面",
+                    "数据存储",
+                    "风险监控和订单管理",
+                    "报告生成"
+                ],
+                correct: 2,
+                explanation: "风险监控器和订单管理系统是最关键的组件，直接影响交易安全和执行效率。"
+            },
+            {
+                question: "智能决策引擎的主要优势是什么？",
+                options: [
+                    "降低系统成本",
+                    "简化操作流程",
+                    "自动化策略优化和风险管理",
+                    "提高用户界面美观度"
+                ],
+                correct: 2,
+                explanation: "智能决策引擎通过AI算法实现自动化的策略选择、参数优化和风险管理，是系统的核心优势。"
+            },
+            {
+                question: "多腿期权系统最适合哪类用户？",
+                options: [
+                    "只适合期权新手",
+                    "适合各层次用户，但需要不同配置",
+                    "只适合专业交易员",
+                    "只适合机构投资者"
+                ],
+                correct: 1,
+                explanation: "系统通过模块化设计可以适应不同层次用户的需求，从初学者到专业交易员都可以使用。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawSystemChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '🎉 恭喜您精通多腿期权系统设计！' : 
+                         percentage >= 60 ? '良好的理解，建议深入学习系统架构设计。' : 
+                         '需要加强对系统设计和架构的理解。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawSystemChart() {
+            const canvas = document.getElementById('systemChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 40;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Define system flow stages
+            const stages = [
+                { name: '市场分析', x: 0.1, y: 0.2, color: '#2563eb' },
+                { name: '策略筛选', x: 0.3, y: 0.2, color: '#7c3aed' },
+                { name: '参数优化', x: 0.5, y: 0.2, color: '#0891b2' },
+                { name: '风险评估', x: 0.7, y: 0.2, color: '#dc2626' },
+                { name: '执行部署', x: 0.9, y: 0.2, color: '#059669' },
+
+                { name: '实时监控', x: 0.1, y: 0.8, color: '#dc2626' },
+                { name: '动态调整', x: 0.3, y: 0.8, color: '#ea580c' },
+                { name: '绩效评估', x: 0.5, y: 0.8, color: '#7c3aed' },
+                { name: '风险控制', x: 0.7, y: 0.8, color: '#dc2626' },
+                { name: '策略优化', x: 0.9, y: 0.8, color: '#2563eb' }
+            ];
+
+            // Draw connecting lines
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+
+            // Top flow
+            for (let i = 0; i < 4; i++) {
+                const start = stages[i];
+                const end = stages[i + 1];
+                const startX = padding + start.x * chartWidth;
+                const startY = padding + start.y * chartHeight;
+                const endX = padding + end.x * chartWidth;
+                const endY = padding + end.y * chartHeight;
+
+                ctx.beginPath();
+                ctx.moveTo(startX + 30, startY);
+                ctx.lineTo(endX - 30, endY);
+                ctx.stroke();
+
+                // Arrow head
+                ctx.beginPath();
+                ctx.moveTo(endX - 30, endY);
+                ctx.lineTo(endX - 40, endY - 5);
+                ctx.lineTo(endX - 40, endY + 5);
+                ctx.closePath();
+                ctx.fillStyle = '#666';
+                ctx.fill();
+            }
+
+            // Bottom flow
+            for (let i = 5; i < 9; i++) {
+                const start = stages[i];
+                const end = stages[i + 1];
+                const startX = padding + start.x * chartWidth;
+                const startY = padding + start.y * chartHeight;
+                const endX = padding + end.x * chartWidth;
+                const endY = padding + end.y * chartHeight;
+
+                ctx.beginPath();
+                ctx.moveTo(startX + 30, startY);
+                ctx.lineTo(endX - 30, endY);
+                ctx.stroke();
+
+                // Arrow head
+                ctx.beginPath();
+                ctx.moveTo(endX - 30, endY);
+                ctx.lineTo(endX - 40, endY - 5);
+                ctx.lineTo(endX - 40, endY + 5);
+                ctx.closePath();
+                ctx.fillStyle = '#666';
+                ctx.fill();
+            }
+
+            // Vertical connections (feedback loops)
+            const verticalConnections = [
+                [4, 5], // 执行部署 -> 实时监控
+                [9, 0]  // 策略优化 -> 市场分析 (feedback loop)
+            ];
+
+            verticalConnections.forEach(([start, end]) => {
+                const startStage = stages[start];
+                const endStage = stages[end];
+                const startX = padding + startStage.x * chartWidth;
+                const startY = padding + startStage.y * chartHeight;
+                const endX = padding + endStage.x * chartWidth;
+                const endY = padding + endStage.y * chartHeight;
+
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                if (start === 9) { // Feedback loop
+                    ctx.moveTo(startX, startY - 30);
+                    ctx.lineTo(startX, padding - 20);
+                    ctx.lineTo(endX, padding - 20);
+                    ctx.lineTo(endX, endY - 30);
+                } else {
+                    ctx.moveTo(startX, startY + 30);
+                    ctx.lineTo(endX, endY - 30);
+                }
+                ctx.stroke();
+                ctx.setLineDash([]);
+            });
+
+            // Draw stage nodes
+            stages.forEach(stage => {
+                const x = padding + stage.x * chartWidth;
+                const y = padding + stage.y * chartHeight;
+
+                // Node circle
+                ctx.beginPath();
+                ctx.arc(x, y, 30, 0, 2 * Math.PI);
+                ctx.fillStyle = stage.color;
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                // Node text
+                ctx.fillStyle = '#fff';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(stage.name, x, y);
+            });
+
+            // Add title
+            ctx.fillStyle = '#ffd700';
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('多腿期权策略系统流程', canvas.width / 2, 30);
+        }
+
+        function buildSystem() {
+            const objective = document.getElementById('tradingObjective').value;
+            const risk = document.getElementById('riskTolerance').value;
+            const outlook = document.getElementById('marketOutlook').value;
+            const timeFrame = document.getElementById('timeFrame').value;
+            const capital = parseInt(document.getElementById('capitalSize').value);
+            const experience = document.getElementById('experienceLevel').value;
+            const automation = document.getElementById('automationLevel').value;
+            const monitoring = document.getElementById('monitoringFreq').value;
+
+            // Generate system configuration based on inputs
+            let systemConfig = {
+                recommendedStrategies: [],
+                riskLevel: 0,
+                automationScore: 0,
+                complexity: 'low'
+            };
+
+            // Strategy recommendations based on objective and outlook
+            if (objective === 'income' && outlook === 'neutral') {
+                systemConfig.recommendedStrategies = ['铁鹰策略', '日历价差', '保护性看跌'];
+            } else if (objective === 'growth' && outlook === 'bullish') {
+                systemConfig.recommendedStrategies = ['看涨价差', '比例价差', '对角价差'];
+            } else if (objective === 'hedge') {
+                systemConfig.recommendedStrategies = ['保护性期权', '领口策略', '合成期权'];
+            } else {
+                systemConfig.recommendedStrategies = ['跨式策略', '宽跨式', '铁蝶策略'];
+            }
+
+            // Risk level calculation
+            const riskWeights = { low: 1, medium: 2, high: 3, aggressive: 4 };
+            systemConfig.riskLevel = riskWeights[risk] * 25;
+
+            // Automation score
+            const autoWeights = { manual: 1, semi: 2, auto: 3 };
+            systemConfig.automationScore = autoWeights[automation] * 33;
+
+            // Complexity assessment
+            if (experience === 'professional' && capital > 100000) {
+                systemConfig.complexity = 'high';
+            } else if (experience === 'advanced' || capital > 50000) {
+                systemConfig.complexity = 'medium';
+            } else {
+                systemConfig.complexity = 'low';
+            }
+
+            const results = `
+                <h4 style="color: var(--system-color); margin-bottom: 1.5rem;">📊 个性化系统配置结果</h4>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                    <div style="padding: 1rem; background: rgba(37, 99, 235, 0.1); border-radius: 8px;">
+                        <strong style="color: var(--system-color);">风险评级</strong><br>
+                        <span style="font-size: 1.2em;">${systemConfig.riskLevel}/100</span>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(124, 58, 237, 0.1); border-radius: 8px;">
+                        <strong style="color: var(--design-color);">自动化程度</strong><br>
+                        <span style="font-size: 1.2em;">${systemConfig.automationScore}%</span>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(8, 145, 178, 0.1); border-radius: 8px;">
+                        <strong style="color: var(--architecture-color);">系统复杂度</strong><br>
+                        <span style="font-size: 1.2em;">${systemConfig.complexity === 'high' ? '高级' : systemConfig.complexity === 'medium' ? '中级' : '基础'}</span>
+                    </div>
+                </div>
+
+                <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 215, 0, 0.1); border-radius: 12px; border-left: 4px solid var(--primary-color);">
+                    <h5 style="color: var(--primary-color); margin-bottom: 1rem;">🎯 推荐策略组合</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        ${systemConfig.recommendedStrategies.map(strategy => 
+                            `<li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">✓ ${strategy}</li>`
+                        ).join('')}
+                    </ul>
+                </div>
+
+                <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(16, 185, 129, 0.1); border-radius: 12px; border-left: 4px solid var(--success-color);">
+                    <h5 style="color: var(--success-color); margin-bottom: 1rem;">🏗️ 系统架构建议</h5>
+                    <p style="margin: 0.5rem 0;"><strong>数据层：</strong> ${monitoring === 'realtime' ? '高频实时数据流' : '定时数据更新'}</p>
+                    <p style="margin: 0.5rem 0;"><strong>分析层：</strong> ${systemConfig.complexity === 'high' ? '深度学习模型' : '传统量化分析'}</p>
+                    <p style="margin: 0.5rem 0;"><strong>执行层：</strong> ${automation === 'auto' ? '全自动化执行' : '人工确认执行'}</p>
+                    <p style="margin: 0.5rem 0;"><strong>监控层：</strong> ${systemConfig.riskLevel > 75 ? '实时风险预警' : '定期风险评估'}</p>
+                </div>
+
+                <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(220, 38, 38, 0.1); border-radius: 12px; border-left: 4px solid var(--flow-color);">
+                    <h5 style="color: var(--flow-color); margin-bottom: 1rem;">⚠️ 关键提醒</h5>
+                    <p style="margin: 0;">• 建议先在模拟环境中测试系统配置</p>
+                    <p style="margin: 0;">• 根据实际交易结果优化系统参数</p>
+                    <p style="margin: 0;">• 定期评估和更新策略组合</p>
+                    <p style="margin: 0;">• 确保充分的风险管理和资金控制</p>
+                </div>
+            `;
+
+            document.getElementById('buildResults').innerHTML = results;
+            document.getElementById('systemOutput').classList.add('show');
+        }
+    </script>
+</body>
+</html>

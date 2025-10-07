@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EQV1R2TPSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EQV1R2TPSL');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第8课：期权价值状态分类 - OPITIOS期权课程</title>
+    <meta name="description" content="学习期权价值状态的分类方法，理解实值、平值、虚值期权的特点和交易策略。">
+    <meta name="keywords" content="期权价值状态,实值期权,平值期权,虚值期权,期权分类,期权交易">
+    <meta name="author" content="OPITIOS期权课程">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://opitios.com/option-course/lesson-08-options-moneyness-classification.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://opitios.com/option-course/lesson-08-options-moneyness-classification.html">
+    <meta property="og:title" content="第8课：期权价值状态分类 - OPITIOS期权课程">
+    <meta property="og:description" content="学习期权价值状态的分类方法，理解实值、平值、虚值期权的特点和交易策略。">
+    <meta property="og:image" content="https://opitios.com/images/lesson-08-og.jpg">
+    <meta property="og:site_name" content="OPITIOS期权课程">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://opitios.com/option-course/lesson-08-options-moneyness-classification.html">
+    <meta property="twitter:title" content="第8课：期权价值状态分类 - OPITIOS期权课程">
+    <meta property="twitter:description" content="学习期权价值状态的分类方法，理解实值、平值、虚值期权的特点和交易策略。">
+    <meta property="twitter:image" content="https://opitios.com/images/lesson-08-twitter.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "第8课：期权价值状态分类",
+        "description": "学习期权价值状态的分类方法，理解实值、平值、虚值期权的特点和交易策略。",
+        "provider": {
+            "@type": "Organization",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        },
+        "courseMode": "online",
+        "educationalLevel": "beginner",
+        "inLanguage": "zh-CN",
+        "url": "https://opitios.com/option-course/lesson-08-options-moneyness-classification.html",
+        "partOfSeries": {
+            "@type": "CourseSeries",
+            "name": "OPITIOS期权课程",
+            "url": "https://opitios.com"
+        }
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第8课：期权状态分类 - OPITIOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --itm-color: #10b981;
+            --atm-color: #ffd700;
+            --otm-color: #ef4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .course-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .course-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .option-states {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .state-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .state-card.itm {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--itm-color);
+        }
+
+        .state-card.atm {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--atm-color);
+        }
+
+        .state-card.otm {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--otm-color);
+        }
+
+        .state-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .state-card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .state-card.itm h4 {
+            color: var(--itm-color);
+        }
+
+        .state-card.atm h4 {
+            color: var(--atm-color);
+        }
+
+        .state-card.otm h4 {
+            color: var(--otm-color);
+        }
+
+        .state-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 2rem auto;
+            background: #000;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .moneyness-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .moneyness-table th {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .moneyness-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .moneyness-table tr:hover td {
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .quiz-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn.show {
+            display: inline-block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .explanation {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 2.5rem;
+            }
+            .option-states {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <section class="course-header">
+                <h1 class="course-title">第8课：期权状态分类</h1>
+                <p style="font-size: 1.5rem; color: var(--text-secondary);">ITM、ATM、OTM深度解析与实战应用</p>
+            </section>
+
+            <section>
+                <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem; font-size: 2rem;">期权货币性（Moneyness）分类</h2>
+                <div class="option-states">
+                    <div class="state-card itm">
+                        <span class="state-icon">💰</span>
+                        <h4>实值期权 (ITM)</h4>
+                        <p style="color: var(--text-secondary);">In The Money</p>
+                        <div style="margin-top: 1rem;">
+                            <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                                <strong>看涨：</strong>股价 > 行权价<br>
+                                <strong>看跌：</strong>股价 < 行权价<br>
+                                <strong>特征：</strong>具有内在价值
+                            </p>
+                        </div>
+                    </div>
+                    <div class="state-card atm">
+                        <span class="state-icon">🎯</span>
+                        <h4>平值期权 (ATM)</h4>
+                        <p style="color: var(--text-secondary);">At The Money</p>
+                        <div style="margin-top: 1rem;">
+                            <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                                <strong>条件：</strong>股价 = 行权价<br>
+                                <strong>特征：</strong>时间价值最高<br>
+                                <strong>Delta：</strong>约 ±0.5
+                            </p>
+                        </div>
+                    </div>
+                    <div class="state-card otm">
+                        <span class="state-icon">📉</span>
+                        <h4>虚值期权 (OTM)</h4>
+                        <p style="color: var(--text-secondary);">Out The Money</p>
+                        <div style="margin-top: 1rem;">
+                            <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                                <strong>看涨：</strong>股价 < 行权价<br>
+                                <strong>看跌：</strong>股价 > 行权价<br>
+                                <strong>特征：</strong>无内在价值
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>实值期权(ITM)的深度分析</h3>
+                <p>实值期权是指具有内在价值的期权合约，这意味着如果立即行权，期权持有者可以获得正向的经济收益。对于<strong>看涨期权</strong>而言，当股票当前价格高于期权的行权价格时，该期权即为实值状态；对于<strong>看跌期权</strong>而言，当股票当前价格低于行权价格时，该期权处于实值状态。实值期权的一个关键特征是其价值由两部分组成：内在价值和时间价值，其中内在价值提供了基础的价值保障。</p>
+                <p><strong>实值期权的风险收益特征</strong>：实值期权通常具有较高的Delta值，意味着其价格对股票价格变动更加敏感。深度实值期权的Delta接近1（看涨）或-1（看跌），使其表现更类似于股票投资。这种特性使得实值期权成为希望获得股票敞口同时降低资本投入的投资者的理想选择。然而，实值期权的权利金成本也相应较高，因为投资者需要为内在价值支付相应的价格。</p>
+                <p><strong>实值程度的影响</strong>：根据实值程度可以进一步细分为轻度实值、中度实值和深度实值。轻度实值期权仍保持较高的时间价值，对波动率变化较为敏感；深度实值期权的时间价值相对较少，主要价值来源于内在价值，表现更加稳健。投资者选择不同程度的实值期权需要根据自己的风险偏好、资本状况和投资目标来决定。</p>
+                <p><strong>实值期权的实战应用</strong>：在实际投资中，实值期权常用于保守型投资策略。由于其内在价值提供的保护，实值期权在市场下跌时损失相对较小，在上涨时能够捕获大部分收益。这使得实值期权成为替代直接股票投资的有效工具，特别适合那些希望减少资本占用同时保持较高确定性收益的投资者。此外，实值期权也常用于构建复杂的对冲策略和套利策略。</p>
+            </div>
+
+            <div class="card">
+                <h3>平值期权(ATM)的核心特性</h3>
+                <p>平值期权是期权交易中最具活力和流动性的合约类型，其定义为股票当前价格与期权行权价格相等或非常接近的状态。由于实际交易中股价在连续变动，严格意义上的平值状态较难维持，因此通常将股价与行权价差距在一定范围内（如±2%）的期权都归类为平值期权。平值期权的最显著特征是拥有<strong>最高的时间价值</strong>，这是因为此时股价向任何方向的变动都可能为期权带来内在价值。</p>
+                <p><strong>平值期权的Greeks特征</strong>：平值期权在希腊字母参数上表现出独特的特征。Delta值约为0.5（看涨）或-0.5（看跌），意味着股价每变动1美元，期权价格约变动0.5美元。Gamma值达到最高点，表示Delta变化速度最快，使得平值期权对股价变动的敏感性变化最为剧烈。Theta值通常为负且绝对值较大，反映了时间价值的快速衰减特性。这些特征使得平值期权既充满机会也蕴含风险。</p>
+                <p><strong>波动率敏感性</strong>：平值期权对隐含波动率的变化极为敏感，Vega值通常达到最高水平。这意味着波动率的微小变化都会对平值期权价格产生显著影响。在重大事件（如财报发布、FDA批准等）前后，平值期权的价格波动往往最为剧烈。这种特性使得平值期权成为波动率交易的首选工具，但同时也要求投资者对市场情绪和事件驱动因素保持高度敏感。</p>
+                <p><strong>流动性与交易策略</strong>：平值期权通常具有最好的流动性，买卖价差最小，成交量最大，这为投资者提供了良好的进出机制。在策略构建中，平值期权常被用作核心头寸，其他行权价的期权作为辅助。例如，在跨式（Straddle）和勒式（Strangle）策略中，平值期权是主要的构成要素。对于需要在短期内应对不确定价格走向的投资者，平值期权提供了最佳的风险收益平衡。</p>
+            </div>
+
+            <!-- 交互式图表 -->
+            <section class="chart-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">期权状态分布与价值分析图</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">以下图表展示不同股价下期权的状态分类和价值构成：</p>
+                <canvas class="chart-canvas" id="moneynessChart" width="800" height="500"></canvas>
+                <div style="margin-top: 1rem;">
+                    <span style="color: var(--itm-color);">■</span> 实值区域 (ITM)
+                    <span style="margin-left: 2rem; color: var(--atm-color);">■</span> 平值区域 (ATM)
+                    <span style="margin-left: 2rem; color: var(--otm-color);">■</span> 虚值区域 (OTM)
+                </div>
+            </section>
+
+            <div class="card">
+                <h3>虚值期权(OTM)的特性与风险</h3>
+                <p>虚值期权是指不具有内在价值的期权合约，其价值完全由时间价值构成。对于看涨期权，当股票价格低于行权价时即为虚值状态；对于看跌期权，当股票价格高于行权价时即为虚值状态。虚值期权的最大特点是<strong>成本相对较低但风险较高</strong>，因为期权持有者需要股价朝有利方向出现足够大的变动才能实现盈利，否则期权将在到期时变得毫无价值。</p>
+                <p><strong>杠杆效应与风险特征</strong>：虚值期权提供了极高的杠杆效应，小额投资即可控制大量的标的资产。然而，这种高杠杆伴随着高风险，期权持有者面临的是"全赢或全输"的局面。虚值期权的Delta值较低，意味着股价的小幅变动对期权价格影响有限，但一旦股价突破行权价格进入实值状态，期权价值可能出现急剧增长。这种非线性的风险收益特征要求投资者具备精准的市场判断能力和严格的风险控制意识。</p>
+                <p><strong>时间价值衰减风险</strong>：虚值期权面临的最大挑战是时间价值的快速衰减。随着到期日临近，如果股价未能朝有利方向移动足够距离，虚值期权的价值将不可避免地归零。这种时间压力使得虚值期权不适合长期持有，更适合基于明确催化剂的短期交易策略。投资者需要在时间价值衰减与股价变动潜力之间找到平衡点。</p>
+                <p><strong>虚值程度的策略含义</strong>：根据虚值程度，可分为轻度虚值、中度虚值和深度虚值。轻度虚值期权仍保持相当的时间价值和合理的成功概率，常用于方向性较强的投资策略；深度虚值期权成本极低但成功概率很小，通常用于对冲极端风险或基于重大事件的高风险投机。选择合适虚值程度的期权需要综合考虑投资者的风险承受能力、预期收益目标以及对市场变动幅度的判断。</p>
+            </div>
+
+            <div class="card">
+                <h3>期权状态分类的实战应用</h3>
+                <table class="moneyness-table">
+                    <thead>
+                        <tr>
+                            <th>期权状态</th>
+                            <th>成本水平</th>
+                            <th>风险等级</th>
+                            <th>适用策略</th>
+                            <th>投资者类型</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(16, 185, 129, 0.1);">
+                            <td><strong>深度实值</strong></td>
+                            <td>高</td>
+                            <td>低</td>
+                            <td>股票替代、保守投资</td>
+                            <td>风险厌恶型</td>
+                        </tr>
+                        <tr style="background: rgba(16, 185, 129, 0.05);">
+                            <td><strong>轻度实值</strong></td>
+                            <td>中高</td>
+                            <td>中低</td>
+                            <td>方向性交易、对冲</td>
+                            <td>稳健型投资者</td>
+                        </tr>
+                        <tr style="background: rgba(255, 215, 0, 0.1);">
+                            <td><strong>平值期权</strong></td>
+                            <td>中</td>
+                            <td>中</td>
+                            <td>波动率交易、事件驱动</td>
+                            <td>平衡型投资者</td>
+                        </tr>
+                        <tr style="background: rgba(239, 68, 68, 0.05);">
+                            <td><strong>轻度虚值</strong></td>
+                            <td>中低</td>
+                            <td>中高</td>
+                            <td>杠杆交易、趋势跟踪</td>
+                            <td>激进型投资者</td>
+                        </tr>
+                        <tr style="background: rgba(239, 68, 68, 0.1);">
+                            <td><strong>深度虚值</strong></td>
+                            <td>低</td>
+                            <td>高</td>
+                            <td>高风险投机、极端对冲</td>
+                            <td>投机型交易者</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>动态调整与滚仓策略</h3>
+                <p><strong>状态转换的动态管理</strong>：期权的货币性状态会随着股价变动而发生改变，这要求投资者建立动态调整机制。当虚值期权转为实值时，其风险特征发生根本改变，投资者需要重新评估持仓的合理性；当实值期权转为虚值时，可能需要考虑止损或调整策略。建立明确的状态转换触发点是成功期权交易的关键要素。</p>
+                <p><strong>滚仓策略的应用</strong>：滚仓是指在当前期权即将到期或状态不利时，平仓现有头寸并建立新的期权头寸。常见的滚仓方式包括时间滚仓（延长到期时间）、价格滚仓（调整行权价）和组合滚仓（同时调整时间和价格）。滚仓策略需要考虑交易成本、时间价值变化以及市场环境，是期权交易中的高级技巧。</p>
+                <p><strong>组合策略中的状态配置</strong>：在构建复杂期权组合时，不同状态期权的配置比例直接影响策略的风险收益特征。例如，在牛市价差策略中，买入轻度虚值看涨期权、卖出较远虚值看涨期权，可以在控制成本的同时保持合理的盈利空间。理解各种状态期权的特性有助于优化组合配置，提高策略执行效果。</p>
+                <p><strong>市场环境的影响考量</strong>：不同市场环境下，各种状态期权的表现存在显著差异。在高波动率环境中，虚值期权的表现可能优于实值期权；在低波动率环境中，实值期权提供更好的风险调整收益。投资者需要根据当前市场环境和未来预期，选择最适合的期权状态和相应的交易策略，实现投资目标的最优化。</p>
+            </div>
+
+            <section class="quiz-section">
+                <h3 style="color: var(--primary-color);">知识测验</h3>
+                <div id="quizContainer"></div>
+                <button class="submit-btn" id="submitQuiz">提交答案</button>
+                <div id="quizResults" class="quiz-results">
+                    <h4>测验结果</h4>
+                    <div id="finalScore">0/4</div>
+                    <div id="resultsMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "当股价为$105，看涨期权行权价为$100时，该期权处于什么状态？",
+                options: [
+                    "虚值期权(OTM)",
+                    "平值期权(ATM)",
+                    "实值期权(ITM)",
+                    "无法确定"
+                ],
+                correct: 2,
+                explanation: "当股价($105)高于看涨期权的行权价($100)时，该看涨期权处于实值状态(ITM)，具有$5的内在价值。"
+            },
+            {
+                question: "哪种期权状态通常具有最高的时间价值？",
+                options: [
+                    "深度实值期权",
+                    "平值期权",
+                    "深度虚值期权",
+                    "所有期权时间价值相同"
+                ],
+                correct: 1,
+                explanation: "平值期权(ATM)通常具有最高的时间价值，因为此时股价向任何方向的变动都可能为期权带来内在价值，其获利潜力最大。"
+            },
+            {
+                question: "虚值期权的主要风险是什么？",
+                options: [
+                    "内在价值损失",
+                    "时间价值衰减",
+                    "Delta风险过高",
+                    "流动性不足"
+                ],
+                correct: 1,
+                explanation: "虚值期权的主要风险是时间价值衰减，因为虚值期权没有内在价值，价值完全由时间价值构成，随着时间推移价值会不断衰减。"
+            },
+            {
+                question: "以下哪种说法关于实值期权是正确的？",
+                options: [
+                    "实值期权没有时间价值",
+                    "实值期权的Delta值接近0",
+                    "实值期权具有内在价值保护",
+                    "实值期权成本最低"
+                ],
+                correct: 2,
+                explanation: "实值期权具有内在价值保护是正确的。实值期权的价值由内在价值和时间价值组成，内在价值提供了基础的价值保障。"
+            }
+        ];
+
+        let userAnswers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupProgressBar();
+            generateQuiz();
+            drawMoneynessChart();
+        });
+
+        function setupProgressBar() {
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                document.getElementById('progressBar').style.width = scrollPercent + '%';
+            });
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+
+            quizData.forEach((quiz, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">${index + 1}. ${quiz.question}</h4>
+                    <div>
+                        ${quiz.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-option="${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>解释：</strong>${quiz.explanation}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+
+                    if (userAnswers.filter(answer => answer !== undefined).length === quizData.length) {
+                        document.getElementById('submitQuiz').classList.add('show');
+                    }
+                });
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', submitQuiz);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizData.forEach((quiz, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                const userAnswer = userAnswers[index];
+
+                options.forEach((option, optIndex) => {
+                    if (optIndex === quiz.correct) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && optIndex !== quiz.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (userAnswer === quiz.correct) {
+                    score++;
+                }
+
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${quizData.length}`;
+
+            let message = percentage >= 80 ? '恭喜您，成绩优秀！' : 
+                         percentage >= 60 ? '成绩良好，继续加油！' : 
+                         '需要更多的学习和练习。';
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('quizResults').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+        }
+
+        function drawMoneynessChart() {
+            const canvas = document.getElementById('moneynessChart');
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const padding = 60;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // X-axis
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            // Y-axis
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('股价', canvas.width - padding + 20, canvas.height - padding + 20);
+            ctx.save();
+            ctx.translate(padding - 30, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('期权价值', 0, 0);
+            ctx.restore();
+
+            const strike = 100;
+            const minPrice = 70;
+            const maxPrice = 130;
+
+            // Draw background regions
+            const strikeX = padding + (strike - minPrice) / (maxPrice - minPrice) * chartWidth;
+
+            // ITM region (left for calls)
+            ctx.fillStyle = 'rgba(16, 185, 129, 0.1)';
+            ctx.fillRect(strikeX, padding, canvas.width - padding - strikeX, canvas.height - 2 * padding);
+
+            // OTM region (left for calls)
+            ctx.fillStyle = 'rgba(239, 68, 68, 0.1)';
+            ctx.fillRect(padding, padding, strikeX - padding, canvas.height - 2 * padding);
+
+            // ATM line
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(strikeX, padding);
+            ctx.lineTo(strikeX, canvas.height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw option value curves for different states
+            const timeValue = 8;
+
+            // Call option intrinsic value
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let price = minPrice; price <= maxPrice; price += 1) {
+                const intrinsicValue = Math.max(price - strike, 0);
+                const x = padding + (price - minPrice) / (maxPrice - minPrice) * chartWidth;
+                const y = canvas.height - padding - (intrinsicValue / 40) * chartHeight;
+
+                if (price === minPrice) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Call option total value (intrinsic + time)
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            for (let price = minPrice; price <= maxPrice; price += 1) {
+                const intrinsicValue = Math.max(price - strike, 0);
+                const currentTimeValue = timeValue * Math.exp(-Math.pow((price - strike) / 25, 2));
+                const totalValue = intrinsicValue + currentTimeValue;
+
+                const x = padding + (price - minPrice) / (maxPrice - minPrice) * chartWidth;
+                const y = canvas.height - padding - (totalValue / 40) * chartHeight;
+
+                if (price === minPrice) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // Add grid lines
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+
+            // Vertical grid lines (stock prices)
+            for (let price = 70; price <= 130; price += 10) {
+                const x = padding + (price - minPrice) / (maxPrice - minPrice) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+
+                // Price labels
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$' + price, x, canvas.height - padding + 20);
+            }
+
+            // Horizontal grid lines
+            for (let value = 0; value <= 40; value += 10) {
+                const y = canvas.height - padding - (value / 40) * chartHeight;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+
+                // Value labels
+                ctx.fillStyle = '#999';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'right';
+                ctx.fillText('$' + value, padding - 10, y + 5);
+            }
+
+            ctx.setLineDash([]);
+
+            // Add region labels
+            ctx.fillStyle = '#ef4444';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('OTM 虚值区域', padding + (strikeX - padding) / 2, padding + 30);
+
+            ctx.fillStyle = '#10b981';
+            ctx.fillText('ITM 实值区域', strikeX + (canvas.width - padding - strikeX) / 2, padding + 30);
+
+            ctx.fillStyle = '#ffd700';
+            ctx.fillText('ATM', strikeX + 5, padding + 50);
+            ctx.fillText('行权价 $' + strike, strikeX, canvas.height - padding + 40);
+
+            // Add legend
+            ctx.fillStyle = '#10b981';
+            ctx.fillRect(padding, padding + 60, 20, 15);
+            ctx.fillStyle = '#ccc';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('内在价值', padding + 30, padding + 72);
+
+            ctx.fillStyle = '#ffd700';
+            ctx.fillRect(padding, padding + 80, 20, 15);
+            ctx.fillStyle = '#ccc';
+            ctx.fillText('期权总价值', padding + 30, padding + 92);
+        }
+    </script>
+</body>
+</html>

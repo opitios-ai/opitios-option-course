@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPITIOS期权交易完整课程体系 - 50课专业期权培训</title>
+    <meta name="description" content="OPITIOS期权交易完整课程体系，包含50课专业期权培训，从基础入门到大师认证，涵盖期权定价、希腊字母、交易策略、风险管理等全方位内容。">
+    <meta name="keywords" content="期权交易,期权课程,期权培训,Black-Scholes模型,希腊字母,期权策略,风险管理,期权定价,美股期权,期权基础">
+    <meta name="author" content="OPITIOS">
+    <meta property="og:title" content="OPITIOS期权交易完整课程体系 - 50课专业期权培训">
+    <meta property="og:description" content="从期权基础到高级策略，50课完整期权交易培训体系，助您成为期权交易专家。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="https://opitios.com/wp-content/uploads/2025/08/logo1.png">
+    <link rel="canonical" href="">
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PRSVZMHT');</script>
+    <!-- End Google Tag Manager -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffd700;
+            --bg-color: #0a0a0b;
+            --card-bg: #1a1a1b;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: rgba(255, 215, 0, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --section-bg: #1a1a1b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1b 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1b 0%, #2d2d2f 100%);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            margin-bottom: 1rem;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .course-section {
+            margin: 4rem 0;
+            background: var(--section-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+            border-radius: 2px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .course-card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2a2a2c 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #ffed4e 100%);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .course-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .course-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-link {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e6c200 100%);
+            color: var(--bg-color);
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .course-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .learning-path {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+            border: 1px solid var(--success-color);
+        }
+
+        .path-title {
+            color: var(--success-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .path-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .path-step {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .step-number {
+            background: var(--success-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: 600;
+        }
+
+        .step-title {
+            color: var(--text-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            background: var(--section-bg);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            .course-section {
+                padding: 2rem;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PRSVZMHT"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    <header class="header">
+        <div class="container">
+            <img src="https://opitios.com/wp-content/uploads/2025/08/logo1.png" alt="OPITIOS Logo" class="logo-img">
+            <h1 class="main-title">OPITIOS期权交易完整课程体系</h1>
+            <p class="subtitle">从期权基础到高级策略，50课完整期权交易培训体系，助您成为期权交易专家</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50</div>
+                    <div class="stat-label">专业课程</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">9</div>
+                    <div class="stat-label">学习模块</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">实战案例</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">实用技能</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- 学习路径 -->
+            <div class="learning-path">
+                <h2 class="path-title">🎯 学习路径指南</h2>
+                <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">
+                    按照以下路径循序渐进，从期权新手成长为交易专家
+                </p>
+                <div class="path-steps">
+                    <div class="path-step">
+                        <div class="step-number">1</div>
+                        <div class="step-title">基础入门</div>
+                        <div class="step-description">掌握期权基本概念和交易机制</div>
+                    </div>
+                    <div class="path-step">
+                        <div class="step-number">2</div>
+                        <div class="step-title">核心理论</div>
+                        <div class="step-description">学习定价模型和希腊字母</div>
+                    </div>
+                    <div class="path-step">
+                        <div class="step-number">3</div>
+                        <div class="step-title">基础策略</div>
+                        <div class="step-description">掌握单腿和价差策略</div>
+                    </div>
+                    <div class="path-step">
+                        <div class="step-number">4</div>
+                        <div class="step-title">高级策略</div>
+                        <div class="step-description">学习波动率和组合策略</div>
+                    </div>
+                    <div class="path-step">
+                        <div class="step-number">5</div>
+                        <div class="step-title">实战精进</div>
+                        <div class="step-description">提升交易心理和风险管理</div>
+                    </div>
+                    <div class="path-step">
+                        <div class="step-number">6</div>
+                        <div class="step-title">大师认证</div>
+                        <div class="step-description">成为期权交易专家</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第1-10课：基础入门篇 -->
+            <section class="course-section">
+                <h2 class="section-title">📚 第1-10课：基础入门篇</h2>
+                <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">
+                    期权交易的基础知识，为后续学习打下坚实基础
+                </p>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-number">第1课</div>
+                        <div class="course-title">美股期权初探</div>
+                        <div class="course-description">了解期权的基本概念、特点和优势，建立期权交易的基础认知。</div>
+                        <a href="lesson-01-us-stock-options-introduction.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第2课</div>
+                        <div class="course-title">期权合约解读：看涨期权与看跌期权的基本概念</div>
+                        <div class="course-description">深入理解看涨期权和看跌期权的机制、盈利方式和应用场景。</div>
+                        <a href="lesson-02-call-put-options-basics.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第3课</div>
+                        <div class="course-title">期权市场结构与交易机制</div>
+                        <div class="course-description">了解期权市场的组织结构、交易流程和参与者角色。</div>
+                        <a href="lesson-03-options-market-structure.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第4课</div>
+                        <div class="course-title">期权合约要素详解</div>
+                        <div class="course-description">掌握期权合约的各个要素，包括标的资产、行权价格、到期日等。</div>
+                        <a href="lesson-04-options-contract-elements.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第5课</div>
+                        <div class="course-title">美式期权vs欧式期权</div>
+                        <div class="course-description">比较美式期权和欧式期权的特点、行权机制和定价差异。</div>
+                        <a href="lesson-05-american-vs-european-options.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第6课</div>
+                        <div class="course-title">期权流动性判断</div>
+                        <div class="course-description">学习如何评估期权的流动性，选择适合交易的期权合约。</div>
+                        <a href="lesson-06-options-liquidity-analysis.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第7课</div>
+                        <div class="course-title">期权价值构成</div>
+                        <div class="course-description">理解期权价值的组成部分：内在价值和时间价值。</div>
+                        <a href="lesson-07-options-value-composition.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第8课</div>
+                        <div class="course-title">期权状态分类</div>
+                        <div class="course-description">掌握实值、平值、虚值期权的判断标准和交易特点。</div>
+                        <a href="lesson-08-options-moneyness-classification.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第9课</div>
+                        <div class="course-title">期权交易风险管理基础</div>
+                        <div class="course-description">建立期权交易的风险意识，学习基本的风险管理方法。</div>
+                        <a href="lesson-09-options-risk-management-basics.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第10课</div>
+                        <div class="course-title">期权交易平台与工具</div>
+                        <div class="course-description">熟悉期权交易平台的功能，掌握必要的交易工具。</div>
+                        <a href="lesson-10-options-trading-platform-tools.html" class="course-link">开始学习</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第11-15课：核心理论篇 -->
+            <section class="course-section">
+                <h2 class="section-title">🧮 第11-15课：核心理论篇</h2>
+                <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">
+                    期权定价理论的核心内容，掌握科学的定价方法
+                </p>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-number">第11课</div>
+                        <div class="course-title">Black-Scholes定价模型基础</div>
+                        <div class="course-description">学习现代期权定价理论的基石，掌握Black-Scholes模型的应用。</div>
+                        <a href="lesson-11-black-scholes-pricing-model.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第12课</div>
+                        <div class="course-title">二叉树定价模型应用</div>
+                        <div class="course-description">理解二叉树模型的基本原理和在期权定价中的应用。</div>
+                        <a href="lesson-12-binomial-pricing-model.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第13课</div>
+                        <div class="course-title">期权定价影响因素分析</div>
+                        <div class="course-description">深入分析影响期权价格的各种因素及其作用机制。</div>
+                        <a href="lesson-13-options-pricing-factors.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第14课</div>
+                        <div class="course-title">隐含波动率与市场情绪</div>
+                        <div class="course-description">理解隐含波动率的概念，学会利用波动率分析市场情绪。</div>
+                        <a href="lesson-14-implied-volatility.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第15课</div>
+                        <div class="course-title">期权定价偏差与套利机会</div>
+                        <div class="course-description">识别期权定价偏差，发现套利机会，提高交易效率。</div>
+                        <a href="lesson-15-options-pricing-arbitrage.html" class="course-link">开始学习</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第16-20课：希腊字母篇 -->
+            <section class="course-section">
+                <h2 class="section-title">📊 第16-20课：希腊字母篇</h2>
+                <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">
+                    掌握期权风险管理的核心工具：希腊字母
+                </p>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-number">第16课</div>
+                        <div class="course-title">Delta价格敏感性深度解析</div>
+                        <div class="course-description">深入理解Delta的含义，掌握价格敏感性分析方法。</div>
+                        <a href="lesson-16-delta-price-sensitivity.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第17课</div>
+                        <div class="course-title">Gamma：Delta变化率与风险管理</div>
+                        <div class="course-description">学习Gamma的作用机制，掌握二阶风险的管理方法。</div>
+                        <a href="lesson-17-gamma-delta-change-rate.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第18课</div>
+                        <div class="course-title">Theta：时间价值衰减的实战策略</div>
+                        <div class="course-description">理解时间价值衰减规律，制定有效的时间管理策略。</div>
+                        <a href="lesson-18-theta-time-decay.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第19课</div>
+                        <div class="course-title">Vega：波动率风险的量化与对冲</div>
+                        <div class="course-description">掌握波动率风险的管理方法，学会Vega对冲技巧。</div>
+                        <a href="lesson-19-vega-volatility-risk.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第20课</div>
+                        <div class="course-title">Rho：利率风险与综合风险管理</div>
+                        <div class="course-description">了解利率对期权的影响，建立综合风险管理体系。</div>
+                        <a href="lesson-20-rho-interest-rate-risk.html" class="course-link">开始学习</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第21-25课：基础策略篇 -->
+            <section class="course-section">
+                <h2 class="section-title">🎯 第21-25课：基础策略篇</h2>
+                <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">
+                    掌握期权交易的基本策略，建立交易基础
+                </p>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-number">第21课</div>
+                        <div class="course-title">买入看涨期权：基础做多策略精通</div>
+                        <div class="course-description">掌握买入看涨期权的策略要点，学会做多市场的技巧。</div>
+                        <a href="lesson-21-buy-call-options.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第22课</div>
+                        <div class="course-title">买入看跌期权：保护策略与做空应用</div>
+                        <div class="course-description">学习买入看跌期权的应用，掌握保护性策略和做空技巧。</div>
+                        <a href="lesson-22-buy-put-options.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第23课</div>
+                        <div class="course-title">卖出看涨期权：收益型策略与风险管理</div>
+                        <div class="course-description">理解卖出看涨期权的风险收益特征，掌握收益型策略。</div>
+                        <a href="lesson-23-sell-call-options.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第24课</div>
+                        <div class="course-title">卖出看跌期权：现金担保与底部收集策略</div>
+                        <div class="course-description">学习卖出看跌期权的应用，掌握现金担保和底部收集策略。</div>
+                        <a href="lesson-24-sell-put-options.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第25课</div>
+                        <div class="course-title">单腿策略综合应用与最优选择</div>
+                        <div class="course-description">综合运用单腿策略，学会在不同市场环境下的最优选择。</div>
+                        <a href="lesson-25-single-leg-strategies.html" class="course-link">开始学习</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第26-30课：价差策略篇 -->
+            <section class="course-section">
+                <h2 class="section-title">📈 第26-30课：价差策略篇</h2>
+                <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">
+                    学习价差策略，降低风险，提高收益稳定性
+                </p>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-number">第26课</div>
+                        <div class="course-title">牛市价差策略深度解析</div>
+                        <div class="course-description">掌握牛市价差策略的构建方法，学会在上涨市场中获利。</div>
+                        <a href="lesson-26-bull-spread-strategy.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第27课</div>
+                        <div class="course-title">熊市价差策略完整应用</div>
+                        <div class="course-description">学习熊市价差策略，掌握在下跌市场中的交易技巧。</div>
+                        <a href="lesson-27-bear-spread-strategy.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第28课</div>
+                        <div class="course-title">日历价差策略与时间套利</div>
+                        <div class="course-description">理解时间价值差异，掌握日历价差策略的应用。</div>
+                        <a href="lesson-28-calendar-spread-strategy.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第29课</div>
+                        <div class="course-title">对角价差策略高级技巧</div>
+                        <div class="course-description">学习对角价差策略，掌握更复杂的价差交易技巧。</div>
+                        <a href="lesson-29-diagonal-spread-strategy.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第30课</div>
+                        <div class="course-title">价差策略综合应用与最优选择</div>
+                        <div class="course-description">综合运用各种价差策略，学会策略选择和优化。</div>
+                        <a href="lesson-30-spread-strategies-comprehensive.html" class="course-link">开始学习</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第31-35课：波动率策略篇 -->
+            <section class="course-section">
+                <h2 class="section-title">⚡ 第31-35课：波动率策略篇</h2>
+                <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">
+                    专注于波动率交易，把握市场不确定性带来的机会
+                </p>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-number">第31课</div>
+                        <div class="course-title">跨式策略理论与实战</div>
+                        <div class="course-description">掌握跨式策略的构建和应用，学会利用波动率获利。</div>
+                        <a href="lesson-31-straddle-strategy.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第32课</div>
+                        <div class="course-title">宽跨式策略深入应用</div>
+                        <div class="course-description">学习宽跨式策略，掌握更灵活的波动率交易方法。</div>
+                        <a href="lesson-32-strangle-strategy.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第33课</div>
+                        <div class="course-title">铁蝶策略实战</div>
+                        <div class="course-description">理解铁蝶策略的构建，掌握低风险波动率交易技巧。</div>
+                        <a href="lesson-33-iron-butterfly-strategy.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第34课</div>
+                        <div class="course-title">铁鹰策略进阶</div>
+                        <div class="course-description">学习铁鹰策略，掌握高级波动率交易技术。</div>
+                        <a href="lesson-34-iron-condor-strategy.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第35课</div>
+                        <div class="course-title">波动率策略综合应用</div>
+                        <div class="course-description">综合运用波动率策略，建立完整的波动率交易体系。</div>
+                        <a href="lesson-35-volatility-strategies-comprehensive.html" class="course-link">开始学习</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第36-40课：高级组合策略篇 -->
+            <section class="course-section">
+                <h2 class="section-title">🎪 第36-40课：高级组合策略篇</h2>
+                <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">
+                    学习复杂的组合策略，提升交易的专业水平
+                </p>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-number">第36课</div>
+                        <div class="course-title">比例价差策略</div>
+                        <div class="course-description">掌握比例价差策略的构建，学会利用比例关系获利。</div>
+                        <a href="lesson-36-ratio-spread-strategy.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第37课</div>
+                        <div class="course-title">日历价差策略高级应用</div>
+                        <div class="course-description">深入学习日历价差策略的高级应用技巧。</div>
+                        <a href="lesson-37-advanced-calendar-spread.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第38课</div>
+                        <div class="course-title">对角价差策略进阶技术</div>
+                        <div class="course-description">掌握对角价差策略的进阶技术，提升交易水平。</div>
+                        <a href="lesson-38-advanced-diagonal-spread.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第39课</div>
+                        <div class="course-title">多腿期权策略系统设计</div>
+                        <div class="course-description">学习多腿期权策略的系统设计方法。</div>
+                        <a href="lesson-39-multi-leg-options-strategies.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第40课</div>
+                        <div class="course-title">期权组合策略综合应用</div>
+                        <div class="course-description">综合运用各种组合策略，建立完整的交易体系。</div>
+                        <a href="lesson-40-options-portfolio-strategies.html" class="course-link">开始学习</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第41-45课：实战精进篇 -->
+            <section class="course-section">
+                <h2 class="section-title">🚀 第41-45课：实战精进篇</h2>
+                <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">
+                    提升实战能力，掌握高级交易技巧和风险管理
+                </p>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-number">第41课</div>
+                        <div class="course-title">实战交易心理学</div>
+                        <div class="course-description">掌握交易心理学，克服情绪影响，提升交易表现。</div>
+                        <a href="lesson-41-trading-psychology.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第42课</div>
+                        <div class="course-title">期权组合管理与优化</div>
+                        <div class="course-description">学习期权组合的管理方法，掌握优化技巧。</div>
+                        <a href="lesson-42-options-portfolio-management.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第43课</div>
+                        <div class="course-title">高频交易与算法优化</div>
+                        <div class="course-description">了解高频交易和算法优化在期权交易中的应用。</div>
+                        <a href="lesson-43-high-frequency-trading.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第44课</div>
+                        <div class="course-title">税务规划与合规管理</div>
+                        <div class="course-description">掌握期权交易的税务规划和合规管理要点。</div>
+                        <a href="lesson-44-tax-planning-compliance.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第45课</div>
+                        <div class="course-title">期权交易的未来发展与展望</div>
+                        <div class="course-description">展望期权交易的未来发展趋势，把握行业机遇。</div>
+                        <a href="lesson-45-future-of-options-trading.html" class="course-link">开始学习</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第46-50课：大师认证篇 -->
+            <section class="course-section">
+                <h2 class="section-title">🏆 第46-50课：大师认证篇</h2>
+                <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">
+                    成为期权交易专家，掌握最前沿的交易技术
+                </p>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-number">第46课</div>
+                        <div class="course-title">全球期权市场与跨境投资</div>
+                        <div class="course-description">了解全球期权市场，掌握跨境投资策略。</div>
+                        <a href="lesson-46-global-options-markets.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第47课</div>
+                        <div class="course-title">期权量化建模与算法设计</div>
+                        <div class="course-description">学习期权量化建模，掌握算法设计技巧。</div>
+                        <a href="lesson-47-quantitative-modeling.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第48课</div>
+                        <div class="course-title">专业交易平台构建与系统管理</div>
+                        <div class="course-description">掌握专业交易平台的构建和系统管理方法。</div>
+                        <a href="lesson-48-trading-platform-development.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第49课</div>
+                        <div class="course-title">期权大师认证与综合评估</div>
+                        <div class="course-description">完成期权大师认证，进行综合能力评估。</div>
+                        <a href="lesson-49-master-certification.html" class="course-link">开始学习</a>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-number">第50课</div>
+                        <div class="course-title">期权交易成功之路与持续发展</div>
+                        <div class="course-description">规划期权交易成功之路，实现持续发展目标。</div>
+                        <a href="lesson-50-options-trading-success-path.html" class="course-link">开始学习</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2024 OPITIOS. 专业的期权交易教育平台</p>
+                <p>从基础到大师，50课完整期权交易培训体系</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
